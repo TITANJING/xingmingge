@@ -1,0 +1,343 @@
+{
+  "meta": {
+    "description": "星座配对兼容性数据，score 为 1-5 分（5=天作之合，1=挑战重重）",
+    "usage": "用 pair key 查找，key 格式为两个星座英文小写按字母序排列用 '-' 连接"
+  },
+  "pairs": {
+    "aquarius-gemini": {
+      "score": 5,
+      "zh": { "title": "灵魂伴侣", "description": "两个风象星座的结合充满了智慧的火花。你们都热爱自由和新鲜事物，对话永远不会无聊。彼此的独立性让这段关系轻松自在。" },
+      "en": { "title": "Soulmates", "description": "Two air signs create sparks of intellectual brilliance. You both love freedom and novelty, and conversations never get boring. Mutual independence keeps the relationship easy and breezy." }
+    },
+    "aquarius-libra": {
+      "score": 5,
+      "zh": { "title": "心意相通", "description": "风象三角的完美搭配。天秤座的优雅与水瓶座的独特相得益彰，你们在社交和理想追求上高度一致。" },
+      "en": { "title": "Kindred Spirits", "description": "A perfect air sign match. Libra's elegance complements Aquarius's uniqueness beautifully. You share social values and idealistic pursuits." }
+    },
+    "aquarius-sagittarius": {
+      "score": 5,
+      "zh": { "title": "冒险搭档", "description": "你们都是自由的灵魂，对世界充满好奇。射手座的热情与水瓶座的创新精神让这段关系充满活力和可能性。" },
+      "en": { "title": "Adventure Partners", "description": "Both free spirits with boundless curiosity about the world. Sagittarius's passion and Aquarius's innovation fill this relationship with energy and possibilities." }
+    },
+    "aries-leo": {
+      "score": 5,
+      "zh": { "title": "热力四射", "description": "两个火象星座的碰撞产生耀眼的火花。你们都充满激情和自信，彼此欣赏对方的勇气和活力，是天生的一对。" },
+      "en": { "title": "Blazing Connection", "description": "Two fire signs colliding in a dazzling display. Both passionate and confident, you admire each other's courage and energy — a natural match." }
+    },
+    "aries-sagittarius": {
+      "score": 5,
+      "zh": { "title": "志同道合", "description": "同为火象星座，你们对生活充满同样的热忱。一起冒险、一起追梦，这段关系充满欢笑和活力。" },
+      "en": { "title": "Kindred Fire", "description": "Fellow fire signs sharing the same passion for life. Adventuring and dreaming together, this relationship is full of laughter and vitality." }
+    },
+    "cancer-pisces": {
+      "score": 5,
+      "zh": { "title": "心有灵犀", "description": "两个水象星座的深度连接。你们不需要太多言语就能理解对方，感情深沉而细腻，家庭观念一致。" },
+      "en": { "title": "Intuitive Bond", "description": "A deep connection between two water signs. You understand each other without many words, with deep and tender emotions and shared family values." }
+    },
+    "cancer-scorpio": {
+      "score": 5,
+      "zh": { "title": "灵魂深处", "description": "水象星座的绝配。你们都重视情感的深度，忠诚而专一。巨蟹的温暖融化天蝎的防备，这是一段刻骨铭心的感情。" },
+      "en": { "title": "Deep Souls", "description": "The ultimate water sign pairing. Both value emotional depth, loyalty, and devotion. Cancer's warmth melts Scorpio's walls — a profoundly moving love." }
+    },
+    "capricorn-taurus": {
+      "score": 5,
+      "zh": { "title": "稳如磐石", "description": "土象星座的黄金搭配。你们都务实可靠，对生活有相同的追求。一起建设的生活扎实而有质感。" },
+      "en": { "title": "Rock Solid", "description": "The golden earth sign pairing. Both practical and reliable with shared life goals. Together you build a solid and quality life." }
+    },
+    "capricorn-virgo": {
+      "score": 5,
+      "zh": { "title": "完美搭档", "description": "两个土象星座的强强联合。你们都注重细节和品质，工作和生活都能配合默契，是理想的人生伴侣。" },
+      "en": { "title": "Perfect Partners", "description": "A powerhouse earth sign union. Both detail-oriented and quality-focused, you work and live in perfect harmony — ideal life partners." }
+    },
+    "leo-sagittarius": {
+      "score": 5,
+      "zh": { "title": "光芒万丈", "description": "火象星座的璀璨组合。狮子座的光芒与射手座的热情交相辉映，你们的生活充满戏剧性和浪漫。" },
+      "en": { "title": "Radiant Duo", "description": "A brilliant fire sign combination. Leo's radiance and Sagittarius's enthusiasm illuminate each other, filling life with drama and romance." }
+    },
+    "gemini-libra": {
+      "score": 5,
+      "zh": { "title": "默契十足", "description": "风象星座的绝妙组合。你们的对话像一场优雅的舞蹈，在社交和艺术方面品味相投，关系轻松愉快。" },
+      "en": { "title": "Perfect Harmony", "description": "A wonderful air sign duo. Your conversations flow like an elegant dance, with shared tastes in socializing and art. An effortlessly delightful relationship." }
+    },
+    "pisces-scorpio": {
+      "score": 5,
+      "zh": { "title": "深海之恋", "description": "两个水象星座的神秘结合。你们的感情如大海般深邃，直觉和感受力让你们无需言语就能心意相通。" },
+      "en": { "title": "Ocean Love", "description": "A mystical union of two water signs. Your love is as deep as the ocean, and your shared intuition creates a wordless understanding." }
+    },
+    "cancer-taurus": {
+      "score": 4,
+      "zh": { "title": "温馨之家", "description": "水象与土象的温暖结合。你们都重视家庭和安全感，金牛的踏实让巨蟹感到安心，巨蟹的温柔让金牛感到幸福。" },
+      "en": { "title": "Warm Home", "description": "A warm water-earth union. Both value family and security. Taurus's groundedness reassures Cancer, while Cancer's tenderness makes Taurus feel loved." }
+    },
+    "cancer-virgo": {
+      "score": 4,
+      "zh": { "title": "贴心关怀", "description": "水象与土象的温和搭配。你们都善于照顾人，细腻而体贴，在日常生活中能给对方最需要的关爱。" },
+      "en": { "title": "Tender Care", "description": "A gentle water-earth pairing. Both naturally caring, thoughtful, and attentive, providing each other with exactly the love needed in daily life." }
+    },
+    "capricorn-scorpio": {
+      "score": 4,
+      "zh": { "title": "强强联合", "description": "土象与水象的力量型组合。你们都有极强的意志力和目标感，共同努力能成就非凡的事业和感情。" },
+      "en": { "title": "Power Couple", "description": "A formidable earth-water combination. Both possess iron willpower and drive. Working together, you can achieve extraordinary things in life and love." }
+    },
+    "aries-gemini": {
+      "score": 4,
+      "zh": { "title": "活力搭档", "description": "火象与风象的活泼组合。你们都精力充沛、热爱新鲜事物，相处时充满欢笑和刺激。" },
+      "en": { "title": "Dynamic Duo", "description": "A lively fire-air pairing. Both energetic and novelty-seeking, your time together is filled with laughter and excitement." }
+    },
+    "aquarius-aries": {
+      "score": 4,
+      "zh": { "title": "先锋组合", "description": "两个都不按常理出牌的星座。你们的关系充满创新和惊喜，彼此尊重对方的独立性。" },
+      "en": { "title": "Pioneer Pair", "description": "Two signs that play by their own rules. Your relationship is full of innovation and surprises, with mutual respect for independence." }
+    },
+    "leo-libra": {
+      "score": 4,
+      "zh": { "title": "华丽之恋", "description": "火象与风象的优雅组合。狮子的热情与天秤的魅力交融，你们是社交场上最耀眼的一对。" },
+      "en": { "title": "Glamorous Love", "description": "An elegant fire-air combination. Leo's passion blends with Libra's charm, making you the most dazzling couple in any social setting." }
+    },
+    "aries-libra": {
+      "score": 3,
+      "zh": { "title": "对立吸引", "description": "对宫星座的经典组合。你们互为镜像，差异带来吸引也带来挑战。学会欣赏彼此的不同是关键。" },
+      "en": { "title": "Opposites Attract", "description": "A classic opposing sign pairing. You mirror each other — differences create attraction but also challenges. Learning to appreciate your contrasts is key." }
+    },
+    "gemini-sagittarius": {
+      "score": 3,
+      "zh": { "title": "天涯旅伴", "description": "对宫星座的互补之旅。你们都热爱探索，只是方式不同——一个用头脑，一个用行动。" },
+      "en": { "title": "Fellow Travelers", "description": "An opposing sign journey of complementarity. Both love exploring, just differently — one through the mind, the other through action." }
+    },
+    "cancer-capricorn": {
+      "score": 3,
+      "zh": { "title": "互补成长", "description": "对宫星座的平衡之道。巨蟹带来情感的温暖，摩羯带来物质的安全，若能互相理解便是绝配。" },
+      "en": { "title": "Complementary Growth", "description": "An opposing sign balance. Cancer brings emotional warmth, Capricorn brings material security. If you understand each other, it's a perfect match." }
+    },
+    "leo-aquarius": {
+      "score": 3,
+      "zh": { "title": "矛盾之美", "description": "对宫星座的碰撞。狮子追求个人光芒，水瓶关注群体利益，观点不同但能互相学习成长。" },
+      "en": { "title": "Beautiful Contradiction", "description": "Opposing signs collide. Leo seeks personal glory while Aquarius focuses on collective good. Different viewpoints, but mutual growth is possible." }
+    },
+    "pisces-virgo": {
+      "score": 3,
+      "zh": { "title": "梦与现实", "description": "对宫星座的交融。双鱼的浪漫与处女的务实看似矛盾，实际上可以完美互补，共同创造美好生活。" },
+      "en": { "title": "Dreams & Reality", "description": "Opposing signs merging. Pisces's romance and Virgo's practicality seem contradictory but can complement perfectly, creating a beautiful life together." }
+    },
+    "scorpio-taurus": {
+      "score": 3,
+      "zh": { "title": "深度纠缠", "description": "对宫星座的浓烈关系。你们都极其执着和忠诚，感情强烈而深刻，但都很固执，需要学会妥协。" },
+      "en": { "title": "Deep Entanglement", "description": "An intense opposing sign relationship. Both incredibly devoted and loyal with strong, deep feelings, but stubbornness requires learning to compromise." }
+    },
+    "leo-gemini": {
+      "score": 4,
+      "zh": { "title": "欢乐组合", "description": "火象与风象的快乐搭配。双子的幽默让狮子开心，狮子的慷慨让双子感动，你们在一起总是笑声不断。" },
+      "en": { "title": "Joyful Pair", "description": "A happy fire-air match. Gemini's humor delights Leo, Leo's generosity moves Gemini — together, laughter never stops." }
+    },
+    "capricorn-pisces": {
+      "score": 4,
+      "zh": { "title": "梦想实践者", "description": "土象与水象的互补搭配。摩羯帮双鱼把梦想变成现实，双鱼为摩羯的生活增添柔情和诗意。" },
+      "en": { "title": "Dream Builders", "description": "A complementary earth-water match. Capricorn helps Pisces turn dreams into reality, while Pisces adds tenderness and poetry to Capricorn's life." }
+    },
+    "pisces-taurus": {
+      "score": 4,
+      "zh": { "title": "浪漫田园", "description": "水象与土象的诗意结合。你们都欣赏生活中的美好事物，金牛的稳定给了双鱼安全感，双鱼的浪漫丰富了金牛的世界。" },
+      "en": { "title": "Romantic Pastoral", "description": "A poetic water-earth union. Both appreciate beauty in life. Taurus's stability grounds Pisces, while Pisces's romance enriches Taurus's world." }
+    },
+    "scorpio-virgo": {
+      "score": 4,
+      "zh": { "title": "深思熟虑", "description": "水象与土象的沉稳组合。你们都善于观察和分析，彼此欣赏对方的深度和认真态度。" },
+      "en": { "title": "Thoughtful Bond", "description": "A steady water-earth pairing. Both observant and analytical, you appreciate each other's depth and serious approach to life." }
+    },
+    "aries-aquarius": {
+      "score": 4,
+      "zh": { "title": "创意火花", "description": "火象与风象的创新搭配。你们都不墨守成规，一起做事总能碰撞出意想不到的创意。" },
+      "en": { "title": "Creative Sparks", "description": "An innovative fire-air match. Neither follows convention, and working together always produces unexpected creative breakthroughs." }
+    },
+    "libra-sagittarius": {
+      "score": 4,
+      "zh": { "title": "优雅冒险", "description": "风象与火象的愉快组合。天秤的优雅与射手的奔放相辅相成，你们的约会总是充满惊喜。" },
+      "en": { "title": "Elegant Adventure", "description": "A delightful air-fire pairing. Libra's elegance and Sagittarius's exuberance complement each other, making every date full of surprises." }
+    },
+    "aries-cancer": {
+      "score": 2,
+      "zh": { "title": "水火考验", "description": "火象与水象的碰撞。白羊的直率可能伤害巨蟹的敏感，巨蟹的情绪化可能让白羊感到束缚。需要大量的耐心和理解。" },
+      "en": { "title": "Fire & Water Test", "description": "Fire meets water. Aries's directness may hurt Cancer's sensitivity, and Cancer's moodiness may feel restricting to Aries. Requires great patience and understanding." }
+    },
+    "aries-capricorn": {
+      "score": 2,
+      "zh": { "title": "步调不同", "description": "白羊的冲劲与摩羯的沉稳节奏不太一致。一个要快，一个要稳，需要找到平衡点才能和谐。" },
+      "en": { "title": "Different Rhythms", "description": "Aries's rush and Capricorn's steady pace don't always align. One wants speed, the other stability — finding balance is essential for harmony." }
+    },
+    "aquarius-taurus": {
+      "score": 2,
+      "zh": { "title": "观念碰撞", "description": "水瓶的前卫与金牛的传统形成鲜明对比。一个追求变化，一个渴望稳定，需要极大的包容性。" },
+      "en": { "title": "Clashing Values", "description": "Aquarius's progressiveness contrasts sharply with Taurus's tradition. One seeks change, the other craves stability — requires enormous tolerance." }
+    },
+    "aquarius-scorpio": {
+      "score": 2,
+      "zh": { "title": "冰与火", "description": "水瓶的理性与天蝎的感性难以调和。天蝎的深沉让水瓶感到压力，水瓶的疏离让天蝎感到不安。" },
+      "en": { "title": "Ice & Fire", "description": "Aquarius's rationality and Scorpio's intensity are hard to reconcile. Scorpio's depth pressures Aquarius, while Aquarius's detachment unsettles Scorpio." }
+    },
+    "cancer-libra": {
+      "score": 2,
+      "zh": { "title": "温柔拉锯", "description": "两个都很温和的星座，但需求不同。巨蟹需要深度的情感连接，天秤追求社交和平衡，容易产生误解。" },
+      "en": { "title": "Gentle Tug-of-War", "description": "Two gentle signs with different needs. Cancer craves deep emotional connection while Libra seeks social balance — misunderstandings arise easily." }
+    },
+    "gemini-pisces": {
+      "score": 2,
+      "zh": { "title": "雾里看花", "description": "都是变动星座，但方式完全不同。双子靠理性分析，双鱼靠感觉直觉，沟通时常常不在一个频率。" },
+      "en": { "title": "Foggy View", "description": "Both mutable signs but with entirely different approaches. Gemini relies on logic, Pisces on intuition — you're often on different wavelengths." }
+    },
+    "gemini-virgo": {
+      "score": 2,
+      "zh": { "title": "水星兄弟", "description": "同为水星守护，但表达方式截然不同。双子的随性让处女焦虑，处女的挑剔让双子窒息。" },
+      "en": { "title": "Mercury Siblings", "description": "Both ruled by Mercury but with vastly different expressions. Gemini's casualness makes Virgo anxious, while Virgo's perfectionism suffocates Gemini." }
+    },
+    "leo-scorpio": {
+      "score": 2,
+      "zh": { "title": "王者之争", "description": "两个都有极强控制欲的星座。你们都骄傲而执着，在权力和注意力上容易产生竞争，但若能互相尊重则非常强大。" },
+      "en": { "title": "Battle of Wills", "description": "Two signs with powerful controlling tendencies. Both proud and determined, competition for power and attention is likely, but mutual respect creates an unbeatable team." }
+    },
+    "leo-taurus": {
+      "score": 2,
+      "zh": { "title": "固执对决", "description": "两个固定星座的较量。你们都不愿意妥协，在生活方式和价值观上可能产生摩擦。" },
+      "en": { "title": "Stubborn Standoff", "description": "Two fixed signs face off. Neither willing to compromise, friction may arise over lifestyle choices and values." }
+    },
+    "pisces-sagittarius": {
+      "score": 2,
+      "zh": { "title": "梦与远方", "description": "都是理想主义者，但方向不同。射手追求外在的冒险，双鱼沉浸于内在的幻想，容易彼此失望。" },
+      "en": { "title": "Dreams & Horizons", "description": "Both idealists but in different directions. Sagittarius seeks outer adventure while Pisces dives into inner fantasy — mutual disappointment is common." }
+    },
+    "capricorn-libra": {
+      "score": 2,
+      "zh": { "title": "现实与理想", "description": "摩羯的严肃务实与天秤的优雅浪漫不太合拍。一个注重结果，一个注重过程，需要调和分歧。" },
+      "en": { "title": "Realism vs Idealism", "description": "Capricorn's serious pragmatism and Libra's elegant romance don't always gel. One focuses on results, the other on the journey — bridging the gap is key." }
+    },
+    "virgo-sagittarius": {
+      "score": 2,
+      "zh": { "title": "细节与宏观", "description": "处女座的细致与射手座的粗犷形成对比。一个关注细节，一个着眼全局，需要互相欣赏对方的优点。" },
+      "en": { "title": "Detail vs Big Picture", "description": "Virgo's meticulousness contrasts with Sagittarius's boldness. One focuses on details, the other on the big picture — appreciating each other's strengths is essential." }
+    },
+    "aries-pisces": {
+      "score": 3,
+      "zh": { "title": "勇者与梦者", "description": "白羊的果敢与双鱼的温柔形成有趣的组合。若白羊能放慢脚步，双鱼能更坚强，便能互相成就。" },
+      "en": { "title": "Warrior & Dreamer", "description": "An intriguing combo of Aries's boldness and Pisces's gentleness. If Aries slows down and Pisces toughens up, you can truly empower each other." }
+    },
+    "aries-virgo": {
+      "score": 2,
+      "zh": { "title": "快与慢", "description": "白羊的急性子与处女的慢工出细活经常冲突。白羊觉得处女太磨蹭，处女觉得白羊太粗糙。" },
+      "en": { "title": "Fast & Slow", "description": "Aries's impatience and Virgo's meticulous pace often clash. Aries finds Virgo too slow, Virgo finds Aries too rough." }
+    },
+    "aries-scorpio": {
+      "score": 3,
+      "zh": { "title": "火星战士", "description": "都与火星有关的两个星座，充满激情和力量。关系强烈而激烈，既能是最好的盟友也能是最强的对手。" },
+      "en": { "title": "Mars Warriors", "description": "Two Mars-connected signs full of passion and power. The relationship is intense — you can be the best allies or the fiercest rivals." }
+    },
+    "aries-taurus": {
+      "score": 3,
+      "zh": { "title": "开拓与守护", "description": "白羊的冒险精神与金牛的稳健形成互补。一个负责开拓，一个负责守护成果，配合得当则非常高效。" },
+      "en": { "title": "Pioneer & Guardian", "description": "Aries's adventurousness and Taurus's steadiness complement each other. One pioneers, the other guards the gains — great efficiency when aligned." }
+    },
+    "aquarius-cancer": {
+      "score": 2,
+      "zh": { "title": "自由与归属", "description": "水瓶追求自由与独立，巨蟹渴望归属与陪伴。这两种需求经常产生矛盾，需要极大的理解和妥协。" },
+      "en": { "title": "Freedom vs Belonging", "description": "Aquarius seeks freedom and independence, Cancer craves belonging and companionship. These conflicting needs require tremendous understanding and compromise." }
+    },
+    "aquarius-capricorn": {
+      "score": 3,
+      "zh": { "title": "传统与革新", "description": "都由土星关联的星座。摩羯尊重传统，水瓶追求革新，若能找到平衡点便能开创全新的可能。" },
+      "en": { "title": "Tradition & Innovation", "description": "Both Saturn-connected signs. Capricorn respects tradition, Aquarius pursues innovation. Finding balance opens entirely new possibilities." }
+    },
+    "aquarius-pisces": {
+      "score": 3,
+      "zh": { "title": "理想国", "description": "都是关注人类集体的星座。水瓶用理性改变世界，双鱼用感性温暖世界，目标相同但路径不同。" },
+      "en": { "title": "Utopia", "description": "Both concerned with the collective. Aquarius changes the world through logic, Pisces warms it through emotion — same goal, different paths." }
+    },
+    "aquarius-virgo": {
+      "score": 2,
+      "zh": { "title": "思维碰撞", "description": "两个都很聪明但思考方式不同。水瓶是宏观创新者，处女是微观完美主义者，容易互相看不惯。" },
+      "en": { "title": "Mental Clash", "description": "Both brilliant but think differently. Aquarius innovates big-picture, Virgo perfects details — mutual frustration is common." }
+    },
+    "cancer-gemini": {
+      "score": 2,
+      "zh": { "title": "心与脑", "description": "巨蟹用心感受世界，双子用脑分析世界。情感型与理智型的碰撞需要更多的耐心和沟通。" },
+      "en": { "title": "Heart & Mind", "description": "Cancer feels the world through emotions, Gemini analyzes it through intellect. This emotional-rational collision needs extra patience and communication." }
+    },
+    "cancer-leo": {
+      "score": 3,
+      "zh": { "title": "月光与阳光", "description": "巨蟹的温柔如月光，狮子的热情如阳光。若狮子能给巨蟹安全感，巨蟹能给狮子赞美，关系可以很美。" },
+      "en": { "title": "Moonlight & Sunshine", "description": "Cancer's tenderness like moonlight, Leo's passion like sunshine. If Leo provides security and Cancer offers admiration, the relationship can be beautiful." }
+    },
+    "cancer-sagittarius": {
+      "score": 2,
+      "zh": { "title": "家与远方", "description": "巨蟹渴望温暖的家，射手向往远方的路。一个想安定，一个想自由，需要找到家与远方的平衡。" },
+      "en": { "title": "Home & Horizon", "description": "Cancer yearns for a warm home, Sagittarius for the open road. One wants to settle, the other to roam — finding balance between home and horizon is crucial." }
+    },
+    "capricorn-gemini": {
+      "score": 2,
+      "zh": { "title": "严肃与玩味", "description": "摩羯的严肃认真与双子的轻松幽默形成反差。摩羯觉得双子不够认真，双子觉得摩羯太无趣。" },
+      "en": { "title": "Serious & Playful", "description": "Capricorn's seriousness and Gemini's playfulness create a stark contrast. Capricorn finds Gemini flippant, Gemini finds Capricorn dull." }
+    },
+    "capricorn-leo": {
+      "score": 2,
+      "zh": { "title": "权力之争", "description": "两个都有野心和领导欲的星座。在谁主导的问题上容易产生分歧，但若目标一致则是最强的战队。" },
+      "en": { "title": "Power Struggle", "description": "Two ambitious, leadership-oriented signs. Disagreements over who leads are common, but when goals align, you're the ultimate power team." }
+    },
+    "gemini-scorpio": {
+      "score": 2,
+      "zh": { "title": "表与里", "description": "双子活在表面的热闹中，天蝎沉浸在内心的深海里。轻浮与深沉的碰撞，需要彼此走出舒适区。" },
+      "en": { "title": "Surface & Depths", "description": "Gemini thrives on the surface, Scorpio dives deep within. This clash of lightness and intensity requires both to step outside their comfort zones." }
+    },
+    "gemini-taurus": {
+      "score": 2,
+      "zh": { "title": "风与土", "description": "双子的善变与金牛的稳定形成反差。一个喜欢新鲜感，一个追求安全感，节奏上需要互相适应。" },
+      "en": { "title": "Wind & Earth", "description": "Gemini's changeability and Taurus's stability contrast sharply. One craves novelty, the other security — adjusting to each other's rhythm is key." }
+    },
+    "leo-pisces": {
+      "score": 3,
+      "zh": { "title": "王子与公主", "description": "一个是耀眼的王者，一个是梦幻的浪漫家。狮子的自信保护双鱼的脆弱，双鱼的柔情满足狮子的需要被崇拜。" },
+      "en": { "title": "King & Dreamer", "description": "One is a dazzling ruler, the other a dreamy romantic. Leo's confidence protects Pisces's vulnerability, and Pisces's adoration satisfies Leo's need to be admired." }
+    },
+    "leo-virgo": {
+      "score": 2,
+      "zh": { "title": "聚光灯与幕后", "description": "狮子爱站在舞台中央，处女喜欢在幕后默默付出。价值观和生活方式的差异需要更多理解。" },
+      "en": { "title": "Spotlight & Backstage", "description": "Leo loves center stage, Virgo prefers working quietly behind the scenes. Differences in values and lifestyle need extra understanding." }
+    },
+    "libra-pisces": {
+      "score": 3,
+      "zh": { "title": "浪漫双重奏", "description": "两个都追求美和浪漫的星座。你们的世界充满了艺术和诗意，但在面对现实问题时可能都不太擅长。" },
+      "en": { "title": "Romantic Duet", "description": "Two signs that pursue beauty and romance. Your world is full of art and poetry, but both may struggle when facing practical matters." }
+    },
+    "libra-scorpio": {
+      "score": 2,
+      "zh": { "title": "优雅与深沉", "description": "天秤的轻盈优雅与天蝎的浓烈深沉形成对比。天秤追求和谐避免冲突，天蝎偏要直面一切。" },
+      "en": { "title": "Grace & Depth", "description": "Libra's airy elegance contrasts with Scorpio's intense depth. Libra seeks harmony and avoids conflict, while Scorpio insists on confronting everything." }
+    },
+    "libra-taurus": {
+      "score": 3,
+      "zh": { "title": "金星之子", "description": "同为金星守护的星座，都热爱美好事物。你们在审美和享受生活方面很合拍，但处理方式不尽相同。" },
+      "en": { "title": "Children of Venus", "description": "Both ruled by Venus, sharing a love of beauty. You're well-matched in aesthetics and enjoying life, though your approaches may differ." }
+    },
+    "libra-virgo": {
+      "score": 3,
+      "zh": { "title": "追求完美", "description": "两个都对生活品质有高要求的星座。在美学和秩序方面能产生共鸣，但标准可能不尽相同。" },
+      "en": { "title": "Pursuit of Perfection", "description": "Two signs with high standards for life quality. You resonate on aesthetics and order, though your specific standards may differ." }
+    },
+    "scorpio-sagittarius": {
+      "score": 2,
+      "zh": { "title": "深与广", "description": "天蝎追求深度，射手追求广度。一个要深入探索，一个要纵横四海，很难在同一个节奏上。" },
+      "en": { "title": "Depth & Breadth", "description": "Scorpio pursues depth, Sagittarius seeks breadth. One wants to dig deep, the other to roam far — staying in sync is the challenge." }
+    },
+    "capricorn-aries": {
+      "score": 2,
+      "zh": { "title": "冲锋与谋略", "description": "白羊是冲锋的勇士，摩羯是运筹帷幄的将军。行事风格的差异既是互补也是摩擦的来源。" },
+      "en": { "title": "Charge & Strategy", "description": "Aries charges ahead, Capricorn strategizes from behind. Different operating styles are both complementary and a source of friction." }
+    },
+    "cancer-aquarius": {
+      "score": 2,
+      "zh": { "title": "情感与理性", "description": "巨蟹以情感为导向，水瓶以理性为主导。在情感表达和生活方式上有较大差异。" },
+      "en": { "title": "Emotion & Logic", "description": "Cancer is emotionally driven, Aquarius is logically guided. Significant differences in emotional expression and lifestyle." }
+    },
+    "gemini-capricorn": {
+      "score": 2,
+      "zh": { "title": "蝴蝶与山羊", "description": "双子的灵动多变与摩羯的沉稳坚定截然不同。生活态度的差异需要双方共同努力去理解。" },
+      "en": { "title": "Butterfly & Mountain Goat", "description": "Gemini's lively changeability and Capricorn's solid determination are worlds apart. Bridging the lifestyle gap requires effort from both sides." }
+    }
+  }
+}

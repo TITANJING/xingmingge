@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "description": "十二宫位含义数据"
+  },
+  "houses": [
+    {
+      "number": 1,
+      "name": {
+        "zh": "第一宫（命宫）",
+        "en": "1st House (House of Self)"
+      },
+      "keywords": {
+        "zh": ["自我", "外貌", "个性"],
+        "en": ["Self", "Appearance", "Personality"]
+      },
+      "description": {
+        "zh": "第一宫代表个人的自我形象、外貌和个性特征。它反映了你如何向世界展现自己，以及他人对你的第一印象。这个宫位掌管个人的生命启航和自我认识。",
+        "en": "The 1st House represents your self-image, appearance, and personality traits. It reflects how you present yourself to the world and the first impressions others have of you. This house governs the beginning of life and self-awareness."
+      },
+      "rulingSign": "aries",
+      "rulingPlanet": "mars"
+    },
+    {
+      "number": 2,
+      "name": {
+        "zh": "第二宫（财帛宫）",
+        "en": "2nd House (House of Money)"
+      },
+      "keywords": {
+        "zh": ["财富", "物质", "价值观"],
+        "en": ["Money", "Material possessions", "Values"]
+      },
+      "description": {
+        "zh": "第二宫掌管个人的财务状况、物质财富和个人资源。它还反映了你对金钱和物质的态度，以及你认为什么具有价值。这个宫位影响你的经济安全感和自我价值。",
+        "en": "The 2nd House governs your finances, material possessions, and personal resources. It reflects your attitudes toward money and material goods, as well as what you value. This house affects your sense of economic security and self-worth."
+      },
+      "rulingSign": "taurus",
+      "rulingPlanet": "venus"
+    },
+    {
+      "number": 3,
+      "name": {
+        "zh": "第三宫（兄弟宫）",
+        "en": "3rd House (House of Communication)"
+      },
+      "keywords": {
+        "zh": ["沟通", "学习", "兄弟姐妹"],
+        "en": ["Communication", "Learning", "Siblings"]
+      },
+      "description": {
+        "zh": "第三宫掌管沟通、思考和学习。它影响你的表达能力、写作和说话风格，以及与兄弟姐妹和近邻的关系。这个宫位还反映了你的思维方式和求知欲。",
+        "en": "The 3rd House governs communication, thinking, and learning. It influences your ability to express yourself, your writing and speaking style, and your relationships with siblings and neighbors. This house reflects your thinking patterns and curiosity."
+      },
+      "rulingSign": "gemini",
+      "rulingPlanet": "mercury"
+    },
+    {
+      "number": 4,
+      "name": {
+        "zh": "第四宫（田宅宫）",
+        "en": "4th House (House of Home)"
+      },
+      "keywords": {
+        "zh": ["家庭", "根基", "父亲"],
+        "en": ["Home", "Family roots", "Father"]
+      },
+      "description": {
+        "zh": "第四宫代表家庭、家族根源和内心世界。它掌管你的家庭环境、与父亲的关系以及你的情感基础。这个宫位反映了你对安全感和归属感的需求。",
+        "en": "The 4th House represents home, family origins, and your inner world. It governs your domestic environment, your relationship with your father, and your emotional foundation. This house reflects your need for security and belonging."
+      },
+      "rulingSign": "cancer",
+      "rulingPlanet": "moon"
+    },
+    {
+      "number": 5,
+      "name": {
+        "zh": "第五宫（子女宫）",
+        "en": "5th House (House of Pleasure)"
+      },
+      "keywords": {
+        "zh": ["创意", "爱情", "娱乐"],
+        "en": ["Creativity", "Romance", "Entertainment"]
+      },
+      "description": {
+        "zh": "第五宫掌管创意表达、浪漫爱情和娱乐活动。它反映了你的创造力、艺术才华和对快乐的追求。这个宫位还与子女、赌博和投机活动有关。",
+        "en": "The 5th House governs creative expression, romantic love, and entertainment. It reflects your creativity, artistic talents, and pursuit of pleasure. This house is also associated with children, gambling, and speculative activities."
+      },
+      "rulingSign": "leo",
+      "rulingPlanet": "sun"
+    },
+    {
+      "number": 6,
+      "name": {
+        "zh": "第六宫（奴仆宫）",
+        "en": "6th House (House of Health)"
+      },
+      "keywords": {
+        "zh": ["健康", "工作", "服务"],
+        "en": ["Health", "Work", "Service"]
+      },
+      "description": {
+        "zh": "第六宫掌管健康、工作和日常服务。它反映了你的身体状况、工作能力和对细节的关注。这个宫位还涉及你与同事的关系以及你的日常习惯。",
+        "en": "The 6th House governs health, work, and daily service. It reflects your physical well-being, work capacity, and attention to detail. This house also involves your relationships with coworkers and your daily habits."
+      },
+      "rulingSign": "virgo",
+      "rulingPlanet": "mercury"
+    },
+    {
+      "number": 7,
+      "name": {
+        "zh": "第七宫（夫妻宫）",
+        "en": "7th House (House of Partnership)"
+      },
+      "keywords": {
+        "zh": ["婚姻", "伴侣", "契约"],
+        "en": ["Marriage", "Partners", "Contracts"]
+      },
+      "description": {
+        "zh": "第七宫代表婚姻、伴侣关系和人际契约。它掌管你的配偶或主要伴侣，以及你在亲密关系中的表现。这个宫位反映了你对平衡和合作的追求。",
+        "en": "The 7th House represents marriage, partnerships, and interpersonal contracts. It governs your spouse or significant partner, and how you behave in intimate relationships. This house reflects your pursuit of balance and cooperation."
+      },
+      "rulingSign": "libra",
+      "rulingPlanet": "venus"
+    },
+    {
+      "number": 8,
+      "name": {
+        "zh": "第八宫（疾厄宫）",
+        "en": "8th House (House of Transformation)"
+      },
+      "keywords": {
+        "zh": ["转变", "共享资源", "深度"],
+        "en": ["Transformation", "Shared resources", "Depth"]
+      },
+      "description": {
+        "zh": "第八宫掌管深层转变、共享资源和心理深度。它涉及遗产、继承和他人的金钱，以及性和死亡等深层话题。这个宫位推动你的内在成长和重生。",
+        "en": "The 8th House governs deep transformation, shared resources, and psychological depth. It involves inheritances, other people's money, and deep topics like sex and death. This house drives your inner growth and rebirth."
+      },
+      "rulingSign": "scorpio",
+      "rulingPlanet": "pluto"
+    },
+    {
+      "number": 9,
+      "name": {
+        "zh": "第九宫（迁移宫）",
+        "en": "9th House (House of Philosophy)"
+      },
+      "keywords": {
+        "zh": ["哲学", "旅行", "高等学习"],
+        "en": ["Philosophy", "Travel", "Higher learning"]
+      },
+      "description": {
+        "zh": "第九宫掌管哲学思想、宗教信仰和高等教育。它反映了你的世界观、追求知识的热情以及对远方的向往。这个宫位鼓励你拓展视野和精神成长。",
+        "en": "The 9th House governs philosophy, religious beliefs, and higher education. It reflects your worldview, passion for knowledge, and desire for distant places. This house encourages you to expand your horizons and spiritual growth."
+      },
+      "rulingSign": "sagittarius",
+      "rulingPlanet": "jupiter"
+    },
+    {
+      "number": 10,
+      "name": {
+        "zh": "第十宫（官禄宫）",
+        "en": "10th House (House of Career)"
+      },
+      "keywords": {
+        "zh": ["事业", "社会地位", "成就"],
+        "en": ["Career", "Social status", "Achievement"]
+      },
+      "description": {
+        "zh": "第十宫代表事业、公众形象和社会地位。它掌管你的职业成就、名誉和与权威人物（如上司或母亲）的关系。这个宫位反映了你对成功的定义和人生目标。",
+        "en": "The 10th House represents career, public image, and social status. It governs your professional achievements, reputation, and relationships with authority figures. This house reflects your definition of success and life goals."
+      },
+      "rulingSign": "capricorn",
+      "rulingPlanet": "saturn"
+    },
+    {
+      "number": 11,
+      "name": {
+        "zh": "第十一宫（福德宫）",
+        "en": "11th House (House of Community)"
+      },
+      "keywords": {
+        "zh": ["友谊", "群体", "希望"],
+        "en": ["Friendship", "Groups", "Hopes and wishes"]
+      },
+      "description": {
+        "zh": "第十一宫掌管友谊、社群和团体活动。它反映了你的社交圈子、对理想的追求和对未来的希望。这个宫位强调集体合作和共同目标的重要性。",
+        "en": "The 11th House governs friendship, community, and group activities. It reflects your social circles, your pursuit of ideals, and your hopes for the future. This house emphasizes the importance of collective cooperation and shared goals."
+      },
+      "rulingSign": "aquarius",
+      "rulingPlanet": "uranus"
+    },
+    {
+      "number": 12,
+      "name": {
+        "zh": "第十二宫（玄秘宫）",
+        "en": "12th House (House of Subconscious)"
+      },
+      "keywords": {
+        "zh": ["潜意识", "隐藏", "精神"],
+        "en": ["Subconscious", "Hidden", "Spirituality"]
+      },
+      "description": {
+        "zh": "第十二宫掌管潜意识、隐秘事务和精神领域。它反映了你的梦想、秘密和无意识的行为模式。这个宫位鼓励你探索内心世界，寻求精神觉醒和解脱。",
+        "en": "The 12th House governs the subconscious, hidden affairs, and spirituality. It reflects your dreams, secrets, and unconscious behavioral patterns. This house encourages you to explore your inner world and seek spiritual awakening."
+      },
+      "rulingSign": "pisces",
+      "rulingPlanet": "neptune"
+    }
+  ]
+}

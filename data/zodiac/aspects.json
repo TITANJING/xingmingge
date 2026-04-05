@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "description": "行星相位含义数据"
+  },
+  "aspects": [
+    {
+      "id": "conjunction",
+      "name": {
+        "zh": "合相",
+        "en": "Conjunction"
+      },
+      "angle": 0,
+      "orb": 8,
+      "symbol": "☌",
+      "nature": "neutral",
+      "description": {
+        "zh": "两颗行星合相表示它们的能量完全融合，产生强大而集中的影响力。这种相位可以是非常积极的，如果两颗行星性质相容；或者可能导致过度和不平衡，如果它们的能量相冲突。",
+        "en": "A conjunction occurs when two planets merge their energies completely, creating a powerful concentrated influence. This aspect can be very positive if the planets are compatible, or may cause excess and imbalance if their energies conflict."
+      }
+    },
+    {
+      "id": "sextile",
+      "name": {
+        "zh": "六分相",
+        "en": "Sextile"
+      },
+      "angle": 60,
+      "orb": 6,
+      "symbol": "⚺",
+      "nature": "harmonious",
+      "description": {
+        "zh": "六分相是最和谐的相位之一，预示着两颗行星之间的轻松合作和流畅互动。这种相位带来机遇、创意灵感和自然的天赋，帮助人们轻松地表达这两颗行星的潜力。",
+        "en": "The sextile is one of the most harmonious aspects, indicating smooth cooperation and easy interaction between two planets. This aspect brings opportunities, creative inspiration, and natural talents, allowing people to easily express the potential of both planets."
+      }
+    },
+    {
+      "id": "square",
+      "name": {
+        "zh": "四分相",
+        "en": "Square"
+      },
+      "angle": 90,
+      "orb": 8,
+      "symbol": "☐",
+      "nature": "challenging",
+      "description": {
+        "zh": "四分相代表两颗行星之间的紧张和冲突，产生内在的张力和不适感。然而，这种挑战性的相位也是成长的驱动力，促使人们克服障碍、发展韧性和找到解决问题的创新方法。",
+        "en": "The square represents tension and conflict between two planets, creating inner friction and discomfort. However, this challenging aspect also drives growth, pushing people to overcome obstacles, develop resilience, and find innovative solutions."
+      }
+    },
+    {
+      "id": "trine",
+      "name": {
+        "zh": "三分相",
+        "en": "Trine"
+      },
+      "angle": 120,
+      "orb": 8,
+      "symbol": "△",
+      "nature": "harmonious",
+      "description": {
+        "zh": "三分相是最吉祥的相位，象征两颗行星之间的完美和谐与自然流畅。这种相位赋予人们天生的才能、幸运和内在的平衡感，使这两颗行星的优良特质自然而然地表现出来。",
+        "en": "The trine is the most fortunate aspect, symbolizing perfect harmony and natural flow between two planets. This aspect grants innate talents, luck, and inner balance, allowing the positive qualities of both planets to express themselves naturally."
+      }
+    },
+    {
+      "id": "opposition",
+      "name": {
+        "zh": "对分相",
+        "en": "Opposition"
+      },
+      "angle": 180,
+      "orb": 8,
+      "symbol": "☍",
+      "nature": "challenging",
+      "description": {
+        "zh": "对分相表示两颗行星处于完全相对的位置，代表对立、意识和潜在的冲突。虽然这种相位带来挑战，但它也是获得平衡和整合的机会，通过认识和接纳对立面来实现个人成长。",
+        "en": "Opposition indicates two planets in completely opposite positions, representing polarity, awareness, and potential conflict. Though this aspect brings challenges, it also offers opportunities for balance and integration through recognizing and accepting opposing forces."
+      }
+    },
+    {
+      "id": "quincunx",
+      "name": {
+        "zh": "梅花相",
+        "en": "Quincunx"
+      },
+      "angle": 150,
+      "orb": 3,
+      "symbol": "⚻",
+      "nature": "challenging",
+      "description": {
+        "zh": "梅花相表示两颗行星之间存在微妙的不协调和不适配，需要调整和适应。这种相位常常带来难以名状的不安感，但通过耐心的自我觉察和灵活调整，人们可以找到整合这两种能量的方法。",
+        "en": "The quincunx indicates subtle discord and misalignment between two planets, requiring adjustment and adaptation. This aspect often brings vague unease, but through patient self-awareness and flexible adaptation, one can find ways to integrate these two energies."
+      }
+    },
+    {
+      "id": "semi-sextile",
+      "name": {
+        "zh": "十二分相",
+        "en": "Semi-sextile"
+      },
+      "angle": 30,
+      "orb": 2,
+      "symbol": "⚼",
+      "nature": "challenging",
+      "description": {
+        "zh": "十二分相是一种微妙的张力相位，两颗行星之间存在轻微的不和谐。虽然它的影响力不如主要相位强大，但它指示着需要在这两种能量之间进行微妙的协调和平衡工作。",
+        "en": "The semi-sextile is a subtle tension aspect with minor discord between two planets. Though less powerful than major aspects, it indicates the need for subtle coordination and balance work between these two energies."
+      }
+    }
+  ]
+}

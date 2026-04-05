@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星命阁 · 探索你的命运</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ Reset ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Serif SC',serif;
+  color:#e0d5ff;
+  min-height:100vh;
+  background:#08081a;
+  overflow-x:hidden;
+}
+
+/* ═══ Starfield Canvas ═══ */
+#starfield{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ═══ Gradient Overlay ═══ */
+.bg-gradient{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(88,40,180,.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(30,60,160,.12) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 50% 50%, rgba(15,15,50,.6) 0%, transparent 80%);
+}
+
+/* ═══ Navigation ═══ */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  padding:0.8rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,8,26,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(120,80,200,.15);
+  transition:background .3s;
+}
+.nav-logo{
+  font-family:'Cinzel',serif;
+  font-size:1.3rem;font-weight:700;
+  background:linear-gradient(135deg,#c8a0ff,#7b8fff,#c8a0ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:.08em;
+  cursor:pointer;
+}
+.nav-links{display:flex;gap:1.8rem;align-items:center}
+.nav-links a{
+  color:#9b8fbb;text-decoration:none;font-size:.85rem;
+  letter-spacing:.05em;transition:color .2s;
+}
+.nav-links a:hover{color:#c8a0ff}
+.nav-btn{
+  padding:.45rem 1.2rem;
+  border:1px solid rgba(120,80,200,.4);
+  border-radius:20px;
+  background:rgba(120,80,200,.1);
+  color:#c8a0ff;font-size:.8rem;
+  cursor:pointer;transition:all .2s;
+  font-family:inherit;letter-spacing:.04em;
+}
+.nav-btn:hover{background:rgba(120,80,200,.25);border-color:rgba(120,80,200,.6)}
+
+/* ═══ Hero Section ═══ */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:2rem;
+}
+.hero-badge{
+  display:inline-block;
+  font-size:.7rem;letter-spacing:.2em;color:#8b7fbb;
+  border:1px solid rgba(120,80,200,.25);border-radius:20px;
+  padding:.3rem 1rem;margin-bottom:1.6rem;
+  background:rgba(120,80,200,.06);
+}
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.4rem,6vw,4.2rem);
+  font-weight:700;
+  background:linear-gradient(135deg,#e0c8ff 0%,#8ba0ff 40%,#c890ff 80%,#ffd0e0 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1.2;margin-bottom:.8rem;
+}
+.hero-sub{
+  font-size:clamp(.9rem,2vw,1.1rem);
+  color:#9b8fbb;line-height:1.8;
+  max-width:520px;margin:0 auto 2.4rem;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn-primary{
+  padding:.7rem 2rem;
+  background:linear-gradient(135deg,#6b3fa0,#4b60c8);
+  color:#fff;border:none;border-radius:24px;
+  font-size:.9rem;font-family:inherit;
+  cursor:pointer;transition:all .3s;
+  box-shadow:0 4px 20px rgba(100,60,180,.3);
+  letter-spacing:.06em;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(100,60,180,.45)}
+.btn-outline{
+  padding:.7rem 2rem;
+  background:transparent;
+  border:1px solid rgba(120,80,200,.4);
+  color:#c8a0ff;border-radius:24px;
+  font-size:.9rem;font-family:inherit;
+  cursor:pointer;transition:all .3s;
+  letter-spacing:.06em;
+}
+.btn-outline:hover{background:rgba(120,80,200,.1);border-color:rgba(120,80,200,.6)}
+
+/* ═══ Section Base ═══ */
+section{position:relative;z-index:1;padding:5rem 2rem}
+.section-title{
+  text-align:center;
+  font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:700;
+  margin-bottom:.6rem;
+  background:linear-gradient(135deg,#d0b8ff,#8ba0ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.section-sub{
+  text-align:center;color:#7b6f9b;
+  font-size:.85rem;margin-bottom:3rem;
+  letter-spacing:.04em;
+}
+
+/* ═══ Module Cards ═══ */
+#modules{padding-top:3rem}
+.module-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.6rem;max-width:960px;margin:0 auto;
+}
+.module-card{
+  position:relative;
+  background:rgba(18,14,36,.7);
+  border:1px solid rgba(120,80,200,.15);
+  border-radius:16px;
+  padding:2.2rem 1.8rem 1.8rem;
+  cursor:pointer;
+  transition:all .35s ease;
+  overflow:hidden;
+  text-decoration:none;color:inherit;
+  display:block;
+}
+.module-card::before{
+  content:'';position:absolute;inset:0;
+  border-radius:16px;
+  background:radial-gradient(ellipse at 50% 0%, var(--accent,.15) 0%, transparent 70%);
+  opacity:0;transition:opacity .35s;
+}
+.module-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(120,80,200,.35);
+  box-shadow:0 12px 40px rgba(80,40,160,.2);
+}
+.module-card:hover::before{opacity:1}
+.module-icon{
+  font-size:2.4rem;margin-bottom:1rem;
+  display:block;position:relative;z-index:1;
+}
+.module-name{
+  font-size:1.15rem;font-weight:700;
+  margin-bottom:.4rem;color:#e0d5ff;
+  position:relative;z-index:1;
+}
+.module-en{
+  font-family:'Cinzel',serif;
+  font-size:.7rem;color:#6b5f8a;
+  letter-spacing:.12em;margin-bottom:.8rem;
+  position:relative;z-index:1;
+}
+.module-desc{
+  font-size:.82rem;color:#9b8fbb;
+  line-height:1.7;position:relative;z-index:1;
+}
+.module-arrow{
+  position:absolute;bottom:1.4rem;right:1.4rem;
+  font-size:1.2rem;color:#6b5f8a;
+  transition:transform .3s,color .3s;z-index:1;
+}
+.module-card:hover .module-arrow{transform:translateX(4px);color:#c8a0ff}
+
+.card-zodiac{--accent:rgba(100,80,220,.15)}
+.card-tarot{--accent:rgba(160,60,180,.15)}
+.card-bazi{--accent:rgba(200,130,60,.15)}
+
+/* ═══ Daily Horoscope ═══ */
+#daily{background:rgba(12,10,28,.4);border-radius:0;margin:0 -2rem;padding:5rem 2rem}
+.zodiac-selector{
+  display:flex;flex-wrap:wrap;gap:.6rem;
+  justify-content:center;max-width:800px;margin:0 auto 2rem;
+}
+.zodiac-btn{
+  width:56px;height:56px;
+  border-radius:50%;border:1px solid rgba(120,80,200,.2);
+  background:rgba(18,14,36,.6);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .25s;
+  font-family:inherit;color:#9b8fbb;
+}
+.zodiac-btn span:first-child{font-size:1.2rem;line-height:1}
+.zodiac-btn span:last-child{font-size:.5rem;margin-top:.15rem;letter-spacing:.02em}
+.zodiac-btn:hover,.zodiac-btn.active{
+  border-color:rgba(120,80,200,.6);
+  background:rgba(120,80,200,.15);
+  color:#c8a0ff;
+  transform:scale(1.1);
+  box-shadow:0 0 16px rgba(120,80,200,.2);
+}
+
+.horoscope-result{
+  max-width:640px;margin:0 auto;
+  background:rgba(18,14,36,.5);
+  border:1px solid rgba(120,80,200,.12);
+  border-radius:16px;
+  padding:2rem;
+  min-height:200px;
+  opacity:0;transform:translateY(12px);
+  transition:all .4s ease;
+}
+.horoscope-result.show{opacity:1;transform:translateY(0)}
+.horo-header{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:1.4rem;padding-bottom:1rem;
+  border-bottom:1px solid rgba(120,80,200,.1);
+}
+.horo-sign-icon{font-size:2.2rem}
+.horo-sign-name{font-size:1.1rem;font-weight:700;color:#d0b8ff}
+.horo-date{font-size:.75rem;color:#6b5f8a;margin-top:.2rem}
+.horo-section{margin-bottom:1.2rem}
+.horo-label{
+  font-size:.75rem;color:#8b7fbb;
+  letter-spacing:.08em;margin-bottom:.5rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.horo-stars{color:#c8a060;font-size:.7rem;letter-spacing:.1em}
+.horo-text{font-size:.85rem;color:#b0a5cc;line-height:1.8}
+
+/* ═══ Footer ═══ */
+footer{
+  position:relative;z-index:1;
+  text-align:center;padding:3rem 2rem 2rem;
+  border-top:1px solid rgba(120,80,200,.1);
+  color:#5b5078;font-size:.75rem;
+}
+footer a{color:#8b7fbb;text-decoration:none}
+footer a:hover{color:#c8a0ff}
+
+/* ═══ Auth Modal ═══ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(4,4,14,.8);
+  backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.show{opacity:1;pointer-events:auto}
+.modal-box{
+  background:rgba(20,16,40,.95);
+  border:1px solid rgba(120,80,200,.2);
+  border-radius:20px;padding:2.4rem 2rem;
+  width:min(400px,90vw);
+  transform:translateY(20px) scale(.96);
+  transition:transform .3s ease;
+}
+.modal-overlay.show .modal-box{transform:translateY(0) scale(1)}
+.modal-close{
+  float:right;background:none;border:none;
+  color:#6b5f8a;font-size:1.4rem;cursor:pointer;
+  transition:color .2s;
+}
+.modal-close:hover{color:#c8a0ff}
+.modal-title{
+  font-size:1.3rem;font-weight:700;color:#d0b8ff;
+  margin-bottom:.3rem;clear:both;
+}
+.modal-sub{font-size:.8rem;color:#7b6f9b;margin-bottom:1.8rem}
+.form-group{margin-bottom:1.2rem}
+.form-group label{
+  display:block;font-size:.75rem;color:#8b7fbb;
+  letter-spacing:.06em;margin-bottom:.4rem;
+}
+.form-group input{
+  width:100%;padding:.65rem 1rem;
+  background:rgba(30,24,55,.8);
+  border:1px solid rgba(120,80,200,.2);
+  border-radius:10px;color:#e0d5ff;
+  font-size:.88rem;font-family:inherit;
+  outline:none;transition:border-color .2s;
+}
+.form-group input:focus{border-color:rgba(120,80,200,.5)}
+.form-group input::placeholder{color:#5b5078}
+.form-submit{
+  width:100%;padding:.7rem;margin-top:.6rem;
+  background:linear-gradient(135deg,#6b3fa0,#4b60c8);
+  color:#fff;border:none;border-radius:12px;
+  font-size:.9rem;font-family:inherit;
+  cursor:pointer;transition:opacity .2s;
+  letter-spacing:.06em;
+}
+.form-submit:hover{opacity:.9}
+.form-switch{
+  text-align:center;margin-top:1.2rem;
+  font-size:.8rem;color:#7b6f9b;
+}
+.form-switch a{color:#c8a0ff;cursor:pointer;text-decoration:none}
+.form-switch a:hover{text-decoration:underline}
+
+/* ═══ Tab Switcher (Auth) ═══ */
+.auth-tabs{
+  display:flex;gap:0;margin-bottom:1.8rem;
+  border-bottom:1px solid rgba(120,80,200,.15);
+}
+.auth-tab{
+  flex:1;padding:.6rem;text-align:center;
+  font-size:.85rem;color:#7b6f9b;
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;
+  font-family:inherit;
+}
+.auth-tab.active{color:#c8a0ff;border-bottom-color:#c8a0ff}
+
+/* ═══ Responsive ═══ */
+@media(max-width:640px){
+  nav{padding:.6rem 1rem}
+  .nav-links a:not(.nav-btn){display:none}
+  .hero h1{font-size:2rem}
+  .module-grid{grid-template-columns:1fr}
+  .zodiac-btn{width:46px;height:46px}
+  .zodiac-btn span:first-child{font-size:1rem}
+  section{padding:3rem 1rem}
+}
+
+/* ═══ Scroll Animation ═══ */
+.fade-up{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ═══ Starfield Background ═══ -->
+<canvas id="starfield"></canvas>
+<div class="bg-gradient"></div>
+
+<!-- ═══ Navigation ═══ -->
+<nav>
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">星命阁</div>
+  <div class="nav-links">
+    <a href="#modules">占卜服务</a>
+    <a href="#daily">每日运势</a>
+    <span id="navUserArea">
+      <button class="nav-btn" onclick="showAuth('login')">登录 / 注册</button>
+    </span>
+  </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+  <div class="hero-badge">✦ 星辰指引 · 命运低语 ✦</div>
+  <h1>星命阁</h1>
+  <p class="hero-sub">
+    东方八字与西方星座的交汇之处<br>
+    在星光中探索属于你的命运密码
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">开始占卜</button>
+    <button class="btn-outline" onclick="document.getElementById('daily').scrollIntoView({behavior:'smooth'})">今日运势</button>
+  </div>
+</section>
+
+<!-- ═══ Module Cards ═══ -->
+<section id="modules">
+  <h2 class="section-title fade-up">选择你的占卜方式</h2>
+  <p class="section-sub fade-up">三种古老的智慧，为你揭示不同维度的命运</p>
+  <div class="module-grid">
+
+    <a href="demo.html" class="module-card card-zodiac fade-up">
+      <span class="module-icon">♈</span>
+      <div class="module-name">星座占卜</div>
+      <div class="module-en">ZODIAC READING</div>
+      <p class="module-desc">基于你的出生日期，解读十二星座的性格、爱情、事业与命运走向</p>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a href="tarot-ritual.html" class="module-card card-tarot fade-up">
+      <span class="module-icon">🃏</span>
+      <div class="module-name">塔罗牌占卜</div>
+      <div class="module-en">TAROT RITUAL</div>
+      <p class="module-desc">抽取命运之牌，让古老的塔罗智慧为你指点迷津，揭示内心深处的答案</p>
+      <span class="module-arrow">→</span>
+    </a>
+
+    <a class="module-card card-bazi fade-up" style="opacity:.5;pointer-events:none">
+      <span class="module-icon">☯</span>
+      <div class="module-name">八字命理</div>
+      <div class="module-en">BAZI DESTINY</div>
+      <p class="module-desc">根据出生年月日时，排出四柱八字，精准推算一生的吉凶祸福</p>
+      <span class="module-arrow" style="color:#5b5078">即将上线</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ Daily Horoscope ═══ -->
+<section id="daily">
+  <h2 class="section-title fade-up">每日星座运势</h2>
+  <p class="section-sub fade-up">选择你的星座，查看今日的星辰指引</p>
+
+  <div class="zodiac-selector fade-up" id="zodiacSelector">
+    <!-- Generated by JS -->
+  </div>
+
+  <div class="horoscope-result" id="horoResult">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+  <p>星命阁 · 星辰指引命运 &nbsp;|&nbsp; <a href="#modules">占卜服务</a> &nbsp;|&nbsp; <a href="#daily">每日运势</a></p>
+  <p style="margin-top:.6rem;font-size:.65rem;color:#3d3560">&copy; 2026 星命阁. All rights reserved.</p>
+</footer>
+
+<!-- ═══ Auth Modal ═══ -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="hideAuth()">&times;</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">登录</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">注册</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <div class="form-group">
+        <label>邮箱地址</label>
+        <input id="loginEmail" type="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input id="loginPassword" type="password" placeholder="输入密码" required>
+      </div>
+      <div id="loginError" style="color:#ff6b9d;font-size:.85rem;margin:-8px 0 8px;display:none"></div>
+      <button class="form-submit" type="submit" id="loginSubmit">登录</button>
+      <div class="form-switch">还没有账号？ <a onclick="switchAuthTab('register')">立即注册</a></div>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" style="display:none" onsubmit="return handleRegister(event)">
+      <div class="form-group">
+        <label>用户昵称</label>
+        <input id="regNickname" type="text" placeholder="你的昵称" required>
+      </div>
+      <div class="form-group">
+        <label>邮箱地址</label>
+        <input id="regEmail" type="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input id="regPassword" type="password" placeholder="至少6位" required minlength="6">
+      </div>
+      <div class="form-group">
+        <label>出生日期（可选，用于星座匹配）</label>
+        <input id="regBirthdate" type="date">
+      </div>
+      <div id="registerError" style="color:#ff6b9d;font-size:.85rem;margin:-8px 0 8px;display:none"></div>
+      <button class="form-submit" type="submit" id="registerSubmit">注册</button>
+      <div class="form-switch">已有账号？ <a onclick="switchAuthTab('login')">去登录</a></div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   STARFIELD
+═══════════════════════════════════════════════════════════════ */
+(function(){
+  const c = document.getElementById('starfield');
+  const ctx = c.getContext('2d');
+  let w, h, stars = [];
+
+  function resize(){
+    w = c.width = window.innerWidth;
+    h = c.height = window.innerHeight;
+    initStars();
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.min(Math.floor(w * h / 2800), 300);
+    for(let i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.4 + .3,
+        a: Math.random(),
+        da: (Math.random() - .5) * .015,
+        color: ['#ffffff','#c8c0ff','#a0b8ff','#ffd8c8'][Math.floor(Math.random()*4)]
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, w, h);
+    for(const s of stars){
+      s.a += s.da;
+      if(s.a > 1 || s.a < .1) s.da *= -1;
+      ctx.globalAlpha = Math.max(0, Math.min(1, s.a));
+      ctx.fillStyle = s.color;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL ANIMATIONS
+═══════════════════════════════════════════════════════════════ */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: .15});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTH STATE
+═══════════════════════════════════════════════════════════════ */
+const Auth = {
+  getToken() { return localStorage.getItem('xmg_token') },
+  getUser()  { try { return JSON.parse(localStorage.getItem('xmg_user') || 'null') } catch{ return null } },
+  save(token, user) {
+    localStorage.setItem('xmg_token', token);
+    localStorage.setItem('xmg_user', JSON.stringify(user));
+  },
+  clear() {
+    localStorage.removeItem('xmg_token');
+    localStorage.removeItem('xmg_user');
+  }
+};
+
+function updateNavUI() {
+  const user = Auth.getUser();
+  const area = document.getElementById('navUserArea');
+  if (user) {
+    area.innerHTML = `
+      <span style="color:#c8a0ff;font-size:.9rem;margin-right:12px">✦ ${user.nickname}</span>
+      <button class="nav-btn" onclick="handleLogout()">退出</button>`;
+  } else {
+    area.innerHTML = `<button class="nav-btn" onclick="showAuth('login')">登录 / 注册</button>`;
+  }
+}
+
+function handleLogout() {
+  Auth.clear();
+  updateNavUI();
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AUTH MODAL
+═══════════════════════════════════════════════════════════════ */
+function showAuth(tab){
+  document.getElementById('authModal').classList.add('show');
+  switchAuthTab(tab || 'login');
+}
+function hideAuth(){
+  document.getElementById('authModal').classList.remove('show');
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('registerError').style.display = 'none';
+}
+document.getElementById('authModal').addEventListener('click', function(e){
+  if(e.target === this) hideAuth();
+});
+
+function switchAuthTab(tab){
+  const tabs = document.querySelectorAll('.auth-tab');
+  tabs[0].classList.toggle('active', tab === 'login');
+  tabs[1].classList.toggle('active', tab === 'register');
+  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+}
+
+function showFormError(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+async function handleLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginSubmit');
+
+  btn.disabled = true;
+  btn.textContent = '登录中…';
+  document.getElementById('loginError').style.display = 'none';
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || '登录失败');
+
+    Auth.save(json.data.access_token, json.data.user);
+    hideAuth();
+    updateNavUI();
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+  } catch(err) {
+    showFormError('loginError', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '登录';
+  }
+  return false;
+}
+
+async function handleRegister(e){
+  e.preventDefault();
+  const nickname = document.getElementById('regNickname').value.trim();
+  const email    = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const btn = document.getElementById('registerSubmit');
+
+  btn.disabled = true;
+  btn.textContent = '注册中…';
+  document.getElementById('registerError').style.display = 'none';
+
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, nickname })
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || '注册失败');
+
+    if (json.data.access_token) {
+      Auth.save(json.data.access_token, json.data.user);
+      hideAuth();
+      updateNavUI();
+    } else {
+      hideAuth();
+      showAuth('login');
+    }
+    document.getElementById('regNickname').value = '';
+    document.getElementById('regEmail').value = '';
+    document.getElementById('regPassword').value = '';
+    document.getElementById('regBirthdate').value = '';
+  } catch(err) {
+    showFormError('registerError', err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '注册';
+  }
+  return false;
+}
+
+// 页面加载时恢复登录状态
+updateNavUI();
+
+/* ═══════════════════════════════════════════════════════════════
+   DAILY HOROSCOPE
+═══════════════════════════════════════════════════════════════ */
+const ZODIAC = [
+  {name:'白羊座', en:'Aries',     icon:'♈', dates:'3/21-4/19',  el:'火'},
+  {name:'金牛座', en:'Taurus',    icon:'♉', dates:'4/20-5/20',  el:'土'},
+  {name:'双子座', en:'Gemini',    icon:'♊', dates:'5/21-6/21',  el:'风'},
+  {name:'巨蟹座', en:'Cancer',    icon:'♋', dates:'6/22-7/22',  el:'水'},
+  {name:'狮子座', en:'Leo',       icon:'♌', dates:'7/23-8/22',  el:'火'},
+  {name:'处女座', en:'Virgo',     icon:'♍', dates:'8/23-9/22',  el:'土'},
+  {name:'天秤座', en:'Libra',     icon:'♎', dates:'9/23-10/23', el:'风'},
+  {name:'天蝎座', en:'Scorpio',   icon:'♏', dates:'10/24-11/22',el:'水'},
+  {name:'射手座', en:'Sagittarius',icon:'♐', dates:'11/23-12/21',el:'火'},
+  {name:'摩羯座', en:'Capricorn', icon:'♑', dates:'12/22-1/19', el:'土'},
+  {name:'水瓶座', en:'Aquarius',  icon:'♒', dates:'1/20-2/18',  el:'风'},
+  {name:'双鱼座', en:'Pisces',    icon:'♓', dates:'2/19-3/20',  el:'水'},
+];
+
+/* Simple seeded random for consistent daily results */
+function dailySeed(sign){
+  const d = new Date();
+  const s = d.getFullYear() * 10000 + (d.getMonth()+1) * 100 + d.getDate() + sign * 7;
+  let x = Math.sin(s) * 10000;
+  return x - Math.floor(x);
+}
+
+function starStr(n){return '★'.repeat(n) + '☆'.repeat(5-n)}
+
+const DAILY_ADVICE = {
+  love: [
+    '今天适合向心仪的人表达你的心意，勇敢一点会有好结果。',
+    '感情方面需要多一些耐心，不要急于求成，让时间说明一切。',
+    '与伴侣之间可能会有小摩擦，注意沟通方式，换位思考很重要。',
+    '桃花运旺盛的一天！保持真诚与自然，魅力自然会吸引对的人。',
+    '单身者今天可能遇到有趣的人，已有伴侣的要注意温暖对方。',
+    '感情进入平稳期，适合一起做些日常但温馨的小事来增进感情。',
+    '有些话藏在心里太久了，今天可以找机会倾诉，对方会理解你。',
+  ],
+  work: [
+    '工作上灵感频频，趁着思维活跃多做些创意型的任务。',
+    '今天适合处理之前积压的琐事，把细节收拾好会让你更轻松。',
+    '可能会遇到突发状况，保持冷静，你比你以为的更有能力应对。',
+    '团队合作运势极佳，多跟同事交流会激发更好的想法。',
+    '注意避免过度承诺，合理安排自己的精力和时间。',
+    '你的专注力今天特别强，适合攻克有难度的项目或学习新技能。',
+    '有贵人相助的迹象，对身边递来的橄榄枝保持开放态度。',
+  ],
+  luck: [
+    '今天的幸运色是蓝色，佩戴与水有关的饰品会增添好运。',
+    '留意下午3点到5点之间，可能会有意想不到的好消息。',
+    '数字3和7对你今天特别有利，可以在重要决定中参考。',
+    '今天适合逛逛书店或图书馆，知识和灵感是你今天最大的财富。',
+    '今天的幸运方位是东南方，出行时可以多留意这个方向。',
+    '深呼吸，放慢节奏。今天不着急做重大决定，顺其自然更好。',
+    '今天适合整理家居或办公环境，清理空间会带来意想不到的好运。',
+  ]
+};
+
+function genHoroscope(idx){
+  const z = ZODIAC[idx];
+  const r1 = dailySeed(idx);
+  const r2 = dailySeed(idx + 100);
+  const r3 = dailySeed(idx + 200);
+
+  const loveStar = Math.min(5, Math.max(2, Math.floor(r1 * 5) + 1));
+  const workStar = Math.min(5, Math.max(2, Math.floor(r2 * 5) + 1));
+  const luckStar = Math.min(5, Math.max(1, Math.floor(r3 * 5) + 1));
+
+  const loveIdx = Math.floor(r1 * DAILY_ADVICE.love.length);
+  const workIdx = Math.floor(r2 * DAILY_ADVICE.work.length);
+  const luckIdx = Math.floor(r3 * DAILY_ADVICE.luck.length);
+
+  const overall = Math.round((loveStar + workStar + luckStar) / 3 * 20);
+
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
+
+  return `
+    <div class="horo-header">
+      <span class="horo-sign-icon">${z.icon}</span>
+      <div>
+        <div class="horo-sign-name">${z.name} <span style="font-size:.7rem;color:#6b5f8a;font-weight:400">${z.en}</span></div>
+        <div class="horo-date">${dateStr} · ${z.dates} · ${z.el}象星座 · 综合指数 ${overall}%</div>
+      </div>
+    </div>
+    <div class="horo-section">
+      <div class="horo-label">💕 爱情运势 <span class="horo-stars">${starStr(loveStar)}</span></div>
+      <div class="horo-text">${DAILY_ADVICE.love[loveIdx]}</div>
+    </div>
+    <div class="horo-section">
+      <div class="horo-label">💼 事业运势 <span class="horo-stars">${starStr(workStar)}</span></div>
+      <div class="horo-text">${DAILY_ADVICE.work[workIdx]}</div>
+    </div>
+    <div class="horo-section">
+      <div class="horo-label">🍀 幸运提示 <span class="horo-stars">${starStr(luckStar)}</span></div>
+      <div class="horo-text">${DAILY_ADVICE.luck[luckIdx]}</div>
+    </div>
+  `;
+}
+
+/* Build zodiac selector buttons */
+const selectorEl = document.getElementById('zodiacSelector');
+ZODIAC.forEach((z, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'zodiac-btn';
+  btn.innerHTML = `<span>${z.icon}</span><span>${z.name.slice(0,2)}</span>`;
+  btn.addEventListener('click', () => selectZodiac(i));
+  selectorEl.appendChild(btn);
+});
+
+function selectZodiac(idx){
+  document.querySelectorAll('.zodiac-btn').forEach((b,i) => b.classList.toggle('active', i === idx));
+  const res = document.getElementById('horoResult');
+  res.classList.remove('show');
+  setTimeout(() => {
+    res.innerHTML = genHoroscope(idx);
+    res.classList.add('show');
+  }, 150);
+}
+
+/* Auto-select based on today's date */
+function getZodiacFromDate(m, d){
+  const ranges = [[1,20],[2,19],[3,21],[4,20],[5,21],[6,22],[7,23],[8,23],[9,23],[10,24],[11,23],[12,22]];
+  // maps month/day to zodiac index
+  for(let i = 11; i >= 0; i--){
+    const [rm, rd] = ranges[i];
+    if(m > rm || (m === rm && d >= rd)) return i;
+  }
+  return 9; // Capricorn for early Jan
+}
+
+(function autoSelect(){
+  const now = new Date();
+  const idx = getZodiacFromDate(now.getMonth()+1, now.getDate());
+  selectZodiac(idx);
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV SCROLL EFFECT
+═══════════════════════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = window.scrollY > 50 ? 'rgba(8,8,26,.95)' : 'rgba(8,8,26,.85)';
+});
+</script>
+</body>
+</html>

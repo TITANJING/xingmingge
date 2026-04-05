@@ -1,0 +1,304 @@
+{
+  "zodiacSigns": [
+    {
+      "id": 1,
+      "name": { "zh": "白羊座", "en": "Aries" },
+      "symbol": "♈",
+      "dateRange": { "startMonth": 3, "startDay": 21, "endMonth": 4, "endDay": 19 },
+      "element": { "zh": "火", "en": "Fire" },
+      "quality": { "zh": "开创", "en": "Cardinal" },
+      "rulingPlanet": { "zh": "火星", "en": "Mars" },
+      "luckyNumbers": [1, 8, 17],
+      "luckyColor": { "zh": "红色", "en": "Red" },
+      "luckyDay": { "zh": "星期二", "en": "Tuesday" },
+      "traits": {
+        "zh": ["勇敢", "自信", "热情", "冲动", "直率", "竞争心强"],
+        "en": ["Courageous", "Confident", "Enthusiastic", "Impulsive", "Direct", "Competitive"]
+      },
+      "description": {
+        "zh": "白羊座是十二星座之首，象征着新的开始和勇往直前的精神。白羊座的人天生具有领导力，充满热情和活力，喜欢挑战和冒险，但有时过于急躁和冲动。",
+        "en": "Aries is the first sign of the zodiac, symbolizing new beginnings and a pioneering spirit. Aries natives are natural leaders, full of passion and energy. They love challenges and adventure, though they can sometimes be too hasty and impulsive."
+      },
+      "compatibility": {
+        "best": ["leo", "sagittarius", "gemini"],
+        "good": ["aquarius", "libra"],
+        "challenging": ["cancer", "capricorn"]
+      }
+    },
+    {
+      "id": 2,
+      "name": { "zh": "金牛座", "en": "Taurus" },
+      "symbol": "♉",
+      "dateRange": { "startMonth": 4, "startDay": 20, "endMonth": 5, "endDay": 20 },
+      "element": { "zh": "土", "en": "Earth" },
+      "quality": { "zh": "固定", "en": "Fixed" },
+      "rulingPlanet": { "zh": "金星", "en": "Venus" },
+      "luckyNumbers": [2, 6, 15],
+      "luckyColor": { "zh": "绿色", "en": "Green" },
+      "luckyDay": { "zh": "星期五", "en": "Friday" },
+      "traits": {
+        "zh": ["可靠", "耐心", "务实", "固执", "忠诚", "享受生活"],
+        "en": ["Reliable", "Patient", "Practical", "Stubborn", "Loyal", "Pleasure-seeking"]
+      },
+      "description": {
+        "zh": "金牛座是土象星座中最稳定的一个，代表着物质安全和感官享受。金牛座的人踏实可靠，有极强的耐心和毅力，重视物质生活的品质，但有时显得过于固执。",
+        "en": "Taurus is the most stable of the earth signs, representing material security and sensual pleasure. Taurus natives are grounded and reliable, with great patience and perseverance. They value quality in material life, though can be overly stubborn."
+      },
+      "compatibility": {
+        "best": ["virgo", "capricorn", "cancer"],
+        "good": ["pisces", "scorpio"],
+        "challenging": ["leo", "aquarius"]
+      }
+    },
+    {
+      "id": 3,
+      "name": { "zh": "双子座", "en": "Gemini" },
+      "symbol": "♊",
+      "dateRange": { "startMonth": 5, "startDay": 21, "endMonth": 6, "endDay": 20 },
+      "element": { "zh": "风", "en": "Air" },
+      "quality": { "zh": "变动", "en": "Mutable" },
+      "rulingPlanet": { "zh": "水星", "en": "Mercury" },
+      "luckyNumbers": [5, 7, 14],
+      "luckyColor": { "zh": "黄色", "en": "Yellow" },
+      "luckyDay": { "zh": "星期三", "en": "Wednesday" },
+      "traits": {
+        "zh": ["聪明", "善变", "好奇", "健谈", "机智", "多才多艺"],
+        "en": ["Intelligent", "Changeable", "Curious", "Talkative", "Witty", "Versatile"]
+      },
+      "description": {
+        "zh": "双子座由水星守护，代表沟通与思维的敏捷。双子座的人思维活跃，善于交际，对新事物充满好奇，但有时缺乏专注力，给人善变的印象。",
+        "en": "Ruled by Mercury, Gemini represents communication and mental agility. Gemini natives have active minds, excel at socializing, and are endlessly curious about new things, though they can lack focus and seem inconsistent."
+      },
+      "compatibility": {
+        "best": ["libra", "aquarius", "aries"],
+        "good": ["leo", "sagittarius"],
+        "challenging": ["virgo", "pisces"]
+      }
+    },
+    {
+      "id": 4,
+      "name": { "zh": "巨蟹座", "en": "Cancer" },
+      "symbol": "♋",
+      "dateRange": { "startMonth": 6, "startDay": 21, "endMonth": 7, "endDay": 22 },
+      "element": { "zh": "水", "en": "Water" },
+      "quality": { "zh": "开创", "en": "Cardinal" },
+      "rulingPlanet": { "zh": "月亮", "en": "Moon" },
+      "luckyNumbers": [2, 7, 11],
+      "luckyColor": { "zh": "银色", "en": "Silver" },
+      "luckyDay": { "zh": "星期一", "en": "Monday" },
+      "traits": {
+        "zh": ["温柔", "敏感", "重感情", "念旧", "保护欲强", "情绪化"],
+        "en": ["Gentle", "Sensitive", "Emotional", "Nostalgic", "Protective", "Moody"]
+      },
+      "description": {
+        "zh": "巨蟹座由月亮守护，是最具母性光辉的星座。巨蟹座的人感情丰富，重视家庭和亲情，有很强的保护欲和同理心，但情绪波动较大，容易受到外界影响。",
+        "en": "Ruled by the Moon, Cancer is the most nurturing sign of the zodiac. Cancer natives are deeply emotional, value family and close bonds, and have strong protective instincts and empathy, though they can be moody and easily influenced by surroundings."
+      },
+      "compatibility": {
+        "best": ["scorpio", "pisces", "taurus"],
+        "good": ["virgo", "capricorn"],
+        "challenging": ["aries", "libra"]
+      }
+    },
+    {
+      "id": 5,
+      "name": { "zh": "狮子座", "en": "Leo" },
+      "symbol": "♌",
+      "dateRange": { "startMonth": 7, "startDay": 23, "endMonth": 8, "endDay": 22 },
+      "element": { "zh": "火", "en": "Fire" },
+      "quality": { "zh": "固定", "en": "Fixed" },
+      "rulingPlanet": { "zh": "太阳", "en": "Sun" },
+      "luckyNumbers": [1, 3, 10],
+      "luckyColor": { "zh": "金色", "en": "Gold" },
+      "luckyDay": { "zh": "星期日", "en": "Sunday" },
+      "traits": {
+        "zh": ["自信", "大方", "热情", "骄傲", "创造力强", "领导力"],
+        "en": ["Confident", "Generous", "Passionate", "Proud", "Creative", "Leadership"]
+      },
+      "description": {
+        "zh": "狮子座由太阳守护，天生具有王者风范。狮子座的人慷慨大方，充满自信和创造力，喜欢成为众人的焦点，但有时过于自我中心和好面子。",
+        "en": "Ruled by the Sun, Leo naturally radiates royal energy. Leo natives are generous, full of confidence and creativity, and love being the center of attention, though they can be overly self-centered and prideful."
+      },
+      "compatibility": {
+        "best": ["aries", "sagittarius", "gemini"],
+        "good": ["libra", "aquarius"],
+        "challenging": ["taurus", "scorpio"]
+      }
+    },
+    {
+      "id": 6,
+      "name": { "zh": "处女座", "en": "Virgo" },
+      "symbol": "♍",
+      "dateRange": { "startMonth": 8, "startDay": 23, "endMonth": 9, "endDay": 22 },
+      "element": { "zh": "土", "en": "Earth" },
+      "quality": { "zh": "变动", "en": "Mutable" },
+      "rulingPlanet": { "zh": "水星", "en": "Mercury" },
+      "luckyNumbers": [5, 14, 23],
+      "luckyColor": { "zh": "米色", "en": "Beige" },
+      "luckyDay": { "zh": "星期三", "en": "Wednesday" },
+      "traits": {
+        "zh": ["细心", "完美主义", "分析力强", "谦虚", "勤劳", "挑剔"],
+        "en": ["Meticulous", "Perfectionist", "Analytical", "Modest", "Diligent", "Critical"]
+      },
+      "description": {
+        "zh": "处女座同样由水星守护，但更偏重于分析和细节。处女座的人做事认真细致，追求完美，有很强的服务精神和分析能力，但有时过于苛刻和焦虑。",
+        "en": "Also ruled by Mercury but focused on analysis and detail. Virgo natives are thorough and meticulous, striving for perfection with strong service orientation and analytical skills, though they can be overly critical and anxious."
+      },
+      "compatibility": {
+        "best": ["taurus", "capricorn", "cancer"],
+        "good": ["scorpio", "pisces"],
+        "challenging": ["gemini", "sagittarius"]
+      }
+    },
+    {
+      "id": 7,
+      "name": { "zh": "天秤座", "en": "Libra" },
+      "symbol": "♎",
+      "dateRange": { "startMonth": 9, "startDay": 23, "endMonth": 10, "endDay": 22 },
+      "element": { "zh": "风", "en": "Air" },
+      "quality": { "zh": "开创", "en": "Cardinal" },
+      "rulingPlanet": { "zh": "金星", "en": "Venus" },
+      "luckyNumbers": [4, 6, 13],
+      "luckyColor": { "zh": "粉色", "en": "Pink" },
+      "luckyDay": { "zh": "星期五", "en": "Friday" },
+      "traits": {
+        "zh": ["优雅", "公正", "善于社交", "犹豫不决", "和平主义", "审美力强"],
+        "en": ["Elegant", "Fair-minded", "Social", "Indecisive", "Peaceful", "Aesthetic"]
+      },
+      "description": {
+        "zh": "天秤座由金星守护，象征着平衡与和谐。天秤座的人优雅迷人，追求公平和美感，善于处理人际关系，但常常在选择面前犹豫不决。",
+        "en": "Ruled by Venus, Libra symbolizes balance and harmony. Libra natives are charming and elegant, pursuing fairness and beauty with excellent social skills, though they often struggle with decision-making."
+      },
+      "compatibility": {
+        "best": ["gemini", "aquarius", "leo"],
+        "good": ["sagittarius", "aries"],
+        "challenging": ["cancer", "capricorn"]
+      }
+    },
+    {
+      "id": 8,
+      "name": { "zh": "天蝎座", "en": "Scorpio" },
+      "symbol": "♏",
+      "dateRange": { "startMonth": 10, "startDay": 23, "endMonth": 11, "endDay": 21 },
+      "element": { "zh": "水", "en": "Water" },
+      "quality": { "zh": "固定", "en": "Fixed" },
+      "rulingPlanet": { "zh": "冥王星", "en": "Pluto" },
+      "luckyNumbers": [8, 11, 18],
+      "luckyColor": { "zh": "深红色", "en": "Crimson" },
+      "luckyDay": { "zh": "星期二", "en": "Tuesday" },
+      "traits": {
+        "zh": ["深沉", "神秘", "洞察力强", "占有欲强", "意志坚定", "爱恨分明"],
+        "en": ["Intense", "Mysterious", "Perceptive", "Possessive", "Determined", "Passionate"]
+      },
+      "description": {
+        "zh": "天蝎座由冥王星守护，代表着深层的转化与重生。天蝎座的人意志力极强，洞察力敏锐，感情深沉而炽烈，但有时过于多疑和控制欲强。",
+        "en": "Ruled by Pluto, Scorpio represents deep transformation and rebirth. Scorpio natives have tremendous willpower, keen insight, and deep intense emotions, though they can be overly suspicious and controlling."
+      },
+      "compatibility": {
+        "best": ["cancer", "pisces", "virgo"],
+        "good": ["taurus", "capricorn"],
+        "challenging": ["leo", "aquarius"]
+      }
+    },
+    {
+      "id": 9,
+      "name": { "zh": "射手座", "en": "Sagittarius" },
+      "symbol": "♐",
+      "dateRange": { "startMonth": 11, "startDay": 22, "endMonth": 12, "endDay": 21 },
+      "element": { "zh": "火", "en": "Fire" },
+      "quality": { "zh": "变动", "en": "Mutable" },
+      "rulingPlanet": { "zh": "木星", "en": "Jupiter" },
+      "luckyNumbers": [3, 7, 9],
+      "luckyColor": { "zh": "紫色", "en": "Purple" },
+      "luckyDay": { "zh": "星期四", "en": "Thursday" },
+      "traits": {
+        "zh": ["乐观", "自由", "直率", "哲学思维", "爱冒险", "粗心"],
+        "en": ["Optimistic", "Freedom-loving", "Frank", "Philosophical", "Adventurous", "Careless"]
+      },
+      "description": {
+        "zh": "射手座由木星守护，象征着探索与扩张。射手座的人乐观开朗，热爱自由和冒险，对哲学和异国文化充满兴趣，但有时过于直率和缺乏耐心。",
+        "en": "Ruled by Jupiter, Sagittarius symbolizes exploration and expansion. Sagittarius natives are optimistic and cheerful, loving freedom and adventure with keen interest in philosophy and foreign cultures, though they can be too blunt and impatient."
+      },
+      "compatibility": {
+        "best": ["aries", "leo", "libra"],
+        "good": ["aquarius", "gemini"],
+        "challenging": ["virgo", "pisces"]
+      }
+    },
+    {
+      "id": 10,
+      "name": { "zh": "摩羯座", "en": "Capricorn" },
+      "symbol": "♑",
+      "dateRange": { "startMonth": 12, "startDay": 22, "endMonth": 1, "endDay": 19 },
+      "element": { "zh": "土", "en": "Earth" },
+      "quality": { "zh": "开创", "en": "Cardinal" },
+      "rulingPlanet": { "zh": "土星", "en": "Saturn" },
+      "luckyNumbers": [4, 8, 13],
+      "luckyColor": { "zh": "棕色", "en": "Brown" },
+      "luckyDay": { "zh": "星期六", "en": "Saturday" },
+      "traits": {
+        "zh": ["有野心", "自律", "务实", "严肃", "负责任", "保守"],
+        "en": ["Ambitious", "Disciplined", "Pragmatic", "Serious", "Responsible", "Conservative"]
+      },
+      "description": {
+        "zh": "摩羯座由土星守护，代表着纪律与成就。摩羯座的人目标明确，意志坚定，脚踏实地地追求成功，有很强的责任感，但有时过于严肃和压抑情感。",
+        "en": "Ruled by Saturn, Capricorn represents discipline and achievement. Capricorn natives are goal-oriented and determined, pursuing success with a grounded approach and strong sense of responsibility, though they can be overly serious and emotionally reserved."
+      },
+      "compatibility": {
+        "best": ["taurus", "virgo", "scorpio"],
+        "good": ["pisces", "cancer"],
+        "challenging": ["aries", "libra"]
+      }
+    },
+    {
+      "id": 11,
+      "name": { "zh": "水瓶座", "en": "Aquarius" },
+      "symbol": "♒",
+      "dateRange": { "startMonth": 1, "startDay": 20, "endMonth": 2, "endDay": 18 },
+      "element": { "zh": "风", "en": "Air" },
+      "quality": { "zh": "固定", "en": "Fixed" },
+      "rulingPlanet": { "zh": "天王星", "en": "Uranus" },
+      "luckyNumbers": [4, 7, 11],
+      "luckyColor": { "zh": "蓝色", "en": "Blue" },
+      "luckyDay": { "zh": "星期六", "en": "Saturday" },
+      "traits": {
+        "zh": ["独立", "创新", "人道主义", "叛逆", "理性", "不可预测"],
+        "en": ["Independent", "Innovative", "Humanitarian", "Rebellious", "Rational", "Unpredictable"]
+      },
+      "description": {
+        "zh": "水瓶座由天王星守护，象征着创新与变革。水瓶座的人思想前卫，崇尚自由与独立，关注人类社会的进步，但有时显得疏离和情感淡薄。",
+        "en": "Ruled by Uranus, Aquarius symbolizes innovation and revolution. Aquarius natives are progressive thinkers who value freedom and independence, caring about humanitarian progress, though they can seem detached and emotionally distant."
+      },
+      "compatibility": {
+        "best": ["gemini", "libra", "sagittarius"],
+        "good": ["aries", "leo"],
+        "challenging": ["taurus", "scorpio"]
+      }
+    },
+    {
+      "id": 12,
+      "name": { "zh": "双鱼座", "en": "Pisces" },
+      "symbol": "♓",
+      "dateRange": { "startMonth": 2, "startDay": 19, "endMonth": 3, "endDay": 20 },
+      "element": { "zh": "水", "en": "Water" },
+      "quality": { "zh": "变动", "en": "Mutable" },
+      "rulingPlanet": { "zh": "海王星", "en": "Neptune" },
+      "luckyNumbers": [3, 9, 12],
+      "luckyColor": { "zh": "海蓝色", "en": "Sea Blue" },
+      "luckyDay": { "zh": "星期四", "en": "Thursday" },
+      "traits": {
+        "zh": ["浪漫", "富有同情心", "直觉强", "逃避现实", "艺术天赋", "多愁善感"],
+        "en": ["Romantic", "Compassionate", "Intuitive", "Escapist", "Artistic", "Sentimental"]
+      },
+      "description": {
+        "zh": "双鱼座由海王星守护，是十二星座中最具灵性的星座。双鱼座的人感受力极强，富有想象力和同情心，具有艺术天赋，但有时过于理想化和逃避现实。",
+        "en": "Ruled by Neptune, Pisces is the most spiritual sign of the zodiac. Pisces natives are deeply perceptive with rich imagination and compassion, possessing artistic talent, though they can be overly idealistic and prone to escapism."
+      },
+      "compatibility": {
+        "best": ["cancer", "scorpio", "taurus"],
+        "good": ["capricorn", "virgo"],
+        "challenging": ["gemini", "sagittarius"]
+      }
+    }
+  ]
+}

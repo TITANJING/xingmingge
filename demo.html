@@ -1,0 +1,2967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星命阁 - 命运占卜</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0f0f2e 100%);
+            color: #e0d5ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: #c9a227;
+            text-shadow: 0 0 30px rgba(201, 162, 39, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .header p {
+            color: #9a8bb8;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a227, transparent);
+            margin: 20px auto;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .tab-btn {
+            padding: 11px 20px;
+            border: 2px solid #c9a227;
+            background: transparent;
+            color: #c9a227;
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #c9a227;
+            z-index: -1;
+            transition: left 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #0a0a1a;
+        }
+
+        .tab-btn:hover::before {
+            left: 0;
+        }
+
+        .tab-btn.active {
+            background: #c9a227;
+            color: #0a0a1a;
+            box-shadow: 0 0 30px rgba(201, 162, 39, 0.5);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Zodiac Fortune Tab */
+        .fortune-input {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        input[type="date"] {
+            padding: 12px 20px;
+            border: 2px solid #c9a227;
+            background: rgba(10, 10, 26, 0.8);
+            color: #e0d5ff;
+            border-radius: 5px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        input[type="date"]:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
+        }
+
+        .btn {
+            padding: 12px 40px;
+            border: none;
+            background: linear-gradient(135deg, #c9a227, #d4b644);
+            color: #0a0a1a;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Zodiac Sign Display */
+        .sign-display {
+            text-align: center;
+            margin: 40px 0;
+            padding: 40px;
+            background: rgba(123, 45, 139, 0.15);
+            border: 2px solid #7b2d8b;
+            border-radius: 10px;
+            animation: slideIn 0.6s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sign-symbol {
+            font-size: 5rem;
+            margin: 20px 0;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .sign-name {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #c9a227;
+            margin: 20px 0;
+        }
+
+        .sign-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            justify-items: center;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: rgba(201, 162, 39, 0.1);
+            border-left: 3px solid #c9a227;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .info-label {
+            color: #c9a227;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            color: #e0d5ff;
+            font-size: 1.1rem;
+        }
+
+        /* Fortune Cards */
+        .fortune-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(123, 45, 139, 0.3), rgba(123, 45, 139, 0.1));
+            border: 2px solid #7b2d8b;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(201, 162, 39, 0.1), transparent);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #c9a227;
+            box-shadow: 0 20px 50px rgba(201, 162, 39, 0.2);
+        }
+
+        .card:hover::before {
+            top: -50%;
+            right: -50%;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #c9a227;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .star-filled {
+            color: #c9a227;
+        }
+
+        .star-empty {
+            color: #444;
+        }
+
+        .card-text {
+            color: #d5c4ff;
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* Compatibility Tab */
+        .compat-input {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            color: #c9a227;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* Compatibility Display */
+        .compat-result {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .signs-display {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sign-box {
+            text-align: center;
+            padding: 30px;
+            background: rgba(123, 45, 139, 0.15);
+            border: 2px solid #7b2d8b;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+
+        .sign-box .symbol {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .sign-box .name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #c9a227;
+        }
+
+        .vs-text {
+            color: #c9a227;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+        }
+
+        /* Score Circle */
+        .score-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-circle {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 30px;
+        }
+
+        svg.score-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle-bg {
+            fill: none;
+            stroke: rgba(201, 162, 39, 0.2);
+            stroke-width: 8;
+        }
+
+        .score-circle-fill {
+            fill: none;
+            stroke: url(#scoreGradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #c9a227;
+            font-weight: 700;
+        }
+
+        .score-label {
+            color: #9a8bb8;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .compat-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #c9a227;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .compat-desc {
+            color: #d5c4ff;
+            text-align: center;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* Breakdown Scores */
+        .breakdown {
+            display: grid;
+            gap: 20px;
+        }
+
+        .breakdown-item {
+            padding: 15px;
+            background: rgba(201, 162, 39, 0.1);
+            border-left: 3px solid #c9a227;
+            border-radius: 5px;
+        }
+
+        .breakdown-label {
+            color: #c9a227;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .breakdown-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(201, 162, 39, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .breakdown-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #c9a227, #d4b644);
+            transition: width 0.8s ease;
+        }
+
+        /* Tarot Tab */
+        .tarot-step {
+            display: none;
+        }
+
+        .tarot-step.active {
+            display: block;
+        }
+
+        /* Spread Selection */
+        .spread-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .spread-card {
+            padding: 30px;
+            background: rgba(123, 45, 139, 0.15);
+            border: 2px solid #7b2d8b;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .spread-card:hover {
+            transform: translateY(-5px);
+            border-color: #c9a227;
+            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.2);
+        }
+
+        .spread-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .spread-name {
+            font-family: 'Cinzel', serif;
+            color: #c9a227;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .spread-desc {
+            color: #9a8bb8;
+            font-size: 0.85rem;
+        }
+
+        /* Card Deck Display */
+        .deck-container {
+            perspective: 1000px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .deck-cards {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            min-height: 180px;
+        }
+
+        .tarot-card {
+            width: 100px;
+            height: 140px;
+            perspective: 1000px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .tarot-card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .tarot-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            border: 2px solid #c9a227;
+            padding: 10px;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #1a0a2e, #2d1b4e);
+            transform: rotateY(180deg);
+        }
+
+        .card-back-symbol {
+            font-size: 2rem;
+            color: #c9a227;
+            margin-bottom: 10px;
+        }
+
+        .card-back-text {
+            font-size: 0.6rem;
+            color: #9a8bb8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.2), rgba(123, 45, 139, 0.2));
+            justify-content: space-between;
+        }
+
+        .card-number {
+            font-family: 'Cinzel', serif;
+            color: #c9a227;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .card-name {
+            font-size: 0.6rem;
+            color: #e0d5ff;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-orientation {
+            font-size: 0.5rem;
+            color: #9a8bb8;
+            text-transform: uppercase;
+        }
+
+        /* Tarot Interpretation */
+        .interpretation {
+            display: none;
+        }
+
+        .interpretation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .selected-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .interpretation-card {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(123, 45, 139, 0.3), rgba(123, 45, 139, 0.1));
+            border: 2px solid #7b2d8b;
+            border-radius: 10px;
+        }
+
+        .interp-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #c9a227;
+            margin-bottom: 10px;
+        }
+
+        .interp-orientation {
+            font-size: 0.85rem;
+            color: #9a8bb8;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .interp-keywords {
+            color: #c9a227;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(201, 162, 39, 0.1);
+            border-radius: 5px;
+        }
+
+        .interp-text {
+            color: #d5c4ff;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .compat-result {
+                grid-template-columns: 1fr;
+            }
+
+            .fortune-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .tarot-card {
+                width: 80px;
+                height: 110px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ===== TODAY'S FORTUNE STYLES ===== */
+        .daily-energy-section {
+            background: linear-gradient(135deg, rgba(10,10,26,0.9) 0%, rgba(26,10,46,0.8) 100%);
+            border: 1px solid rgba(201,162,39,0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .daily-energy-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(201,162,39,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .daily-energy-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .daily-energy-date {
+            font-size: 0.78rem;
+            color: #9a8bb8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .daily-energy-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: #c9a227;
+            margin-bottom: 4px;
+        }
+        .daily-energy-subtitle {
+            font-size: 0.8rem;
+            color: #7a6a9a;
+        }
+        .daily-energy-keywords {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .daily-energy-keywords .kw-tag {
+            padding: 5px 14px;
+            border: 1px solid rgba(201,162,39,0.4);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #c9a227;
+            background: rgba(201,162,39,0.07);
+        }
+        .daily-energy-text {
+            font-size: 0.92rem;
+            color: #c4b8e0;
+            line-height: 1.9;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .daily-energy-advice {
+            background: rgba(201,162,39,0.08);
+            border-left: 3px solid #c9a227;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #b0a0cc;
+            line-height: 1.7;
+        }
+        .fortune-divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+        .fortune-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent);
+        }
+        .fortune-divider span {
+            background: #0a0a1a;
+            padding: 0 15px;
+            font-size: 0.8rem;
+            color: #9a8bb8;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+        .sign-today-summary {
+            background: rgba(123,45,139,0.12);
+            border: 1px solid rgba(201,162,39,0.2);
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            color: #c4b8e0;
+            line-height: 1.85;
+            text-align: center;
+        }
+        .card-detail {
+            font-size: 0.8rem;
+            color: #7a6a9a;
+            line-height: 1.65;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(201,162,39,0.1);
+        }
+        .fortune-tip {
+            background: rgba(201,162,39,0.07);
+            border: 1px dashed rgba(201,162,39,0.35);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.88rem;
+            color: #b0a0cc;
+            line-height: 1.75;
+        }
+        .fortune-tip::before {
+            content: '✦ 今日提示 ✦';
+            display: block;
+            color: #c9a227;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* ===== SHARED NEW TAB STYLES ===== */
+        .tab-heading {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: #c9a227;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(201,162,39,0.3);
+        }
+        .tab-subtitle {
+            text-align: center;
+            color: #9a8bb8;
+            font-size: 0.88rem;
+            margin-bottom: 35px;
+            letter-spacing: 0.5px;
+        }
+        .natal-input {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .input-group input[type="time"] {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(201,162,39,0.4);
+            color: #e0d5ff;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.9rem;
+            width: 140px;
+        }
+        .input-group input[type="time"]:focus {
+            outline: none;
+            border-color: #c9a227;
+        }
+
+        /* ===== NATAL CHART ===== */
+        .natal-chart-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .natal-svg-wrap {
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 460px;
+        }
+        .planet-table {
+            flex: 1;
+            min-width: 260px;
+        }
+        .planet-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(201,162,39,0.12);
+        }
+        .planet-row:last-child { border-bottom: none; }
+        .planet-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1.5px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .planet-name-zh {
+            font-size: 0.82rem;
+            color: #9a8bb8;
+            width: 42px;
+            flex-shrink: 0;
+        }
+        .planet-sign-name {
+            font-size: 0.92rem;
+            color: #e0d5ff;
+            font-weight: 600;
+        }
+        .planet-sign-interp {
+            font-size: 0.76rem;
+            color: #7a6a9a;
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+        .natal-interp-section { margin-top: 20px; }
+        .natal-interp-card {
+            background: rgba(123,45,139,0.1);
+            border: 1px solid rgba(201,162,39,0.2);
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 14px;
+        }
+        .natal-interp-title {
+            color: #c9a227;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .natal-interp-sign {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+        .natal-interp-text {
+            color: #b0a0cc;
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        /* ===== MOON & RISING ===== */
+        .moonrising-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+        .moonrising-card {
+            background: rgba(26,10,46,0.7);
+            border: 2px solid rgba(201,162,39,0.3);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .moonrising-card:hover { border-color: #c9a227; }
+        .moonrising-planet-symbol { font-size: 2.5rem; margin-bottom: 5px; }
+        .moonrising-planet-name {
+            font-size: 0.78rem;
+            color: #9a8bb8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .moonrising-sign-symbol {
+            font-size: 3.2rem;
+            color: #c9a227;
+            line-height: 1;
+        }
+        .moonrising-sign-name {
+            font-size: 1.25rem;
+            color: #e0d5ff;
+            margin: 8px 0;
+            font-family: 'Cinzel', serif;
+        }
+        .moonrising-keywords {
+            font-size: 0.78rem;
+            color: #9a8bb8;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        .moonrising-description {
+            font-size: 0.87rem;
+            color: #b0a0cc;
+            line-height: 1.75;
+            text-align: left;
+        }
+        .moonrising-combined {
+            background: rgba(201,162,39,0.07);
+            border: 1px solid rgba(201,162,39,0.25);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .moonrising-combined-title {
+            font-family: 'Cinzel', serif;
+            color: #c9a227;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        .moonrising-combined-text {
+            color: #b0a0cc;
+            font-size: 0.9rem;
+            line-height: 1.85;
+            text-align: center;
+        }
+
+        /* ===== ANNUAL FORECAST ===== */
+        .annual-year-badge {
+            text-align: center;
+            margin: 10px 0 30px;
+        }
+        .annual-year-number {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            color: #c9a227;
+            text-shadow: 0 0 30px rgba(201,162,39,0.4);
+            line-height: 1;
+        }
+        .annual-year-label {
+            color: #9a8bb8;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-top: 6px;
+        }
+        .annual-overview {
+            background: rgba(123,45,139,0.1);
+            border: 1px solid rgba(201,162,39,0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .annual-overview-title {
+            font-family: 'Cinzel', serif;
+            color: #c9a227;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        .annual-overview-text {
+            color: #b0a0cc;
+            line-height: 1.85;
+            font-size: 0.9rem;
+        }
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 14px;
+        }
+        .month-card {
+            background: rgba(26,10,46,0.6);
+            border: 1px solid rgba(201,162,39,0.2);
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s;
+        }
+        .month-card:hover {
+            border-color: rgba(201,162,39,0.5);
+            transform: translateY(-2px);
+        }
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .month-name {
+            font-family: 'Cinzel', serif;
+            color: #c9a227;
+            font-size: 0.88rem;
+        }
+        .month-stars { font-size: 0.72rem; }
+        .month-theme {
+            font-size: 0.75rem;
+            color: #9a8bb8;
+            margin-bottom: 7px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .month-text {
+            font-size: 0.82rem;
+            color: #b0a0cc;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Navigation -->
+    <a href="index.html" style="position:fixed;top:1rem;left:1.5rem;z-index:9999;display:inline-flex;align-items:center;gap:.4em;font-family:'Noto Serif SC',serif;font-size:.75rem;color:#9b8faa;text-decoration:none;letter-spacing:.08em;padding:.4em .9em;border:1px solid #3d2f5560;border-radius:20px;background:#09080f80;backdrop-filter:blur(8px);transition:all .3s;" onmouseover="this.style.borderColor='#c8860a';this.style.color='#c8860a'" onmouseout="this.style.borderColor='#3d2f5560';this.style.color='#9b8faa'">← 占卜帐篷</a>
+
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>✦ 星命阁 ✦</h1>
+            <p>Your Celestial Fortune Awaits</p>
+            <div class="divider"></div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="fortune">今日运势</button>
+            <button class="tab-btn" data-tab="natal">本命星盘</button>
+            <button class="tab-btn" data-tab="moonrising">月亮·上升</button>
+            <button class="tab-btn" data-tab="compatibility">星座配对</button>
+            <button class="tab-btn" data-tab="annual">流年运势</button>
+            <button class="tab-btn" data-tab="tarot">塔罗占卜</button>
+        </div>
+
+        <!-- Tab 1: Zodiac Fortune -->
+        <div id="fortune" class="tab-content active">
+
+            <!-- Section A: Today's General Cosmic Energy (no input needed) -->
+            <div class="daily-energy-section" id="dailyEnergySection">
+                <div class="daily-energy-header">
+                    <div class="daily-energy-date" id="dailyEnergyDate"></div>
+                    <div class="daily-energy-title">今日天象能量</div>
+                    <div class="daily-energy-subtitle">今日对所有星座的整体宇宙氛围</div>
+                </div>
+                <div class="daily-energy-keywords" id="dailyEnergyKeywords"></div>
+                <div class="daily-energy-text" id="dailyEnergyText"></div>
+                <div class="daily-energy-advice" id="dailyEnergyAdvice"></div>
+            </div>
+
+            <div class="fortune-divider">
+                <span>✦ 输入你的生日，获取专属个人运势 ✦</span>
+            </div>
+
+            <!-- Section B: Personal Fortune (birthday-based) -->
+            <div class="fortune-input">
+                <div style="text-align:center;width:100%;margin-bottom:8px;">
+                    <div style="color:#9a8bb8;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;">你的生日 Birthday</div>
+                </div>
+                <input type="date" id="fortuneDate" />
+                <button class="btn" onclick="calculateFortune()">查看个人运势</button>
+            </div>
+
+            <div id="fortuneResult" class="hidden">
+                <div class="sign-display">
+                    <div class="sign-symbol" id="fortuneSymbol"></div>
+                    <div class="sign-name" id="fortuneName"></div>
+                    <div class="sign-info">
+                        <div class="info-item">
+                            <div class="info-label">主宰星球</div>
+                            <div class="info-value" id="fortunePlanet"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">幸运数字</div>
+                            <div class="info-value" id="fortuneNumber"></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">幸运颜色</div>
+                            <div class="info-value" id="fortuneColor" style="display: flex; align-items: center; gap: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's summary for this sign -->
+                <div class="sign-today-summary" id="signTodaySummary"></div>
+
+                <div class="fortune-cards">
+                    <div class="card">
+                        <div class="card-icon">❤️</div>
+                        <div class="card-title">爱情运</div>
+                        <div class="stars" id="loveStar"></div>
+                        <div class="card-text" id="loveText"></div>
+                        <div class="card-detail" id="loveDetail"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💼</div>
+                        <div class="card-title">事业运</div>
+                        <div class="stars" id="careerStar"></div>
+                        <div class="card-text" id="careerText"></div>
+                        <div class="card-detail" id="careerDetail"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💰</div>
+                        <div class="card-title">财运</div>
+                        <div class="stars" id="financeStar"></div>
+                        <div class="card-text" id="financeText"></div>
+                        <div class="card-detail" id="financeDetail"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🌿</div>
+                        <div class="card-title">健康运</div>
+                        <div class="stars" id="healthStar"></div>
+                        <div class="card-text" id="healthText"></div>
+                        <div class="card-detail" id="healthDetail"></div>
+                    </div>
+                </div>
+
+                <!-- Today's tip -->
+                <div class="fortune-tip" id="fortuneTip"></div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Compatibility -->
+        <div id="compatibility" class="tab-content">
+            <div class="compat-input">
+                <div class="input-group">
+                    <label class="input-label">第一个人</label>
+                    <input type="date" id="date1" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">第二个人</label>
+                    <input type="date" id="date2" />
+                </div>
+                <button class="btn" onclick="calculateCompatibility()">查询配对</button>
+            </div>
+
+            <div id="compatResult" class="hidden">
+                <div class="compat-result">
+                    <div class="signs-display">
+                        <div class="sign-box">
+                            <div class="symbol" id="sign1Symbol"></div>
+                            <div class="name" id="sign1Name"></div>
+                        </div>
+                        <div class="vs-text">♥</div>
+                        <div class="sign-box">
+                            <div class="symbol" id="sign2Symbol"></div>
+                            <div class="name" id="sign2Name"></div>
+                        </div>
+                    </div>
+
+                    <div class="score-section">
+                        <div class="score-circle">
+                            <svg class="score-svg" viewBox="0 0 200 200">
+                                <defs>
+                                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#c9a227;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#d4b644;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="100" cy="100" r="90" class="score-circle-bg"></circle>
+                                <circle cx="100" cy="100" r="90" class="score-circle-fill" id="scoreFill"></circle>
+                            </svg>
+                            <div class="score-text">
+                                <div class="score-number" id="scoreNumber">0</div>
+                                <div class="score-label">配合度</div>
+                            </div>
+                        </div>
+
+                        <div class="compat-title" id="compatTitle"></div>
+                        <div class="compat-desc" id="compatDesc"></div>
+
+                        <div class="breakdown">
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">
+                                    <span>情感契合度</span>
+                                    <span id="emotionalScore">0%</span>
+                                </div>
+                                <div class="breakdown-bar">
+                                    <div class="breakdown-fill" id="emotionalBar"></div>
+                                </div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">
+                                    <span>沟通默契度</span>
+                                    <span id="commScore">0%</span>
+                                </div>
+                                <div class="breakdown-bar">
+                                    <div class="breakdown-fill" id="commBar"></div>
+                                </div>
+                            </div>
+                            <div class="breakdown-item">
+                                <div class="breakdown-label">
+                                    <span>价值观一致性</span>
+                                    <span id="valuesScore">0%</span>
+                                </div>
+                                <div class="breakdown-bar">
+                                    <div class="breakdown-fill" id="valuesBar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Natal Chart (本命星盘) -->
+        <div id="natal" class="tab-content">
+            <h2 class="tab-heading">✦ 本命星盘 ✦</h2>
+            <p class="tab-subtitle">输入出生日期和时间，探索你天生的星象蓝图</p>
+            <div class="natal-input">
+                <div class="input-group">
+                    <label class="input-label">出生日期</label>
+                    <input type="date" id="natalDate" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">出生时间</label>
+                    <input type="time" id="natalTime" value="12:00" />
+                </div>
+                <button class="btn" onclick="calculateNatalChart()">生成我的星盘</button>
+            </div>
+            <div id="natalResult" class="hidden">
+                <div class="natal-chart-container">
+                    <div class="natal-svg-wrap" id="natalSvgContainer"></div>
+                    <div class="planet-table" id="planetTable"></div>
+                </div>
+                <div class="natal-interp-section" id="natalInterpSection"></div>
+            </div>
+        </div>
+
+        <!-- Tab: Moon & Rising (月亮·上升) -->
+        <div id="moonrising" class="tab-content">
+            <h2 class="tab-heading">☽ 月亮 · 上升星座 ☽</h2>
+            <p class="tab-subtitle">月亮星座揭示你的内在情感，上升星座展示你的外在形象</p>
+            <div class="natal-input">
+                <div class="input-group">
+                    <label class="input-label">出生日期</label>
+                    <input type="date" id="mrDate" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">出生时间</label>
+                    <input type="time" id="mrTime" value="12:00" />
+                </div>
+                <button class="btn" onclick="calculateMoonRising()">分析月亮与上升</button>
+            </div>
+            <div id="moonRisingResult" class="hidden">
+                <div class="moonrising-cards" id="moonRisingCards"></div>
+                <div class="moonrising-combined" id="moonRisingCombined"></div>
+            </div>
+        </div>
+
+        <!-- Tab: Annual Forecast (流年运势) -->
+        <div id="annual" class="tab-content">
+            <h2 class="tab-heading">★ 流年运势 ★</h2>
+            <p class="tab-subtitle">基于你的太阳星座，探索一整年十二个月的运势走向</p>
+            <div class="fortune-input">
+                <input type="date" id="annualDate" />
+                <button class="btn" onclick="calculateAnnualForecast()">查看流年运势</button>
+            </div>
+            <div id="annualResult" class="hidden">
+                <div class="annual-year-badge">
+                    <div class="annual-year-number" id="annualYear">2026</div>
+                    <div class="annual-year-label" id="annualSignLabel"></div>
+                </div>
+                <div class="annual-overview" id="annualOverview"></div>
+                <div class="months-grid" id="monthsGrid"></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Tarot Reading -->
+        <div id="tarot" class="tab-content">
+            <!-- Step 1: Spread Selection -->
+            <div class="tarot-step active" id="spreadStep">
+                <h2 style="text-align: center; color: #c9a227; font-family: 'Cinzel', serif; margin-bottom: 30px;">选择牌阵</h2>
+                <div class="spread-options">
+                    <div class="spread-card" onclick="selectSpread(1)">
+                        <div class="spread-icon">🃏</div>
+                        <div class="spread-name">单牌阵</div>
+                        <div class="spread-desc">一张卡牌，获得直接的答案</div>
+                    </div>
+                    <div class="spread-card" onclick="selectSpread(3)">
+                        <div class="spread-icon">🃏🃏🃏</div>
+                        <div class="spread-name">三牌阵</div>
+                        <div class="spread-desc">过去、现在、未来</div>
+                    </div>
+                    <div class="spread-card" onclick="selectSpread(5)">
+                        <div class="spread-icon">💕</div>
+                        <div class="spread-name">爱情牌阵</div>
+                        <div class="spread-desc">五张牌探索感情关系</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 & 3: Card Deck -->
+            <div class="tarot-step" id="deckStep">
+                <h2 style="text-align: center; color: #c9a227; font-family: 'Cinzel', serif; margin-bottom: 20px;" id="deckTitle"></h2>
+                <p style="text-align: center; color: #9a8bb8; margin-bottom: 30px;">点击卡牌进行选择</p>
+                <div class="deck-container">
+                    <div class="deck-cards" id="deckCards"></div>
+                </div>
+            </div>
+
+            <!-- Step 4: Interpretation -->
+            <div class="tarot-step" id="interpretStep">
+                <h2 style="text-align: center; color: #c9a227; font-family: 'Cinzel', serif; margin-bottom: 30px;">你的塔罗解读</h2>
+                <div class="selected-cards" id="interpretationCards"></div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn" onclick="resetTarot()">重新占卜</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ ZODIAC SIGNS DATA ============
+        const ZODIAC_SIGNS = [
+            { id: 0, name: '白羊座', enName: 'Aries', symbol: '♈', startMonth: 3, startDay: 21, endMonth: 4, endDay: 19, element: '火象', rulingPlanet: '火星', luckyNumbers: [6, 15, 24], luckyColor: '红色' },
+            { id: 1, name: '金牛座', enName: 'Taurus', symbol: '♉', startMonth: 4, startDay: 20, endMonth: 5, endDay: 20, element: '土象', rulingPlanet: '金星', luckyNumbers: [2, 11, 29], luckyColor: '绿色' },
+            { id: 2, name: '双子座', enName: 'Gemini', symbol: '♊', startMonth: 5, startDay: 21, endMonth: 6, endDay: 20, element: '风象', rulingPlanet: '水星', luckyNumbers: [3, 12, 21], luckyColor: '黄色' },
+            { id: 3, name: '巨蟹座', enName: 'Cancer', symbol: '♋', startMonth: 6, startDay: 21, endMonth: 7, endDay: 22, element: '水象', rulingPlanet: '月亮', luckyNumbers: [2, 11, 20], luckyColor: '银色' },
+            { id: 4, name: '狮子座', enName: 'Leo', symbol: '♌', startMonth: 7, startDay: 23, endMonth: 8, endDay: 22, element: '火象', rulingPlanet: '太阳', luckyNumbers: [1, 10, 19], luckyColor: '金色' },
+            { id: 5, name: '处女座', enName: 'Virgo', symbol: '♍', startMonth: 8, startDay: 23, endMonth: 9, endDay: 22, element: '土象', rulingPlanet: '水星', luckyNumbers: [4, 13, 22], luckyColor: '棕色' },
+            { id: 6, name: '天秤座', enName: 'Libra', symbol: '♎', startMonth: 9, startDay: 23, endMonth: 10, endDay: 22, element: '风象', rulingPlanet: '金星', luckyNumbers: [6, 15, 24], luckyColor: '蓝色' },
+            { id: 7, name: '天蝎座', enName: 'Scorpio', symbol: '♏', startMonth: 10, startDay: 23, endMonth: 11, endDay: 21, element: '水象', rulingPlanet: '冥王星', luckyNumbers: [2, 11, 20], luckyColor: '深红色' },
+            { id: 8, name: '射手座', enName: 'Sagittarius', symbol: '♐', startMonth: 11, startDay: 22, endMonth: 12, endDay: 21, element: '火象', rulingPlanet: '木星', luckyNumbers: [3, 12, 21], luckyColor: '紫色' },
+            { id: 9, name: '摩羯座', enName: 'Capricorn', symbol: '♑', startMonth: 12, startDay: 22, endMonth: 1, endDay: 19, element: '土象', rulingPlanet: '土星', luckyNumbers: [4, 13, 22], luckyColor: '黑色' },
+            { id: 10, name: '水瓶座', enName: 'Aquarius', symbol: '♒', startMonth: 1, startDay: 20, endMonth: 2, endDay: 18, element: '风象', rulingPlanet: '天王星', luckyNumbers: [4, 8, 13], luckyColor: '青色' },
+            { id: 11, name: '双鱼座', enName: 'Pisces', symbol: '♓', startMonth: 2, startDay: 19, endMonth: 3, endDay: 20, element: '水象', rulingPlanet: '海王星', luckyNumbers: [3, 7, 12], luckyColor: '海绿色' }
+        ];
+
+        // ============ FORTUNE TEMPLATES ============
+        // Each entry: [中文简语, English, 中文详细解读]
+        const FORTUNE_TEMPLATES = {
+            love: [
+                ['星光眷顾你的心房，真诚的情感将吸引志同道合的灵魂。', 'The stars bless your heart.',
+                 '金星的光芒此刻正悄悄照耀着你的感情世界。如果你还在等待，那个与你频率相符的人，已在命运的轨道上向你靠近。不必刻意追求，只需保持真实的自我，磁场自然相吸。建议今日多参加社交活动，或与朋友相聚，邂逅就在不经意间。'],
+                ['爱情的种子已在心中萌芽，用耐心和温柔去浇灌。', 'Love\'s seeds germinate; nurture with patience.',
+                 '感情的生长如同春日之花，急不来也慌不得。你与对方之间正在经历一段微妙的升温期——某个细节、某个眼神，都可能是关系深化的契机。对于已有伴侣者，今日适合安排一次真诚的深谈，分享彼此内心深处的期待与感受，感情将因此更加坚固。'],
+                ['你散发的温暖魅力引人注目，单身者将有意外邂逅。', 'Your warm charm attracts; singles may meet someone.',
+                 '你今日的气场格外迷人，举手投足间散发着一种难以言说的吸引力。命运的红线或许正悄然牵动，单身的你不妨在熟悉的场合放开心扉，一段新缘分极可能就此开始。切记：不要用过多的理性分析去抵制直觉，爱情有时候就是那一瞬间的心动。'],
+                ['与伴侣的沟通将到达新高度，理解与信任加深。', 'Communication with partner reaches new heights.',
+                 '今日的星象特别有利于深层次的情感交流。那些积压心底许久却没机会说出口的话，此刻说出来最容易被对方接受。无论是久悬未决的小矛盾，还是对未来的共同规划，都可以在今天坦然敞开来谈。真正的亲密关系，是建立在彼此了解而非相互猜测之上的。'],
+                ['爱情需要勇气和承诺，这正是你将获得的力量。', 'Love requires courage—the strength you shall find.',
+                 '感情中某个关键性的决定，可能正在等待你的抉择。星象显示，你的内心其实已有答案，只是缺少一点勇气去迈出那一步。无论是表白、求婚，还是选择放下一段不再适合的关系，今天的能量都在支持你做出真实的选择。跟随内心，命运会在前方为你铺路。'],
+                ['爱的信号已在空气中弥漫，用心感受就能捕捉。', 'Love\'s signals fill the air; feel them deeply.',
+                 '有时候爱意不是用言语表达的，而是藏在对方的一个行为细节、一条未回复的消息、或是一杯无声递来的水中。今日的你感知力特别敏锐，建议你停下脚步，细细品味身边人传递给你的情感信号。感情的深度，往往在这些被日常淹没的小事里悄悄积累。'],
+                ['旧伤已在愈合，心门将再度向爱敞开。', 'Old wounds heal; your heart opens to love again.',
+                 '过去的失落与遗憾，如今在星光的温柔治愈下渐渐消散。你会发现，自己对爱情的恐惧在减少，对关系的期待在回暖。这是一个重新出发的好时机——不是急于填补内心的空缺，而是以更成熟的心态去迎接下一段真实的相遇。放下过去，才能拥抱未来。'],
+                ['双方的默契在某个瞬间会达到惊人的共鸣。', 'A moment of stunning resonance awaits you both.',
+                 '感情中的默契，是两颗心靠近时才会产生的奇妙频率。今日你可能会体验到与对方心灵相通的片刻——一个未说出口的念头被对方说了，一个习惯的动作被对方主动迎合。珍惜这样的时刻，它是感情最真实的馈赠，也是两个人走向更深处的信号。'],
+                ['感情路上需先爱自己，内外充盈才能吸引真爱。', 'Love yourself first; inner fullness attracts true love.',
+                 '星象提醒你：爱情的根基，是一个完整的自己。今日适合把注意力拉回到自身——做一件让自己开心的事，花时间整理情绪，或者审视自己在感情中的模式与期待。当你不再将爱情视为生命的全部，而是作为美好的加分项来对待，真正匹配你的人反而会自然出现。'],
+                ['感情考验来临，以平静之心便可化险为夷。', 'Love\'s test arrives; calm heart turns tides.',
+                 '感情中出现了一些令你不安的小波折？星象显示这不过是一次短暂的磨合期考验，而非关系本质的动摇。建议今日避免在情绪激动时做出重大决定，给彼此一些空间和时间。待风波平息，你会发现这次小小的考验反而成为感情升温的转折点。'],
+                ['爱如星河，浩瀚而深远，值得你全力以赴。', 'Love like the galaxy—vast and deep, worth it all.',
+                 '此刻星盘中的金星与木星形成吉相，是感情运势中难得的扩展期。无论你现在处于哪个感情阶段，都值得以开放而期待的心去面对。已有伴侣者可借此时机共同规划一段旅行或尝试新事物；单身者则应拓展社交圈，主动走进更大的生活场景。'],
+                ['感情中保持适当距离，给爱情呼吸的空间。', 'Give love breathing space; distance keeps magic alive.',
+                 '再深厚的感情，也需要各自独立的时间和空间来滋养。今日星象提示你：爱不是占有，而是陪伴与成全。如果你近来与对方关系略显紧绷，不妨各自做一件自己喜欢的事，给彼此一些喘息的空间。当两人重新相聚时，那股久违的新鲜感会悄然归来。']
+            ],
+            career: [
+                ['职场中的贵人相助，你的才华将被看见和认可。', 'Mentors support you; your talents will be seen.',
+                 '职场中某位有影响力的人，正在留意你的表现。今日是让自己闪光的好时机——在会议上勇于发言，或将一项已完成的工作主动呈现出来。不必担心抢风头，你的真诚态度会让人感到舒适而非威胁。机遇往往藏在被看见的那一刻。'],
+                ['新的项目机会降临，这是展现实力的舞台。', 'New project opportunities—a stage for your skills.',
+                 '一个新的任务或项目正在向你靠近，或许今天就会出现。星象显示这并非普通差事，而是可以在职业路上留下印记的重要机遇。建议你做足准备，主动争取，哪怕超出舒适区也值得尝试。踏出这一步的人，往往比那些观望的人早一步到达成功。'],
+                ['坚持与努力将带来晋升的可能，不要懈怠。', 'Persistence brings promotion; stay focused.',
+                 '你在职场的努力已被记录在案——无论是频繁的加班、认真完成的细节，还是平时不声不响的付出，都没有被忽视。晋升或加薪的消息可能还需要一段时间才会正式到来，但今日的坚守是积累声望最关键的阶段。千里之行始于足下，切勿因为短期看不到成果而放弃。'],
+                ['团队合作顺利，你的领导力将闪耀光芒。', 'Team collaboration flows; your leadership shines.',
+                 '今日你在团队中的协调能力将得到充分展现。同事们对你的信任和配合度明显提升，这是你发挥影响力的最好时机。无论是带领一次小组讨论，还是在项目推进中主动承担责任，你的领导气质都会自然流露，并获得他人的肯定与追随。'],
+                ['创意的泉源喷涌而出，新想法会为你增分。', 'Creativity flows; fresh ideas will impress.',
+                 '今日你的思维格外活跃，脑中涌现的灵感和想法值得认真记录下来。哪怕是看似天马行空的创意，也可能在细化后成为令人眼前一亮的方案。建议今天专门留出时间做头脑风暴，或与思维开放的同事碰撞火花。创意力是你此刻最大的职场武器。'],
+                ['逆境中隐藏着机遇，困境正是蜕变的起点。', 'Adversity hides opportunity; hardship starts growth.',
+                 '眼前的工作压力或挑战，并非阻碍，而是一次蜕变的邀请。星象显示你正处于职业生涯的一个重要转折点——越是困难的时候坚持住，越能在日后建立起让旁人羡慕的硬实力。此刻不是退缩的时机，而是深蹲再起跳的蓄力期。保持专注，成功就在不远处。'],
+                ['细节决定成败，今日宜精雕细琢手头工作。', 'Details decide success; polish your work today.',
+                 '今日特别适合做精细化的工作——仔细检查一份报告、完善一个方案的细节、或者梳理项目中存在的漏洞。此刻的谨慎态度，将为你在关键时刻避免失误，并让合作方看到你专业负责的一面。完美主义者今天最如鱼得水。'],
+                ['人脉是无形的财富，今日广结善缘。', 'Networks are wealth; forge bonds today.',
+                 '职场不仅靠能力，还靠连接。今天的星象鼓励你主动打开社交边界——约一位许久未联络的业内朋友喝咖啡，或参加一个行业交流活动。这种看似无目的的人脉经营，往往在日后的关键时刻发挥意想不到的作用。今日种下的种子，他日必有收获。'],
+                ['职业方向的迷茫会在今日逐渐清晰。', 'Career confusion clears; direction emerges today.',
+                 '如果你近来对职业方向感到困惑，或者对现有的工作状态感到迷失，今日的星象将带来一道清明之光。一次偶然的对话、一篇无意间读到的文章，或者内心深处一个安静的声音，都可能成为指引你找到方向的线索。保持敏感和开放，答案正在到来的路上。'],
+                ['过去的努力正在结出果实，耐心等待收获。', 'Past efforts bear fruit; harvest awaits patiently.',
+                 '你长期付出的努力，终于开始在职业层面悄悄转化为成果。可能是一个项目顺利收尾，可能是客户关系进入稳定期，也可能是某项技能经过磨练终于达到质的飞跃。今日适合做一次工作复盘，看看自己走了多远，然后带着成就感迈向下一个阶段。'],
+                ['职场风云变幻，保持冷静才能掌握先机。', 'Workplace shifts; calm mind seizes advantage.',
+                 '职场环境近来出现了一些变化——人事调动、政策调整，或是竞争格局的改变。此刻最重要的不是随波逐流，而是保持冷静，观察全局，找到其中对自己最有利的切入点。那些在风云中保持理性的人，最终往往是秩序重建后的受益者。'],
+                ['今日之学习，是明日之跨越。', 'Today\'s learning is tomorrow\'s leap forward.',
+                 '职场的竞争归根结底是学习速度的竞争。今日的星象特别适合充电学习——报名一门课程、阅读一本专业书籍、或者向一位经验丰富的前辈请教。不要因为"没时间"而推迟学习计划，今日播下的知识种子，将在最需要的时候开花结果。']
+            ],
+            finance: [
+                ['财运亨通，意外之喜可能降临，谨慎理财最重要。', 'Fortune smiles; unexpected gains may come.',
+                 '今日财运星高照，可能有意外收入或额外奖励的惊喜降临。但星象也提醒你：好运气不等于可以随意挥霍，越是财运旺盛的时候越要建立健康的理财习惯。建议将意外所得的一部分存入储蓄或投资，让财富在流动中持续积累，而非昙花一现。'],
+                ['投资计划将带来稳定增长，耐心是关键。', 'Investment plans grow steadily; patience is key.',
+                 '已有投资计划的你，今日可能迎来一个令人振奋的进展信号。星象显示长线投资的方向是正确的，需要的只是多一点耐心。不要因短期的小幅波动而轻易调整策略，真正的财富积累从来不是一蹴而就的。如果你还在观望，这个时期适合认真做功课而非盲目入场。'],
+                ['消费需谨慎，储蓄的力量在于长远眼光。', 'Spend wisely; saving power lies in long-term vision.',
+                 '今日你可能面临一些消费诱惑——限时优惠、冲动购物的念头，或者朋友的推荐。星象建议你在消费前多问自己一句："这是我真正需要的，还是我当下想要的？"两者之间的差距，正是储蓄得以积累的空间。节制不是吝啬，而是对未来自己的尊重与投资。'],
+                ['财运平稳，稳扎稳打才是上策。', 'Steady finance; consistent efforts prevail.',
+                 '今日财运属于平稳期，没有大起大落。这种状态其实弥足珍贵——它意味着你的财务基础是稳固的。建议利用这段平静期做一次财务审查：查看月度支出是否合理、是否有可优化的固定费用，或者调整一下资产配置的比例。稳定中隐藏着可以改进的细节。'],
+                ['幸运女神垂青，赚钱机会悄然而至。', 'Fortune favors you; earning opportunities approach.',
+                 '今日你的商业嗅觉特别敏锐，可能会发现一个此前忽视的赚钱机会或变现渠道。无论是副业尝试、技能变现，还是一个小小的合作邀约，都值得认真考虑。星象建议你大胆迈出第一步，哪怕规模很小，也是开启财富新流动的重要起点。'],
+                ['财务焦虑需要用行动化解，做计划比担心有效。', 'Action beats worry; plan to ease financial stress.',
+                 '如果你近来有财务上的压力或焦虑，今日星象的信息是：与其在脑海中反复盘算，不如拿出纸笔把收支列出来，面对真实的数字。焦虑往往源于模糊，而清晰往往带来力量。制定一份简单的财务改善计划，哪怕每月多存一点，也会让你的内心安稳许多。'],
+                ['适当投资自己，是最高回报的财务决策。', 'Investing in yourself yields the highest returns.',
+                 '最值得花钱的地方，有时候不是资产，而是自己。今日星象鼓励你在教育、健康、或者个人成长方面进行一笔投入——一门课程、一次专业咨询、或者改善工作环境的小物件。这类投资看似无形，却能在日后的收入能力上产生真实可见的回报。'],
+                ['贵人财运相助，今日合作谈判宜进行。', 'Benefactor energy supports; negotiate partnerships.',
+                 '今日有贵人财运的加持，特别适合进行商务洽谈、合同签署或者合作伙伴关系的推进。你的表达方式今天格外有说服力，对方也更容易被你的诚意打动。把握这个窗口期，主动推进那些一直悬而未决的财务合作，胜算比平时高出许多。'],
+                ['破财小心，今日宜守不宜攻。', 'Guard your wallet; conserve rather than expand.',
+                 '今日星象提示财务上宜守不宜冲。一些看似诱人的投资机会可能暗藏风险，合同细节也需要格外仔细核查。建议延迟非必要的大额支出，暂缓冒险性的财务决策。这不是胆怯，而是在不利时机保全实力，等待更好的时机再出手。'],
+                ['意外支出可能出现，提前预备应急储备金。', 'Unexpected costs may arise; build emergency funds.',
+                 '星象提示今日或近期可能出现计划外的花销——车辆维修、医疗费用，或是生活中突发的需求。这提醒我们：应急储备金不是可有可无的选项，而是财务安全的最基本屏障。建议你评估目前的储蓄是否足以应对3-6个月的基本支出，若不足请优先补足。'],
+                ['财富心态决定财富流向，今日优化金钱观。', 'Money mindset shapes wealth flow; refine yours.',
+                 '一个人对金钱的信念和态度，深刻影响着财富的流向。今日适合审视自己的金钱观——你是否相信自己值得拥有财富？你在金钱上是否有恐惧或匮乏感？试着用更丰盛的视角看待金钱：它是能量的流动，是价值交换的媒介，而非压力的来源。'],
+                ['长期目标明确，财务规划今日重新出发。', 'Clear long-term goals; financial planning restarts.',
+                 '你是否已经为自己的财务未来设定了清晰的目标？今日星象特别适合做一次长期财务规划——5年后你希望实现什么？是购置房产、退休储备，还是实现某个人生梦想？把目标具体化、可量化，然后从今日起用每一个财务决定来靠近它。清晰的目标是财富聚集的磁铁。']
+            ],
+            health: [
+                ['身体状态良好，坚持锻炼和好的生活习惯。', 'Health is good; maintain exercise and habits.',
+                 '今日你的身体能量处于一个相当不错的状态，抵抗力和活力都在线。这是坚持健康习惯的好时机——今天的规律运动、均衡饮食，将在未来几周内持续发挥正面效应。不要因为"感觉良好"就放松对健康的关注，正是在状态好的时候打下的基础，才是日后抵御风险的底气。'],
+                ['精力充沛，适合开展新的健身计划。', 'Energy abounds; perfect for new fitness routines.',
+                 '你今日精气神饱满，是尝试一项新运动或开启新健康计划的绝佳时机。无论是跑步、游泳、瑜伽还是力量训练，今天的行动力和意志力都能帮你顺利踏出第一步。建议不要只停留在"计划要运动"的想法上，立刻起身，哪怕只是20分钟的步行，也是对身体最好的馈赠。'],
+                ['需多注意休息，及时释放压力。', 'Rest is essential; release stress and recharge.',
+                 '星象显示你近期可能承受了相当大的精神和身体压力，身体在以各种方式向你发出需要休息的信号。今日建议减少不必要的社交和工作任务，主动为自己创造安静的独处时光。一段深度睡眠、一次舒缓的冥想，或是在自然中的漫步，都能让你的身心得到真正的恢复。'],
+                ['提高免疫力关键期，营养与睡眠优先。', 'Boost immunity; nutrition and sleep come first.',
+                 '免疫力是身体最忠诚的守护者，而它的强弱取决于你日常的生活质量。今日星象提醒你：充足的睡眠（7-8小时）、丰富的维生素摄入（多吃蔬果）、以及减少熬夜和过度刺激，是当下最迫切需要改善的三个维度。小小的生活调整，将在未来数月内显著提升你的整体健康状态。'],
+                ['心灵平和，身体自然轻盈健康。', 'Inner peace brings outer health and lightness.',
+                 '情绪与身体健康之间的关系比我们想象的更为深刻。长期的焦虑、愤怒或压抑，会在身体上留下真实的痕迹。今日的星象特别适合做内心的疏导工作——写日记、冥想、与信任的人倾诉，或只是静静地感受当下。当内心的水面趋于平静，你会发现身体也随之变得更加轻盈。'],
+                ['户外活动充电，大自然是最好的医药。', 'Outdoor activity recharges; nature is medicine.',
+                 '今日星象鼓励你走出室内，去感受自然的疗愈力量。无论是公园里的早晨散步、山间的徒步，还是只是在阳光下坐上片刻，与自然的接触都能显著改善你的心理和生理状态。研究表明，每天只需20分钟的户外时光，就能大幅降低皮质醇（压力激素）水平，让整个人重焕活力。'],
+                ['饮食调整期，减少刺激性食物有益健康。', 'Adjust diet; reduce stimulants for better health.',
+                 '今日的身体状态对饮食的变化格外敏感。建议减少咖啡因、辛辣食物和高糖饮料的摄入，尝试用温热的花草茶或温水代替。肠胃是情绪的第二大脑，照顾好消化系统的健康，你会发现整个人的精神状态也随之改善。今日的饮食选择，是对未来健康的直接投资。'],
+                ['睡眠质量待提升，建立规律作息是关键。', 'Improve sleep quality; build a consistent schedule.',
+                 '如果你近来睡眠浅、难以入睡或容易早醒，今日星象建议你认真审视自己的作息习惯。睡前一小时减少屏幕暴露，保持卧室的凉爽与黑暗，并尝试在固定时间上床和起床。高质量的睡眠不仅恢复体力，更是大脑进行记忆整合和免疫修复的黄金时间，其价值难以替代。'],
+                ['关注心理健康，情绪是身体的晴雨表。', 'Mind your mental health; emotions mirror body.',
+                 '今日请给自己的情绪状态打个分：你有多久没有真正开心地大笑过？有多久没有享受一件纯粹为自己而做的事？心理健康的忽视，往往比生理疾病更难察觉，却同样需要认真对待。建议今日安排一件能让你真正感到快乐的活动，把"自我照顾"从愿望清单移到今日待办。'],
+                ['眼睛和颈椎需要关注，久坐后记得活动。', 'Care for eyes and neck; move after sitting long.',
+                 '现代生活中，眼睛疲劳和颈椎不适几乎成了全民困扰。今日星象特别提示你：每工作60分钟，记得起身活动5分钟，做做颈部拉伸和眼部放松练习。这些看似微小的习惯，长期坚持下去，将在很大程度上预防慢性颈椎病和视力下降，是投入最小、回报最高的健康策略。'],
+                ['水分补充至关重要，今日多饮温水。', 'Hydration is vital; drink more warm water today.',
+                 '你今日的身体可能正处于轻微缺水状态，这会导致注意力涣散、情绪低落，甚至误判为疲倦感。建议今日有意识地增加饮水量，目标是2升温水（非冰饮），分散在一天中均匀饮用。良好的水分状态能改善血液循环、促进代谢、提升皮肤弹性，是最简单却常被忽视的健康法则。'],
+                ['放慢节奏，给身体与灵魂一个喘息的机会。', 'Slow down; give body and soul space to breathe.',
+                 '在这个一切都在提速的时代，学会放慢节奏是一种智慧。今日的星象建议你做一件事：拒绝那些不必要的紧迫感，把"等一下"改成"现在就做"，把"再快一点"改成"做好就够"。身体的慢性损耗往往来自长期的过度运转，给自己适度的喘息，才能走得更稳、更远。']
+            ]
+        };
+
+        // ============ DAILY ENERGY TEMPLATES ============
+        const DAILY_ENERGY_TEMPLATES = [
+            {
+                theme: '木星扩张日',
+                keywords: ['机遇涌现', '扩展边界', '慷慨心态', '乐观前行'],
+                text: '今日宇宙间涌动着一股扩张与繁荣的能量，木星的慷慨光芒笼罩四方。无论你身处哪个星座，今天都是打破惯例、勇于尝试的吉日。那些一直在计划却迟迟未行动的事情，今日迈出第一步最为有力。人与人之间的连接也特别顺畅，合作洽谈、朋友叙旧，都会在今天产生意想不到的温暖回响。',
+                advice: '今日宜：启动新计划，拓展人脉，做慷慨之举。忌：过度消费，自我封闭。'
+            },
+            {
+                theme: '金星和谐日',
+                keywords: ['美与爱', '和谐共鸣', '艺术灵感', '心灵滋养'],
+                text: '金星今日以最温柔的姿态降临，空气中弥漫着爱与美的能量。这是一个适合感受美好事物的日子——欣赏艺术、品尝美食、与心爱之人共度时光，都会在今天得到加倍的享受。感情中的小摩擦在这种能量下容易化解，人与人之间的理解和共情能力也处于高峰状态。',
+                advice: '今日宜：表达情感，享受艺术，安排约会。忌：争论是非，强行决策。'
+            },
+            {
+                theme: '火星行动日',
+                keywords: ['行动力爆棚', '意志坚定', '突破障碍', '激情四射'],
+                text: '火星以燃烧的热情席卷今日能量场，行动力与意志力被调至最高频率。那些拖延已久的任务、需要勇气才能迈出的一步，今天的能量可以帮你突破心理防线。竞争和挑战在今日反而是滋养成长的养分，不要回避，直面它，你会发现自己比想象中更有力量。',
+                advice: '今日宜：攻克难题，体育运动，主动争取。忌：鲁莽冲动，与人争吵。'
+            },
+            {
+                theme: '水星思维日',
+                keywords: ['思维活跃', '沟通清晰', '信息流通', '洞察力强'],
+                text: '水星在今日点亮你的思维空间，逻辑清晰、表达流利，是处理复杂信息和重要沟通的最佳时机。重要的合同签署、商务谈判、学习新知识，都适合在今日进行。你的语言今天特别有穿透力，能精准传达意图，也容易被他人接受和理解。',
+                advice: '今日宜：书写表达，学习充电，签署文件。忌：散漫拖延，信息过载。'
+            },
+            {
+                theme: '月亮感知日',
+                keywords: ['情感敏锐', '直觉涌现', '内省时刻', '家庭温暖'],
+                text: '今日月亮能量居主导，你的情感世界格外细腻而丰富。直觉和内在感知力处于一年中的高峰状态，那些无法用理性解释的感觉，今天尤其值得信任。适合回顾过去、整理内心，与家人或亲密朋友共享一个温暖的时刻。创作者今日的灵感将如涌泉。',
+                advice: '今日宜：内省写作，家庭相聚，冥想休息。忌：强行理性，做重大决策。'
+            },
+            {
+                theme: '土星专注日',
+                keywords: ['深耕专注', '纪律精进', '长远布局', '稳健前行'],
+                text: '土星的纪律能量在今日提供了坚实的支撑，这是一个非常适合认真工作、打磨细节、建立长期计划的日子。浮躁与冲动在这种能量下自动消退，你会发现自己比平时更有耐心，也更能专注于手头的事务。今日播下的勤奋种子，将在数月后结出令人满意的果实。',
+                advice: '今日宜：深度工作，制定计划，补足短板。忌：分心娱乐，急于求成。'
+            },
+            {
+                theme: '天王星突破日',
+                keywords: ['灵光一闪', '打破常规', '意外转机', '创新思维'],
+                text: '天王星的电光石火在今日划过能量场，带来了突如其来的洞见与变化。那些一直困扰你的问题，今天可能会以一种出人意料的方式找到解法。旧的思路行不通，换个角度，你会看到全新的可能。保持头脑开放，今日的"意外"往往是命运为你准备的礼物。',
+                advice: '今日宜：头脑风暴，接受改变，尝试新事物。忌：固执己见，抵制变化。'
+            },
+            {
+                theme: '海王星灵感日',
+                keywords: ['梦境启示', '创意涌动', '灵性感悟', '慈悲心升'],
+                text: '海王星以梦幻而柔和的能量笼罩今日，现实与灵性之间的边界变得透明而美丽。这是艺术家、写作者、音乐人最爱的能量——灵感像潮水般涌来，只需打开接收的通道。对他人的同理心和慈悲感也在今天特别强烈，助人之举在此刻有着非同寻常的深意和回响。',
+                advice: '今日宜：艺术创作，冥想祈祷，帮助他人。忌：签署合同，过于相信直觉而忽视实际。'
+            },
+            {
+                theme: '冥王星蜕变日',
+                keywords: ['深度转化', '释放旧我', '力量重生', '直面真相'],
+                text: '冥王星以深沉的力量推动今日的能量走向转化与重生。那些阻碍你前行的旧有模式、对过去的执念，或是一段已经走到尽头的关系——今日的能量支持你勇敢面对和放手。蜕变并不轻松，但在这种支持性的宇宙能量下，你有足够的内在力量完成这次跨越。',
+                advice: '今日宜：心理梳理，结束旧阶段，做艰难但必要的决定。忌：逃避现实，沉溺过去。'
+            },
+            {
+                theme: '太阳荣耀日',
+                keywords: ['活力四射', '自信提升', '目标清晰', '光芒绽放'],
+                text: '太阳以最饱满的能量照耀今日，生命力、自信心和目标感都被调到最高频率。今天是展现自我、大声说出你的想法和需求的好时机。你的存在本身就是一种力量，不要把光芒藏在角落，让它自然绽放。重要的展示、演讲或自我介绍，今日进行效果最佳。',
+                advice: '今日宜：表现自我，领导他人，设定目标。忌：过度谦虚，自我怀疑。'
+            },
+            {
+                theme: '星象和谐日',
+                keywords: ['万事顺遂', '内外平衡', '顺势而为', '平静致远'],
+                text: '今日各大行星处于相对和谐的状态，宇宙能量的流动平稳而顺畅。这是一个"顺势而为"的好日子——不必强行推进困难的事，也不必焦虑那些还未发生的问题。把握当下每一个流动的机遇，以平和而专注的心态去应对今天遇到的每一件事，自然能收到意外之喜。',
+                advice: '今日宜：顺水推舟，享受当下，感恩已有。忌：强行干预，过度焦虑。'
+            },
+            {
+                theme: '逆行审视日',
+                keywords: ['回顾复盘', '慎重决策', '内在整合', '延迟判断'],
+                text: '今日宇宙能量偏向内省与审视，而非外在的扩张行动。一些事情可能出现延迟、误解或反复，这不是运气不好，而是宇宙在邀请你放慢脚步、重新审视。利用这段时间做内在的清理和整合——检视过去的决策，梳理尚未完成的事项，让自己以更清醒的状态迎接接下来的前进期。',
+                advice: '今日宜：反思复盘，完善旧项目，内心独处。忌：启动新项目，做重大承诺。'
+            },
+            {
+                theme: '大地能量日',
+                keywords: ['脚踏实地', '稳固根基', '身心安定', '自然疗愈'],
+                text: '今日的能量来自大地，踏实、稳固、充满滋养。无论近来经历了多少起伏，今天都是重新找回内心根基的机会。接触自然——赤脚踏上草地、坐在树旁、做一顿丰盛的家常饭——都能帮助你与最真实的自己重新连接。踏实存在，是今日最大的智慧。',
+                advice: '今日宜：接触自然，居家整理，做手工或料理。忌：过度规划，脱离当下。'
+            }
+        ];
+
+        // ============ SIGN TODAY SUMMARIES ============
+        // 每个星座12条，按星座索引0-11
+        const SIGN_TODAY_SUMMARIES = [
+            // 0 白羊座
+            ['今日白羊座的行动力如火焰般旺盛，你的直觉和执行力都处于高峰状态。宇宙在为你打气，勇敢出击，不要犹豫。',
+             '今日白羊座容易感到一股难以抑制的冲劲，这是天象赐予你的礼物。用这份能量去突破一个一直在拖延的目标，而非分散在琐事上。',
+             '白羊座今日的磁场格外强烈，你走进任何场合都会自带一种无法忽视的存在感。这是建立印象的最佳时机，主动出击效果最好。',
+             '今日白羊座可能感到些许浮躁，这是多余能量在寻找出口。建议通过运动或创造性活动将其转化，不然容易与人产生不必要的摩擦。',
+             '宇宙今日特别眷顾白羊座，你的判断力和行动力同时在线，是难得的"说到做到"之日。抓住这个窗口推进重要事务。',
+             '今日白羊座内心深处有一股渴望证明自己的冲动，与其向外证明，不如用成果说话。将这份激情转化为实际行动，今日大有可为。'],
+            // 1 金牛座
+            ['金牛座今日的感官世界特别丰富，对美好事物的感知力超强。把握这股鉴赏能量，让生活中的小细节成为你的愉悦来源。',
+             '今日金牛座的稳定磁场发挥着重要作用，你的冷静和判断力在今天成为周围人的依靠。学会欣赏自己这份沉稳的价值。',
+             '金牛座今日可能需要面对某个关于"放手"的课题——对旧习惯、旧观念，或旧关系的执念需要松动。放开才能接纳新的丰盛。',
+             '今日金牛座财运特别有感觉，某个理财或增收的想法值得认真记录下来，在评估后逐步推进。',
+             '今日金牛座的安全感需要被认真滋养。花时间整理家居环境，或者烹制一顿用心的料理，都能帮你找回那种踏实自在的状态。',
+             '金牛座今日不宜被他人的紧迫感打乱节奏，坚守自己的步伐和判断，反而能在今天得到最好的结果。'],
+            // 2 双子座
+            ['双子座今日思维飞速旋转，灵感和创意不断涌现。抓住那些一闪而过的想法，记录下来——今天的灵光可能是未来的蓝图。',
+             '今日双子座的社交能量全开，你的语言魅力和沟通技巧都处于最佳状态，是建立新连接或深化旧关系的绝佳时机。',
+             '双子座今日可能在多个选项之间反复权衡，难以下定决心。建议给自己设一个截止时间，强制决策，行动比等待更有收益。',
+             '今日双子座的好奇心会带你进入一个新的知识领域，顺着这份兴趣深入探索，说不定会开启一段新的热情或技能。',
+             '双子座今日的内心比外表更需要关注。在热闹的社交表层之下，有没有什么情绪需要独处时好好消化？留出时间给内心的你。',
+             '今日双子座的多才多艺在某个场合将大放光彩，别谦虚——展示你独特的视角和跨领域的思考，这正是你最宝贵的优势。'],
+            // 3 巨蟹座
+            ['巨蟹座今日的情感感知力如海潮般深远，你能感受到他人未曾言说的情绪。用这份共情力量去温暖身边需要支持的人。',
+             '今日巨蟹座家庭能量特别强，无论是与家人的联系还是对"家"这个概念的渴望，都值得今天认真滋养和关注。',
+             '巨蟹座今日可能会因为他人的一个细微举动而内心起伏，记得提醒自己：不是所有的事情都与你有关，减少过度解读。',
+             '今日巨蟹座的创作灵感藏在情感深处，试着把内心的感受转化为文字、画作或音乐，你会惊讶地发现这是最有力量的表达。',
+             '巨蟹座今日的直觉非常可靠，特别是在关于人的判断上。相信你的第一感觉，它往往比理性分析更接近真相。',
+             '今日巨蟹座需要在照顾他人与照顾自己之间找到平衡。给自己先充满电，才能持续成为他人的温暖港湾。'],
+            // 4 狮子座
+            ['狮子座今日光芒四射，你走进的任何场合都会成为焦点。这不是偶然，而是你真实能量的自然流露——尽情绽放吧。',
+             '今日狮子座的创造力和表达欲望特别旺盛，把内心想说的话大声说出来，把想做的事立刻动手，今天的你特别有感召力。',
+             '狮子座今日可能需要学习一件事：真正的强大不是从不需要帮助，而是懂得适时接受他人的支持。今天试着放下自尊，接受一份善意。',
+             '今日狮子座的领导气质自然流露，同事或朋友会不自觉地向你靠近、征求你的意见。担起这份责任，同时记得倾听每一个声音。',
+             '狮子座今日对认可和欣赏的需求比平时更强，不妨主动寻求正向反馈，或者花时间欣赏自己已经取得的成就，滋养内心的自信。',
+             '今日狮子座的热情是感染周围人的最强武器。用你的乐观和活力去点燃身边人的积极性，你的影响力今天会超出你的预期。'],
+            // 5 处女座
+            ['处女座今日的分析能力达到巅峰，那些复杂的问题在你面前变得清晰可解。用这份洞察力专注于一件最重要的事上。',
+             '今日处女座的细心程度令人叹服，但提醒自己：完美的敌人是完成。在追求细节的同时，不要忘记整体推进的节奏。',
+             '处女座今日可能承担了过多不必要的责任，学会说"不"也是一种能力。保护好自己的精力边界，才能把最重要的事情做好。',
+             '今日处女座的实用智慧特别突出，你能看到别人忽视的解决方案。主动分享这些洞见，你的建议在今天会特别有价值。',
+             '处女座今日适合做一次系统性的梳理——无论是工作清单、个人目标还是生活习惯，清理冗余，精简核心，你会感到前所未有的轻盈。',
+             '今日处女座的身体感知力特别灵敏，适合关注健康细节，调整作息和饮食结构。小小的改变，将带来显著的长期收益。'],
+            // 6 天秤座
+            ['天秤座今日的和谐能量弥漫四周，你的存在让周围的氛围变得更加舒适和平衡。这份影响力是你独特而珍贵的天赋。',
+             '今日天秤座面临某个需要做出选择的时刻，星象建议：与其追求所谓完美答案，不如选择一个"足够好"的方向并全力推进。',
+             '天秤座今日的审美灵感极为活跃，无论是穿搭、空间布置还是创意设计，今天的你品味超群，值得大胆展示。',
+             '今日天秤座的外交天赋大放光彩，你擅长在不同立场之间找到平衡点。无论是谈判、调解还是团队协调，今日出手效果最佳。',
+             '天秤座今日需要特别关注内心真实的需求，而非总是优先考虑他人的感受。你的需要同样值得被认真对待和满足。',
+             '今日天秤座的社交能量满格，与老朋友重聚或者参加文化艺术类活动，都会让你的心情和灵感得到双重充电。'],
+            // 7 天蝎座
+            ['天蝎座今日的洞察力如同X光，能穿透表象看见本质。用这份能力去理解一个复杂的局势或人物，你会得到意外的清醒认知。',
+             '今日天蝎座内心深处有一股蜕变的冲动，某个旧的信念或模式正在松动。不要阻止这个过程，放手让它自然发生。',
+             '天蝎座今日的专注力无人能及，适合深度攻克一个需要全情投入的项目或课题，你在这种状态下的产出将远超平时。',
+             '今日天蝎座的情感强度可能较高，这是你感受生命深度的方式。但记得在强烈情绪中保留一丝清醒，不要被感受完全淹没。',
+             '天蝎座今日在人际关系中的直觉特别准确，那些你不太确定是否可以信任的人，今天会给你更多信息去判断。',
+             '今日天蝎座适合探索内心的幽深地带——冥想、写日记、或与心理咨询师交谈，都是让潜意识浮现的有效方式。'],
+            // 8 射手座
+            ['射手座今日的自由渴望如风般奔涌，就算不能真正踏上旅途，也可以通过阅读、学习或与远方朋友的对话来满足灵魂的探索需求。',
+             '今日射手座的乐观能量是今日整个能量场中最高频的存在。你的笑声和正向思维，会如阳光般驱散周围人心中的阴霾。',
+             '射手座今日容易因为"只看大局"而忽略细节，但今天恰恰有一些细节是不可忽视的。多花一点耐心在这些地方，会避免不必要的麻烦。',
+             '今日射手座的哲学思维特别活跃，你会不断地问"为什么"和"更深层的意义是什么"。这种追问是你最大的智慧来源，顺着它走。',
+             '射手座今日在某个事情上需要做出承诺，虽然这对你来说有些挑战，但星象显示这一次的坚守将带来意义深远的成果。',
+             '今日射手座适合与来自不同背景的人交流，多元的视角能激发你的思维火花，也可能带来意想不到的机遇或信息。'],
+            // 9 摩羯座
+            ['摩羯座今日的意志力和专注度处于顶峰，任何需要长期坚持的目标，今天都是最适合强化执行的时机。',
+             '今日摩羯座的责任感驱动着你向前，但请记得：真正的成功不仅是外在成就，还包括内心的满足感。今天留点时间问问自己是否真的快乐。',
+             '摩羯座今日在职业判断上特别准确，你能清晰看到哪些努力方向真正有价值，哪些是在消耗时间。做出果断取舍，聚焦核心。',
+             '今日摩羯座的领导魅力源自你的稳健和言出必行。他人对你的信任正在积累，不要急于展示，让成果为你发声。',
+             '摩羯座今日可能感到来自多方面的压力，这时候尤其需要回到自己的节奏——你一步一步走到今天的方式，依然是最可靠的前进路径。',
+             '今日摩羯座适合做一次长远规划的复盘，检视自己的5年目标是否需要调整，以及当前的行动是否真正在向那个方向靠近。'],
+            // 10 水瓶座
+            ['水瓶座今日的创新思维犹如闪电，你看到的解决方案往往是别人还没想到的角度。大胆分享你的想法，今日会有人真正理解你。',
+             '今日水瓶座对社会议题和集体福祉的关怀特别强烈，适合参与有意义的团体活动，或为某个你认同的理念贡献一份力量。',
+             '水瓶座今日可能感到与众不同带来的某种孤独感，这是创新者常见的体验。记住：走在时代前面的人，注定需要一些时间等待他人跟上。',
+             '今日水瓶座的技术和理性能力全力加持，适合解决复杂的系统性问题，或者把一个抽象的概念落地成具体可行的方案。',
+             '水瓶座今日渴望打破某个固化的规则或惯例，这种冲动值得尊重，但星象建议以建设性的方式去推动改变，而非单纯的反叛。',
+             '今日水瓶座的人道主义关怀令人动容，你愿意为了更大的整体利益付出个人代价。这份精神是你灵魂中最闪耀的宝石。'],
+            // 11 双鱼座
+            ['双鱼座今日的灵性感知力达到顶点，梦境、直觉和某些无法解释的"知道"感，都是宇宙在向你传递信息，值得认真聆听。',
+             '今日双鱼座的慈悲心如海洋般深广，你对身边人的痛苦感同身受。这是美德，但记得保护好自己的情绪边界，不要被他人的情绪淹没。',
+             '双鱼座今日的艺术灵感如泉涌，无论是音乐、绘画、写作还是摄影，今天的创作都会带有一种触动灵魂的特质。',
+             '今日双鱼座在某个关系或情境中可能看到了他人看不见的深层真相。用温柔而不带评判的方式去处理这个敏感的认知。',
+             '双鱼座今日容易逃进梦想世界，这固然美好，但星象提醒你：实现梦想需要一个关键步骤——把它们落地。今天写下一个具体的行动计划。',
+             '今日双鱼座的治愈能量特别强，你的陪伴对身边的人来说就是一剂良药。不必做什么，只是真实地在场，就足以让人感到温暖和被理解。']
+        ];
+
+        // ============ FORTUNE TIPS ============
+        const FORTUNE_TIPS = [
+            // 0 白羊座
+            ['今日行动口诀：想到就做，不要等到"准备好了"再出发。', '佩戴红色或橙色单品，提升今日行动磁场。', '今日遇到竞争或挑战，选择"参与"而非"观望"，白羊座的力量在行动中才能真正激活。', '今日一个小建议：把最难的那件事放在上午完成，届时你的能量最旺盛。'],
+            // 1 金牛座
+            ['今日小提示：花5分钟整理一下你的桌面或钱包，实体空间的清爽会直接影响你今天的运气流动。', '今日适合犒劳自己一顿丰盛的美食，满足感官的享受能帮你充满能量。', '金牛座今日的关键词是"踏实"，不被外界的浮躁影响，你的稳定就是今天最大的优势。', '今日建议：做一件期待已久却一直推迟的事，哪怕只是很小的一步，你会感到意外的满足。'],
+            // 2 双子座
+            ['今日小提示：带一本笔记本出门，把今天涌现的每一个灵感都记录下来，这些碎片可能是未来某个计划的起点。', '双子座今日的关键：在多个想法中选出一个，深入推进，广度之后需要深度的收口。', '今日一个对话可能成为转折点，和一位你一直想深入交流的人约一次对话吧。', '今日建议：刻意减少"同时多件事"的状态，单线程地专注于一件事，你会发现效率和满足感都更高。'],
+            // 3 巨蟹座
+            ['今日小提示：给一位许久没联系的家人或老友发一条简短的消息，这个举动会带来意想不到的温暖回应。', '巨蟹座今日的关键：先满足自己的情感需求，才能更好地成为他人的避风港。', '今日带一个让你感到安心的小物件，比如一块玉石或一张合影，在需要的时刻默默给你力量。', '今日建议：睡前写下今天让你感到感激的三件小事，这个简单的练习将显著提升你明日的能量状态。'],
+            // 4 狮子座
+            ['今日小提示：穿上你最喜欢的那件衣服，用外在的光彩呼应内在的能量，今天是属于你的舞台。', '狮子座今日的关键：在发光的同时，记得欣赏他人的光芒，真正的领袖是懂得点亮他人的人。', '今日一个小练习：在镜子前真诚地欣赏自己三点优点，自信从自我认可开始。', '今日建议：把一件让你觉得兴奋的事告诉身边的人，你的热情会像火把一样点燃周围人的能量。'],
+            // 5 处女座
+            ['今日小提示：用番茄工作法（25分钟专注+5分钟休息）来安排今天的工作，你的完成度会让自己感到惊喜。', '处女座今日的关键：区分"重要"和"紧急"，不要让紧急的事情霸占了重要的事情的时间。', '今日适合做一次"数字断舍离"——清理手机里的冗余信息、取消不必要的订阅，给头脑减负。', '今日建议：对今天完成的事情给自己一个小奖励，建立正向循环，而非只看到还没做的清单。'],
+            // 6 天秤座
+            ['今日小提示：在做一个重要决定前，写下利弊两栏，让思维具象化帮助你快速找到平衡点。', '天秤座今日的关键：你不需要让所有人满意，专注于让最重要的那1-3个人满意就够了。', '今日适合在环境美化上下点功夫——换一束花、调整一下房间布置，美好的空间会让你今天的创意和心情都更好。', '今日建议：主动约一位你欣赏的朋友或同事交流，你们之间的化学反应会在今天产生最美的火花。'],
+            // 7 天蝎座
+            ['今日小提示：在今天遇到让你感到强烈情绪的时刻，先深呼吸三次，再做回应，而不是反应。', '天蝎座今日的关键：你的直觉是武器，但也需要理性来校准。今天在重要判断上，结合两者。', '今日适合进行一次深度冥想，让潜意识浮现，你可能会得到一个一直在寻找的答案。', '今日建议：做一件完全为了自己快乐的事，不需要任何理由，不需要解释，只因为你值得。'],
+            // 8 射手座
+            ['今日小提示：读一篇关于你从未涉足领域的文章，让好奇心带你走进新的知识世界，这种体验会让今天变得特别充实。', '射手座今日的关键：在保持乐观的同时，也给现实留一席之地，最好的射手既能仰望星空，也能脚踏实地。', '今日适合制定一个小型冒险计划，哪怕只是探索城市中一个从未去过的角落。', '今日建议：把今天的一个重要承诺完整地记下来，射手座的成长往往始于学会让语言与行动保持一致。'],
+            // 9 摩羯座
+            ['今日小提示：今天起床后先完成一件小事（叠被、做早操、写日记），这个"第一胜利"会为全天设定高效的基调。', '摩羯座今日的关键：检视你正在努力的方向是否真正符合你内心最深处的价值观，而非只是外在的期待。', '今日适合给自己的长期目标做一次阶段性复盘，记录进度，调整策略，稳步推进。', '今日建议：对自己说一句"我已经做得足够好了"——摩羯座最需要给自己的，不是更多压力，而是更多认可。'],
+            // 10 水瓶座
+            ['今日小提示：把你脑中一个"也许太疯狂"的想法写下来，不加评判地记录它——疯狂的想法往往是创新的种子。', '水瓶座今日的关键：找到一位真正能理解你思维方式的人交流，这种连接对你的能量状态有巨大的正面影响。', '今日适合为一件你关心的社会议题做一件小事——转发信息、参与讨论、或者直接行动。', '今日建议：用技术或工具解决一个生活中的小低效问题，这件事会给你带来与成就感相称的满足感。'],
+            // 11 双鱼座
+            ['今日小提示：在今天开始之前，花3分钟做深呼吸冥想，为自己建立一层情绪保护层，避免过度吸收他人的负面能量。', '双鱼座今日的关键：把脑中最美丽的一个想象用某种方式表达出来，哪怕只是一段文字或一幅简笔画。', '今日适合聆听一段能触动内心的音乐，让情感得到释放和表达，音乐是双鱼座最好的情绪疗愈师。', '今日建议：为某个你一直只在心里希望的事情，制定哪怕只有三步的行动清单——把梦想变成计划的第一步，就是今天。']
+        ];
+
+        // ============ COMPATIBILITY DATA ============
+        const COMPATIBILITY_DATA = [
+            { sign1: 0, sign2: 1, score: 62, title: '稳重配对', desc: '白羊的热情与金牛的稳重可以很好互补，但需要多沟通。' },
+            { sign1: 0, sign2: 2, score: 78, title: '理想搭档', desc: '双子灵动的思维与白羊的行动力相得益彰，充满新鲜感。' },
+            { sign1: 0, sign2: 3, score: 68, title: '互补伴侣', desc: '巨蟹的温柔可以安抚白羊的冲动，但需要耐心理解。' },
+            { sign1: 0, sign2: 4, score: 88, title: '天作之合', desc: '两个火象星座，热情碰撞，激情四溅，天生一对。' },
+            { sign1: 0, sign2: 5, score: 65, title: '互学伴侣', desc: '白羊可学处女的谨慎，处女学白羊的勇气，需磨合。' },
+            { sign1: 0, sign2: 6, score: 82, title: '互补配对', desc: '天秤的优雅与白羊的热血碰撞，产生独特的化学反应。' },
+            { sign1: 0, sign2: 7, score: 74, title: '刺激关系', desc: '两个强势星座，需要相互尊重和妥协才能和谐。' },
+            { sign1: 0, sign2: 8, score: 85, title: '理想匹配', desc: '射手的自由精神与白羊的冒险心契合，一起冒险去！' },
+            { sign1: 0, sign2: 9, score: 59, title: '需磨合', desc: '摩羯的保守与白羊的冲动需要时间调和，耐心是关键。' },
+            { sign1: 0, sign2: 10, score: 75, title: '创意搭档', desc: '水瓶的创新与白羊的行动力相辅相成，充满可能性。' },
+            { sign1: 0, sign2: 11, score: 63, title: '梦幻配对', desc: '双鱼的温柔与白羊的热情可交织成美妙爱情，但需耐心。' },
+            { sign1: 1, sign2: 2, score: 72, title: '轻松伴侣', desc: '双子的灵活可缓和金牛的固执，关系轻松有趣。' },
+            { sign1: 1, sign2: 3, score: 86, title: '天生配对', desc: '两个温柔的星座，一起营造宁静而稳定的爱情城堡。' },
+            { sign1: 1, sign2: 4, score: 58, title: '存在差异', desc: '火象的热烈与土象的保守差异大，需要理解和妥协。' },
+            { sign1: 1, sign2: 5, score: 84, title: '完美搭档', desc: '都是务实派，一起构建稳定而有序的美好生活。' },
+            { sign1: 1, sign2: 6, score: 76, title: '和谐配对', desc: '金牛的稳定与天秤的优雅和谐共处，生活品质高。' },
+            { sign1: 1, sign2: 7, score: 69, title: '互补关系', desc: '天蝎的深沉与金牛的忠诚相遇，产生深层次连接。' },
+            { sign1: 1, sign2: 8, score: 65, title: '学习配对', desc: '射手热爱自由，金牛喜欢安稳，需互相理解和体谅。' },
+            { sign1: 1, sign2: 9, score: 81, title: '理想组合', desc: '都是实干家，一起为未来奋力，充满安全感。' },
+            { sign1: 1, sign2: 10, score: 61, title: '需调适', desc: '水瓶的异想天开与金牛的脚踏实地差异明显。' },
+            { sign1: 1, sign2: 11, score: 73, title: '温柔搭档', desc: '双鱼的温柔与金牛的忠诚相融，构建稳定的爱。' },
+            { sign1: 2, sign2: 3, score: 79, title: '理想伴侣', desc: '都是灵敏的星座，沟通流畅，理解彼此的需求。' },
+            { sign1: 2, sign2: 4, score: 71, title: '活力配对', desc: '两个充满活力的星座，生活多彩而充满惊喜。' },
+            { sign1: 2, sign2: 5, score: 77, title: '知性搭档', desc: '都喜欢思考和交流，知识碰撞产生火花。' },
+            { sign1: 2, sign2: 6, score: 87, title: '天作之合', desc: '风象星座天生相合，沟通完美，互相欣赏。' },
+            { sign1: 2, sign2: 7, score: 64, title: '不同节奏', desc: '天蝎的深沉与双子的轻灵步调不同，需调整。' },
+            { sign1: 2, sign2: 8, score: 82, title: '理想匹配', desc: '都热爱自由和冒险，人生观相似，一起探索世界。' },
+            { sign1: 2, sign2: 9, score: 60, title: '存在差异', desc: '双子的善变与摩羯的严谨差异大，但可互补。' },
+            { sign1: 2, sign2: 10, score: 89, title: '绝配', desc: '两个风象星座，心灵相通，创意无限，默契十足。' },
+            { sign1: 2, sign2: 11, score: 75, title: '互补配对', desc: '双鱼的梦想与双子的实行力相辅相成。' },
+            { sign1: 3, sign2: 4, score: 74, title: '温热配对', desc: '巨蟹的温柔安抚狮子的傲气，形成互补。' },
+            { sign1: 3, sign2: 5, score: 80, title: '互助伴侣', desc: '都细心周到，互相照顾，关系温馨细致。' },
+            { sign1: 3, sign2: 6, score: 70, title: '缓和配对', desc: '天秤的理性可缓和巨蟹的情绪起伏。' },
+            { sign1: 3, sign2: 7, score: 83, title: '灵魂配对', desc: '都是敏感的星座，深刻理解彼此的内心世界。' },
+            { sign1: 3, sign2: 8, score: 66, title: '不同路线', desc: '射手的自由与巨蟹的顾家有冲突，需要磨合。' },
+            { sign1: 3, sign2: 9, score: 77, title: '相融配对', desc: '摩羯的责任心与巨蟹的关怀完美结合。' },
+            { sign1: 3, sign2: 10, score: 68, title: '需理解', desc: '水瓶的理性与巨蟹的感性需要相互适应。' },
+            { sign1: 3, sign2: 11, score: 85, title: '天生一对', desc: '都是深情的星座，沉溺在爱的深海中。' },
+            { sign1: 4, sign2: 5, score: 69, title: '互补关系', desc: '狮子的热烈与处女的谨慎需要融合。' },
+            { sign1: 4, sign2: 6, score: 81, title: '理想搭档', desc: '都具有领导气质，一起闪耀光芒，相互欣赏。' },
+            { sign1: 4, sign2: 7, score: 62, title: '势力对抗', desc: '两个强势星座易产生冲突，需要相互尊重。' },
+            { sign1: 4, sign2: 8, score: 84, title: '完美匹配', desc: '都是热情奔放的星座，人生目标一致，天作之合。' },
+            { sign1: 4, sign2: 9, score: 76, title: '和谐配对', desc: '摩羯的稳定可支撑狮子的梦想，互相鼓励。' },
+            { sign1: 4, sign2: 10, score: 73, title: '创意搭档', desc: '狮子的热力与水瓶的新意碰撞出火花。' },
+            { sign1: 4, sign2: 11, score: 67, title: '学习配对', desc: '狮子的自信与双鱼的温柔可互补，但差异存在。' },
+            { sign1: 5, sign2: 6, score: 79, title: '完美伴侣', desc: '都是理性细心的星座，一起营造有序生活。' },
+            { sign1: 5, sign2: 7, score: 72, title: '互补配对', desc: '处女的分析与天蝎的直觉相辅相成。' },
+            { sign1: 5, sign2: 8, score: 68, title: '需调适', desc: '射手的冒险与处女的谨慎需要相互妥协。' },
+            { sign1: 5, sign2: 9, score: 82, title: '天生搭档', desc: '都是务实派，目标清晰，一起脚踏实地走向成功。' },
+            { sign1: 5, sign2: 10, score: 74, title: '知性配对', desc: '都喜欢思考，知识交流丰富，精神共鸣。' },
+            { sign1: 5, sign2: 11, score: 70, title: '缓和关系', desc: '处女的理性可柔和双鱼的感性梦幻。' },
+            { sign1: 6, sign2: 7, score: 75, title: '互补配对', desc: '天秤的和谐与天蝎的深沉相遇，相互吸引。' },
+            { sign1: 6, sign2: 8, score: 80, title: '理想组合', desc: '都热爱自由与美好，人生价值观相似，共鸣十足。' },
+            { sign1: 6, sign2: 9, score: 65, title: '不同步调', desc: '摩羯的严谨与天秤的轻松步调不同。' },
+            { sign1: 6, sign2: 10, score: 86, title: '完美配对', desc: '两个风象星座，志趣相投，心灵相通。' },
+            { sign1: 6, sign2: 11, score: 77, title: '温柔搭档', desc: '双鱼的柔情与天秤的优雅和谐相融。' },
+            { sign1: 7, sign2: 8, score: 71, title: '刺激配对', desc: '天蝎的强势与射手的自由相互挑战，充满激情。' },
+            { sign1: 7, sign2: 9, score: 79, title: '深度配对', desc: '都具有决心和意志，共同面对挑战。' },
+            { sign1: 7, sign2: 10, score: 69, title: '需理解', desc: '水瓶的理性与天蝎的神秘需要相互了解。' },
+            { sign1: 7, sign2: 11, score: 84, title: '灵魂绑定', desc: '都是敏感神秘的星座，深深沉溺彼此。' },
+            { sign1: 8, sign2: 9, score: 67, title: '互补关系', desc: '射手的热烈与摩羯的稳健需要时间融合。' },
+            { sign1: 8, sign2: 10, score: 88, title: '理想伴侣', desc: '两个都热爱自由和创新，人生路上相伴相随。' },
+            { sign1: 8, sign2: 11, score: 78, title: '和谐搭档', desc: '射手的乐观与双鱼的梦幻相融，充满美好。' },
+            { sign1: 9, sign2: 10, score: 73, title: '理性配对', desc: '都是思想深邃的星座，精神层面契合。' },
+            { sign1: 9, sign2: 11, score: 76, title: '稳定配对', desc: '摩羯的保护欲与双鱼的依赖感相辅相成。' },
+            { sign1: 10, sign2: 11, score: 81, title: '梦想搭档', desc: '水瓶的理想与双鱼的梦想交织，充满诗意。' }
+        ];
+
+        // ============ TAROT MAJOR ARCANA ============
+        const TAROT_MAJOR = [
+            { id: 0, name: '愚者', enName: 'The Fool', keywords: '开始、冒险、天真', upright: '踏上新的旅程，充满希望和可能性', reversed: '轻率的决定，需要更多思考' },
+            { id: 1, name: '魔术师', enName: 'The Magician', keywords: '力量、创意、意志', upright: '掌握你的力量，显现你的梦想', reversed: '能力发挥不足，需要重拾信心' },
+            { id: 2, name: '女祭司', enName: 'The High Priestess', keywords: '直觉、秘密、内在智慧', upright: '相信你的直觉，隐藏的真相即将显现', reversed: '忽视内在声音，误入歧途' },
+            { id: 3, name: '皇后', enName: 'The Empress', keywords: '丰饶、创造、母性', upright: '丰盛与创意的时刻，享受生活的美好', reversed: '创意受阻，失去与他人的连接' },
+            { id: 4, name: '皇帝', enName: 'The Emperor', keywords: '权力、领导、控制', upright: '掌控局面，展现领导力和权威', reversed: '权力滥用，固执己见' },
+            { id: 5, name: '教皇', enName: 'The Hierophant', keywords: '传统、信念、教导', upright: '遵循既定法则，寻求精神指导', reversed: '挑战权威，寻求新的信仰' },
+            { id: 6, name: '恋人', enName: 'The Lovers', keywords: '爱、关系、价值观', upright: '深层的爱与灵魂的相连，重要的抉择', reversed: '关系考验，价值观冲突' },
+            { id: 7, name: '战车', enName: 'The Chariot', keywords: '意志、胜利、控制', upright: '克服困难，朝着目标全力前行', reversed: '失去方向，缺乏动力' },
+            { id: 8, name: '力量', enName: 'Strength', keywords: '力量、毅力、自律', upright: '内在力量将克服所有挑战', reversed: '自我怀疑，缺乏耐心' },
+            { id: 9, name: '隐士', enName: 'The Hermit', keywords: '内省、指引、独处', upright: '是时候向内探索，寻求答案', reversed: '孤独感过重，与他人隔离' },
+            { id: 10, name: '命运之轮', enName: 'Wheel of Fortune', keywords: '命运、循环、好运', upright: '幸运降临，命运的轮转对你有利', reversed: '坏运气，需要静观其变' },
+            { id: 11, name: '正义', enName: 'Justice', keywords: '正义、真理、平衡', upright: '公正的结果即将到来', reversed: '不公正，法律问题或冤屈' },
+            { id: 12, name: '吊人', enName: 'The Hanged Man', keywords: '暂停、视角、解放', upright: '放下执着，换个角度看世界', reversed: '延误，陷入停滞状态' },
+            { id: 13, name: '死神', enName: 'Death', keywords: '转变、结束、新生', upright: '旧的阶段结束，新生活即将开始', reversed: '抗拒改变，停留在过去' },
+            { id: 14, name: '节制', enName: 'Temperance', keywords: '平衡、和谐、耐心', upright: '寻找平衡，好事值得等待', reversed: '过度，缺乏和谐与平衡' },
+            { id: 15, name: '魔鬼', enName: 'The Devil', keywords: '欲望、恐惧、束缚', upright: '认清你被什么束缚，才能解脱', reversed: '开始解脱束缚，重获自由' },
+            { id: 16, name: '塔', enName: 'The Tower', keywords: '突变、启示、解脱', upright: '激进的改变即将到来，打破旧格局', reversed: '避免了灾难，危机缓解' },
+            { id: 17, name: '星星', enName: 'The Star', keywords: '希望、信仰、灵感', upright: '有希望和灵感指引你的路', reversed: '失去信心，前路迷茫' },
+            { id: 18, name: '月亮', enName: 'The Moon', keywords: '幻觉、潜意识、直觉', upright: '相信你的直觉，真相隐在幻影后', reversed: '幻觉消散，真相大白' },
+            { id: 19, name: '太阳', enName: 'The Sun', keywords: '光明、快乐、成功', upright: '光明与幸福到来，一切顺利', reversed: '暂时的阴云，很快散去' },
+            { id: 20, name: '审判', enName: 'Judgement', keywords: '觉醒、重生、召唤', upright: '觉醒时刻，新的阶段即将开启', reversed: '自我怀疑，无法听见召唤' },
+            { id: 21, name: '世界', enName: 'The World', keywords: '完成、整体、圆满', upright: '一个周期的完美结束，成就圆满', reversed: '尚未完成，还需努力' }
+        ];
+
+        // ============ UTILITY FUNCTIONS ============
+
+        // Simple seeded random function (Mulberry32)
+        function seededRandom(seed) {
+            return function() {
+                seed |= 0;
+                seed = seed + 0x6D2B79F5 | 0;
+                let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+
+        // Get zodiac sign from date
+        function getZodiacSign(date) {
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
+            for (let sign of ZODIAC_SIGNS) {
+                if ((month === sign.startMonth && day >= sign.startDay) ||
+                    (month === sign.endMonth && day <= sign.endDay)) {
+                    return sign;
+                }
+            }
+            return ZODIAC_SIGNS[0];
+        }
+
+        // Generate star rating HTML
+        function getStarRating(rating) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                html += `<span class="${i <= rating ? 'star-filled' : 'star-empty'}">★</span>`;
+            }
+            return html;
+        }
+
+        // Random color display
+        function getColorDisplay(colorName) {
+            const colorMap = {
+                '红色': '#ff6b6b',
+                '绿色': '#51cf66',
+                '黄色': '#ffd43b',
+                '银色': '#c0c0c0',
+                '金色': '#ffd700',
+                '棕色': '#8b6f47',
+                '蓝色': '#4dabf7',
+                '深红色': '#d6336c',
+                '紫色': '#b197fc',
+                '黑色': '#2c2e3e',
+                '青色': '#22b8cf',
+                '海绿色': '#12b886'
+            };
+            return `<div style="width: 20px; height: 20px; background: ${colorMap[colorName] || '#ccc'}; border-radius: 3px;"></div>${colorName}`;
+        }
+
+        // Fisher-Yates shuffle
+        function shuffleArray(array, rng) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(rng() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ============ TAB SWITCHING ============
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.dataset.tab;
+
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                this.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // ============ DAILY ENERGY INIT ============
+        function initDailyEnergy() {
+            const today = new Date();
+            const todayStr = today.toISOString().slice(0,10);
+            const seed = parseInt(todayStr.replace(/-/g,''));
+            const rng = seededRandom(seed);
+            const tpl = DAILY_ENERGY_TEMPLATES[Math.floor(rng() * DAILY_ENERGY_TEMPLATES.length)];
+
+            const months = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+            const weekdays = ['日','一','二','三','四','五','六'];
+            const dateLabel = `${today.getFullYear()}年${months[today.getMonth()]}月${today.getDate()}日  星期${weekdays[today.getDay()]}`;
+
+            const dateEl = document.getElementById('dailyEnergyDate');
+            if (dateEl) dateEl.textContent = dateLabel;
+
+            const keyEl = document.getElementById('dailyEnergyKeywords');
+            if (keyEl) {
+                keyEl.innerHTML = tpl.keywords.map(k => `<span class="kw-tag">${k}</span>`).join('');
+            }
+
+            const textEl = document.getElementById('dailyEnergyText');
+            if (textEl) {
+                textEl.innerHTML = `<div style="color:#d4af60;font-weight:bold;margin-bottom:6px;letter-spacing:1px;">⟡ ${tpl.theme}</div>${tpl.text}`;
+            }
+
+            const advEl = document.getElementById('dailyEnergyAdvice');
+            if (advEl) advEl.textContent = tpl.advice;
+        }
+
+        // ============ FORTUNE TAB ============
+        function calculateFortune() {
+            const dateInput = document.getElementById('fortuneDate').value;
+            if (!dateInput) {
+                alert('请选择日期');
+                return;
+            }
+
+            const date = new Date(dateInput);
+            const sign = getZodiacSign(date);
+
+            // Create seed from date and sign for deterministic fortune
+            const dateStr = dateInput.replace(/-/g, '');
+            const seed = parseInt(dateStr) + sign.id * 10000;
+            const rng = seededRandom(seed);
+
+            // Show result
+            const result = document.getElementById('fortuneResult');
+            result.classList.remove('hidden');
+
+            // Display sign
+            document.getElementById('fortuneSymbol').textContent = sign.symbol;
+            document.getElementById('fortuneName').textContent = `${sign.name} ${sign.enName}`;
+            document.getElementById('fortunePlanet').textContent = sign.rulingPlanet;
+            document.getElementById('fortuneNumber').textContent = sign.luckyNumbers.join(', ');
+            document.getElementById('fortuneColor').innerHTML = getColorDisplay(sign.luckyColor);
+
+            // Get fortunes for each category
+            const categories = [
+                { id: 'love', label: '爱情运', templates: FORTUNE_TEMPLATES.love },
+                { id: 'career', label: '事业运', templates: FORTUNE_TEMPLATES.career },
+                { id: 'finance', label: '财运', templates: FORTUNE_TEMPLATES.finance },
+                { id: 'health', label: '健康运', templates: FORTUNE_TEMPLATES.health }
+            ];
+
+            // Today's date seed (so daily energy changes by day, not just birthday)
+            const todayStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
+            const combinedSeed = parseInt(dateStr) ^ parseInt(todayStr);
+            const rng2 = seededRandom(combinedSeed + sign.id * 99991);
+
+            // Sign today summary
+            const summaries = SIGN_TODAY_SUMMARIES[sign.id] || SIGN_TODAY_SUMMARIES[0];
+            const summaryIdx = Math.floor(rng2() * summaries.length);
+            const summaryEl = document.getElementById('signTodaySummary');
+            if (summaryEl) summaryEl.textContent = `✦ 今日${sign.name}能量速览 ✦  ${summaries[summaryIdx]}`;
+
+            categories.forEach(cat => {
+                const idx = Math.floor(rng() * cat.templates.length);
+                const tpl = cat.templates[idx];
+                const zh = tpl[0], detail = tpl[2] || '';
+                const rating = Math.ceil(rng() * 5);
+
+                document.getElementById(cat.id + 'Star').innerHTML = getStarRating(rating);
+                document.getElementById(cat.id + 'Text').textContent = zh;
+                const detailEl = document.getElementById(cat.id + 'Detail');
+                if (detailEl) detailEl.textContent = detail;
+            });
+
+            // Fortune tip
+            const tips = FORTUNE_TIPS[sign.id] || FORTUNE_TIPS[0];
+            const tipEl = document.getElementById('fortuneTip');
+            if (tipEl) tipEl.textContent = tips[Math.floor(rng2() * tips.length)];
+
+            // Scroll to result
+            result.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============ COMPATIBILITY DETAIL GENERATOR ============
+        function generateCompatDetail(s1, s2, score) {
+            const elem1 = s1.element, elem2 = s2.element;
+            const sameElem = elem1 === elem2;
+            const elemPairs = {
+                '火火': '两个火象星座相遇，如同两团火焰交融——热情倍增、能量爆棚，但也要小心过度燃烧导致彼此消耗。你们之间永远不缺激情和活力，关键是学会在热烈中保持温柔，在竞争中记得合作。',
+                '土土': '两个土象星座的结合犹如两座山峰并肩而立——稳固、可靠、充满安全感。你们对物质稳定和实际目标有着高度一致的追求，能共同建造坚不可摧的生活基础。需要注意的是不要让关系变得过于沉闷和缺乏惊喜。',
+                '风风': '两个风象星座相遇就像两股清风交汇——思维碰撞、言语交织，永远有说不完的话题。你们在精神层面的共鸣极为深刻，是彼此最好的思想伴侣。但也需要注意：不要让关系停留在头脑层面而忽略了情感的深度连接。',
+                '水水': '两个水象星座相遇如同两片海洋融合——情感的深度和敏感度都被加倍放大。你们能以最细腻的方式感受彼此的喜怒哀乐，灵魂层面的连接极为紧密。但要小心不要一起沉溺在情绪的漩涡中，需要彼此提醒回到现实。',
+                '火土': '火象与土象的结合是激情与稳重的碰撞。火象带来的冲劲和创意需要土象的耐心来落地实现，而土象的保守也需要火象的热情来打破舒适区。这段关系的成长空间巨大，但需要双方持续地互相理解和适应。',
+                '火风': '火象与风象的组合是天生的催化反应——风助火势，越烧越旺。你们之间的互动充满能量和灵感，社交场合中你们是最耀眼的组合。关键在于将这种外在的活力转化为内在关系的深度。',
+                '火水': '火象与水象是看似矛盾但蕴含深度的组合。火的热情可以温暖水的敏感，而水的深度可以让火的能量更有方向。当你们学会在差异中找到互补，这段关系将拥有既热烈又深沉的独特质感。',
+                '土风': '土象与风象的结合是实践与理论的对话。风象带来的创新思维需要土象的执行力来实现，而土象的固有模式也需要风象的新视角来刷新。耐心和开放的心态是这段关系成功的密码。',
+                '土水': '土象与水象的组合如同河岸与水流——彼此滋养、相辅相成。土象提供稳固的容器来承载水象丰沛的情感，而水象的柔情能润泽土象有时过于刚硬的心。这是一个在安全感中孕育深情的组合。',
+                '风水': '风象与水象的结合是头脑与心灵的交响曲。风象用理性分析帮助水象梳理复杂的情绪，水象用深度的情感打动风象有时过于理性的内心。双方的差异恰恰是互相学习和成长的契机。'
+            };
+            const key1 = [elem1, elem2].sort().join('');
+            const key2 = sameElem ? elem1+elem1 : key1;
+            const elemText = elemPairs[key2] || elemPairs[key1] || '你们的元素组合独特而有趣，蕴含着丰富的互动可能性。';
+
+            // Love advice based on score range
+            let loveAdvice = '';
+            if (score >= 85) loveAdvice = `你们之间有着极高的天然默契，这是令人羡慕的星座组合。${s1.name}的特质和${s2.name}的能量形成了美妙的共振。在这段关系中，你们不需要刻意迎合对方，做最真实的自己反而能让关系更加亲密。需要注意的是，即便是最和谐的组合也需要用心经营——不要因为"理所当然"而忽视了日常的情感维护。`;
+            else if (score >= 70) loveAdvice = `${s1.name}和${s2.name}的组合有着良好的基础和可观的发展空间。你们在一些核心价值观上比较一致，但在某些生活细节和情感表达方式上可能存在差异。这些差异不是问题，而是让彼此成长的催化剂。建议定期进行深度沟通，分享各自的期待和感受，让关系在理解中持续升温。`;
+            else if (score >= 60) loveAdvice = `${s1.name}和${s2.name}的组合需要更多的耐心和努力，但这并不意味着关系不能成功——恰恰相反，经过磨合后建立起的感情往往更加深厚和珍贵。你们的差异点可能集中在生活节奏、情感需求或沟通方式上。建议双方各退一步，在理解对方"为什么不一样"而非"为什么不像我"的基础上寻找共识。`;
+            else loveAdvice = `${s1.name}和${s2.name}的组合具有相当的挑战性，但在占星学中，挑战往往意味着最大的成长机会。你们之间的差异可能在日常中带来摩擦，但如果双方都愿意学习和调整，这段关系将帮助你们各自成为更完整的人。关键是：接受对方就是与自己不同，不试图改变对方，而是寻找共存之道。`;
+
+            // Communication style
+            const commStyles = {
+                '火': '直接、热烈、不绕弯子',
+                '土': '务实、稳重、行动多于言语',
+                '风': '理性、健谈、善于表达',
+                '水': '含蓄、感性、重视情感共鸣'
+            };
+            const commAdvice = elem1 === elem2
+                ? `你们都属于${commStyles[elem1]}的沟通风格，在交流上自然而流畅。`
+                : `${s1.name}的沟通方式偏向${commStyles[elem1]}，而${s2.name}则更${commStyles[elem2]}。了解这一差异，能帮助你们避免很多不必要的误解。`;
+
+            return `
+                <div style="background:rgba(123,45,139,0.08);border-radius:12px;padding:18px;margin-top:16px;">
+                    <div style="color:#d4af60;font-weight:bold;font-size:0.85rem;margin-bottom:10px;">⟡ 元素分析：${elem1} × ${elem2}</div>
+                    <div style="color:#b8a8d8;font-size:0.8rem;line-height:1.75;">${elemText}</div>
+                </div>
+                <div style="background:rgba(201,162,39,0.06);border-radius:12px;padding:18px;margin-top:12px;">
+                    <div style="color:#d4af60;font-weight:bold;font-size:0.85rem;margin-bottom:10px;">♥ 感情建议</div>
+                    <div style="color:#b8a8d8;font-size:0.8rem;line-height:1.75;">${loveAdvice}</div>
+                </div>
+                <div style="background:rgba(116,185,255,0.06);border-radius:12px;padding:18px;margin-top:12px;">
+                    <div style="color:#d4af60;font-weight:bold;font-size:0.85rem;margin-bottom:10px;">💬 沟通方式</div>
+                    <div style="color:#b8a8d8;font-size:0.8rem;line-height:1.75;">${commAdvice}</div>
+                </div>`;
+        }
+
+        // ============ COMPATIBILITY TAB ============
+        function calculateCompatibility() {
+            const date1 = document.getElementById('date1').value;
+            const date2 = document.getElementById('date2').value;
+
+            if (!date1 || !date2) {
+                alert('请选择两个日期');
+                return;
+            }
+
+            const dateObj1 = new Date(date1);
+            const dateObj2 = new Date(date2);
+            const sign1 = getZodiacSign(dateObj1);
+            const sign2 = getZodiacSign(dateObj2);
+
+            // Find compatibility data
+            let data = null;
+            const pairs = COMPATIBILITY_DATA.filter(p =>
+                (p.sign1 === sign1.id && p.sign2 === sign2.id) ||
+                (p.sign1 === sign2.id && p.sign2 === sign1.id)
+            );
+
+            if (pairs.length > 0) {
+                data = pairs[0];
+            } else {
+                data = { score: 70, title: '互补搭档', desc: '你们有独特的吸引力，需要时间互相了解。' };
+            }
+
+            // Display signs
+            document.getElementById('sign1Symbol').textContent = sign1.symbol;
+            document.getElementById('sign1Name').textContent = sign1.name;
+            document.getElementById('sign2Symbol').textContent = sign2.symbol;
+            document.getElementById('sign2Name').textContent = sign2.name;
+
+            // Animate score circle
+            const circumference = 2 * Math.PI * 90;
+            const strokeDashoffset = circumference - (data.score / 100) * circumference;
+            document.getElementById('scoreFill').style.strokeDasharray = circumference;
+            document.getElementById('scoreFill').style.strokeDashoffset = circumference;
+
+            setTimeout(() => {
+                document.getElementById('scoreFill').style.strokeDashoffset = strokeDashoffset;
+            }, 100);
+
+            // Update score
+            document.getElementById('scoreNumber').textContent = data.score;
+
+            // Update compatibility info
+            document.getElementById('compatTitle').textContent = data.title;
+            document.getElementById('compatDesc').textContent = data.desc;
+
+            // Generate detailed compatibility analysis
+            const detailAnalysis = generateCompatDetail(sign1, sign2, data.score);
+            let detailContainer = document.getElementById('compatDetailAnalysis');
+            if (!detailContainer) {
+                detailContainer = document.createElement('div');
+                detailContainer.id = 'compatDetailAnalysis';
+                detailContainer.style.cssText = 'margin-top:20px;text-align:left;';
+                document.getElementById('compatDesc').parentNode.appendChild(detailContainer);
+            }
+            detailContainer.innerHTML = detailAnalysis;
+
+            // Derived scores
+            const cSeed = sign1.id * 100 + sign2.id;
+            const cRng = seededRandom(cSeed);
+            const emotional = Math.round(data.score * 0.9 + cRng() * 10);
+            const comm = Math.round(data.score * 0.85 + cRng() * 15);
+            const values = Math.round(data.score * 0.95 + cRng() * 5);
+
+            document.getElementById('emotionalScore').textContent = Math.min(emotional, 100) + '%';
+            document.getElementById('commScore').textContent = Math.min(comm, 100) + '%';
+            document.getElementById('valuesScore').textContent = Math.min(values, 100) + '%';
+
+            document.getElementById('emotionalBar').style.width = Math.min(emotional, 100) + '%';
+            document.getElementById('commBar').style.width = Math.min(comm, 100) + '%';
+            document.getElementById('valuesBar').style.width = Math.min(values, 100) + '%';
+
+            // Show result
+            document.getElementById('compatResult').classList.remove('hidden');
+            document.getElementById('compatResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============ TAROT TAB ============
+        let tarotState = {
+            selectedSpread: 0,
+            cards: [],
+            selectedCards: [],
+            deck: []
+        };
+
+        function selectSpread(count) {
+            tarotState.selectedSpread = count;
+            const spreadNames = {
+                1: '单牌阵',
+                3: '三牌阵 - 过去、现在、未来',
+                5: '爱情牌阵 - 你、伴侣、过去、现在、未来'
+            };
+
+            document.getElementById('deckTitle').textContent = spreadNames[count];
+
+            // Shuffle deck with seeded random
+            const seed = Math.floor(Math.random() * 1000000);
+            const rng = seededRandom(seed);
+            tarotState.deck = shuffleArray(TAROT_MAJOR, rng);
+            tarotState.selectedCards = [];
+
+            // Create card elements
+            const deckCards = document.getElementById('deckCards');
+            deckCards.innerHTML = '';
+
+            for (let i = 0; i < 10; i++) {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'tarot-card';
+                cardDiv.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-back">
+                            <div class="card-back-symbol">✦</div>
+                            <div class="card-back-text">Tarot</div>
+                        </div>
+                        <div class="card-front" style="display: none;">
+                            <div class="card-number">?</div>
+                            <div class="card-name">?</div>
+                            <div class="card-orientation">?</div>
+                        </div>
+                    </div>
+                `;
+
+                cardDiv.addEventListener('click', () => selectCard(cardDiv, i));
+                deckCards.appendChild(cardDiv);
+            }
+
+            // Switch to deck step
+            document.querySelectorAll('.tarot-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('deckStep').classList.add('active');
+        }
+
+        function selectCard(cardElement, cardIndex) {
+            if (tarotState.selectedCards.length >= tarotState.selectedSpread) {
+                return;
+            }
+
+            if (tarotState.selectedCards.includes(cardIndex)) {
+                return;
+            }
+
+            const card = tarotState.deck[cardIndex];
+            const isReversed = Math.random() > 0.5;
+
+            // Flip card with animation
+            const cardInner = cardElement.querySelector('.card-inner');
+            cardElement.classList.add('flipped');
+
+            // Update card front
+            const cardFront = cardElement.querySelector('.card-front');
+            cardFront.style.display = 'flex';
+            cardFront.querySelector('.card-number').textContent = card.id + 1;
+            cardFront.querySelector('.card-name').innerHTML = `${card.name}<br><small>${card.enName}</small>`;
+            cardFront.querySelector('.card-orientation').textContent = isReversed ? '逆位' : '正位';
+            if (isReversed) {
+                cardFront.style.transform = 'scaleY(-1)';
+            }
+
+            tarotState.selectedCards.push({
+                index: cardIndex,
+                card: card,
+                reversed: isReversed
+            });
+
+            // Check if all cards selected
+            if (tarotState.selectedCards.length === tarotState.selectedSpread) {
+                setTimeout(showInterpretation, 800);
+            }
+        }
+
+        function showInterpretation() {
+            document.querySelectorAll('.tarot-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('interpretStep').classList.add('active');
+
+            const interpretationCards = document.getElementById('interpretationCards');
+            interpretationCards.innerHTML = '';
+
+            const spreadTitles = {
+                1: ['牌意'],
+                3: ['过去', '现在', '未来'],
+                5: ['你', '伴侣', '过去关系', '现在处境', '未来展望']
+            };
+
+            const titles = spreadTitles[tarotState.selectedSpread];
+
+            tarotState.selectedCards.forEach((item, idx) => {
+                const card = item.card;
+                const meaning = item.reversed ? card.reversed : card.upright;
+
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'interpretation-card';
+                cardDiv.innerHTML = `
+                    <div style="color: #c9a227; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px;">${titles[idx]}</div>
+                    <div class="interp-name">${card.name}</div>
+                    <div class="interp-orientation">${item.reversed ? '逆位' : '正位'}</div>
+                    <div class="interp-keywords">${card.keywords}</div>
+                    <div class="interp-text">${meaning}</div>
+                `;
+                interpretationCards.appendChild(cardDiv);
+            });
+
+            document.getElementById('interpretStep').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetTarot() {
+            tarotState = {
+                selectedSpread: 0,
+                cards: [],
+                selectedCards: [],
+                deck: []
+            };
+
+            document.querySelectorAll('.tarot-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('spreadStep').classList.add('active');
+            document.getElementById('spreadStep').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============ PLANET CALCULATION ENGINE ============
+
+        function getDaysSinceJ2000(date) {
+            const J2000 = new Date(Date.UTC(2000, 0, 1, 12, 0, 0));
+            return (date.getTime() - J2000.getTime()) / 86400000;
+        }
+        function normalizeAngle(a) { return ((a % 360) + 360) % 360; }
+        function degreeToSignIndex(deg) { return Math.floor(normalizeAngle(deg) / 30); }
+
+        function getPlanetPositions(date, hour) {
+            const d = getDaysSinceJ2000(date) + (hour / 24);
+            return {
+                sun:     normalizeAngle(280.459  + 0.98564736  * d),
+                moon:    normalizeAngle(218.316  + 13.176396   * d),
+                mercury: normalizeAngle(252.251  + 4.092317    * d),
+                venus:   normalizeAngle(181.980  + 1.602136    * d),
+                mars:    normalizeAngle(355.453  + 0.524039    * d),
+                jupiter: normalizeAngle(34.396   + 0.083056    * d),
+                saturn:  normalizeAngle(50.077   + 0.033459    * d),
+                uranus:  normalizeAngle(314.055  + 0.011729    * d),
+                neptune: normalizeAngle(304.349  + 0.006020    * d)
+            };
+        }
+        function getRisingSignIndex(date, hour) {
+            const d = getDaysSinceJ2000(date) + (hour / 24);
+            const GMST = normalizeAngle(280.46061837 + 360.98564736629 * d);
+            // Assume China (120°E)
+            return degreeToSignIndex(GMST + 120);
+        }
+
+        // ============ PLANET METADATA & INTERPRETATIONS ============
+        const PLANET_META = [
+            { key: 'sun',     symbol: '☉', color: '#FFD700', name: '太阳' },
+            { key: 'moon',    symbol: '☽', color: '#DDDDDD', name: '月亮' },
+            { key: 'mercury', symbol: '☿', color: '#88A0B8', name: '水星' },
+            { key: 'venus',   symbol: '♀', color: '#FFB6C1', name: '金星' },
+            { key: 'mars',    symbol: '♂', color: '#FF6347', name: '火星' },
+            { key: 'jupiter', symbol: '♃', color: '#DAA520', name: '木星' },
+            { key: 'saturn',  symbol: '♄', color: '#C4A35A', name: '土星' },
+            { key: 'uranus',  symbol: '♅', color: '#7FFFD4', name: '天王星' },
+            { key: 'neptune', symbol: '♆', color: '#6495ED', name: '海王星' }
+        ];
+
+        const PLANET_IN_SIGN_BRIEF = {
+            sun:     ['充满活力的开拓者','稳固持久的建设者','灵活多变的沟通者','温柔体贴的守护者','自信热情的领导者','理性细致的分析者','优雅平衡的外交家','深沉神秘的探索者','乐观自由的旅行者','勤奋严谨的建设者','独特创新的理想者','敏感浪漫的梦想者'],
+            moon:    ['情绪热烈直接，需要行动释放内心能量','情绪稳定持久，渴望安全感和物质舒适','情绪多变灵活，需要智识刺激和多样体验','情绪敏感丰富，家庭第一照护欲强','情绪戏剧热烈，需要欣赏和关注才感安心','情绪细腻理性，通过服务他人表达深情','情绪渴望和谐，善解人意需要伴侣陪伴','情绪深沉强烈，占有欲强感受极为深刻','情绪乐观豁达，需要精神自由冒险刺激','情绪内敛克制，通过踏实行动证明情感','情绪疏离独特，需要精神独立思想空间','情绪极度敏感，同情心强常沉浸梦境'],
+            mercury: ['思维迅速直接','思维深思熟虑','思维灵敏多变','思维直觉丰富','思维自信热情','思维精准分析','思维公正平衡','思维深刻洞察','思维乐观开阔','思维实际稳健','思维创新前卫','思维感性直觉'],
+            venus:   ['爱情直接热烈','爱情稳定忠诚','爱情好奇多变','爱情温柔深情','爱情慷慨热情','爱情细腻体贴','爱情优雅平衡','爱情深沉专一','爱情自由奔放','爱情谨慎持久','爱情独特前卫','爱情浪漫理想'],
+            mars:    ['行动快速大胆','行动缓慢稳健','行动多变灵活','行动情绪化守护','行动热情豪迈','行动精准谨慎','行动追求公平','行动果断有力','行动热情远大','行动踏实高效','行动独特前卫','行动温和直觉'],
+            jupiter: ['扩展冒险精神','扩展物质丰盛','扩展知识探索','扩展家庭根基','扩展创意表达','扩展服务精神','扩展人际和谐','扩展深层转化','扩展哲学视野','扩展事业地位','扩展人道理想','扩展灵性智慧'],
+            saturn:  ['限制冲动行为','稳固物质基础','学习集中思维','建立家庭责任','培养谦逊克制','精进细节完善','平衡人际关系','深化内在转化','拓展边界规范','成就事业高峰','承担社会责任','深化灵性修行']
+        };
+
+        // ============ DETAILED SUN SIGN PERSONALITY ============
+        const SUN_SIGN_DETAIL = [
+            // 0 白羊
+            { personality: '你是天生的领导者和先驱。白羊座的太阳赋予你无比旺盛的行动力和竞争意识。你做事果断，不喜拖泥带水，遇到困难时的第一反应永远是"我来"。你的热情极具感染力，常常成为团队中点燃激情的那个人。在人际关系中你坦率直接，讨厌弯弯绕绕，虽然有时显得冲动和缺乏耐心，但你的真诚和勇气总能赢得他人的敬佩。',
+              love: '恋爱中你是主动出击的狩猎者，享受追求的过程甚至超过拥有。你需要一个能与你匹敌、让你保持激情和新鲜感的伴侣。你的爱热烈而直接，不会遮遮掩掩，但也需要学习在热情消退后依然用耐心维系关系的深度。',
+              career: '你适合需要开拓精神和果断决策的岗位——创业、项目管理、竞技类运动或危机处理。你是天然的破局者，在混乱中找到方向的能力出众。职场中你需要自由度和挑战，重复和枯燥会让你迅速失去动力。',
+              challenge: '最大的人生课题是学习等待与倾听。你的冲动和急性子有时会导致决策过于草率。培养耐心，在行动之前多花一点时间思考全局，会让你从一个优秀的开拓者蜕变为真正的领袖。' },
+            // 1 金牛
+            { personality: '你拥有大地般的沉稳和坚韧。金牛座的太阳让你脚踏实地、值得信赖，你是朋友圈中最可靠的那个人。你对美好事物有天生的鉴赏力——美食、音乐、自然、艺术都能让你的灵魂得到滋养。你做事有条不紊，一旦下定决心就会以坚不可摧的毅力坚持到底。你重视物质安全感，这不是贪婪，而是你对稳定生活的本能追求。',
+              love: '在感情中你是一个忠诚而深情的伴侣，一旦爱上一个人便会全心付出。你渴望稳定长久的关系，而非短暂的激情火花。你用行动而非言语来表达爱——为对方做一顿可口的饭菜、一个温暖的拥抱，都是你爱的语言。你需要警惕的是对安全感的过度依赖可能变成控制或占有。',
+              career: '你适合需要持久耐力和审美品味的职业——金融理财、建筑设计、美食烹饪、园艺农业或音乐艺术。你不是最快到达终点的人，但绝对是最稳定到达的。你的职业上升曲线是缓慢但持续的，最终的成就往往令人刮目相看。',
+              challenge: '最大的人生课题是学习拥抱变化。你对改变的天然抗拒有时会让你在固有的舒适区里停滞不前。当生命邀请你放手旧有的模式时，请记住：松开手，才能接住更大的礼物。' },
+            // 2 双子
+            { personality: '你是天生的沟通者和思想家。双子座太阳赋予你灵活多变的思维和超强的语言天赋，你能同时处理多条信息流而不会混乱。你对新鲜事物的好奇心无穷无尽，这让你成为一个博学多才的人。你善于在不同场合切换角色，与各种类型的人建立连接。你的幽默感和机智让你在社交场合如鱼得水，是天然的信息枢纽和人群中的灵魂人物。',
+              love: '你在感情中需要智识上的碰撞和持续的新鲜感。一个无法与你进行深度对话的人，很难长期吸引你。你的爱情有时显得花心或飘忽，但那只是因为你还没找到那个能同时满足你头脑和心灵的人。找到TA后，你会是一个妙趣横生、永不无聊的伴侣。',
+              career: '你适合需要沟通、创意和多任务处理的职业——媒体、写作、教育、营销、翻译、科技行业或咨询。你最怕的是被困在一个一成不变的岗位上。给你多变的环境和新的挑战，你就能绽放出最大的才华。',
+              challenge: '最大的人生课题是学习专注与深入。你的注意力容易分散在太多方向上，导致"样样通、样样松"。当你学会在某一个领域深耕到底时，你会发现深度带来的满足感远超广度的新鲜感。' },
+            // 3 巨蟹
+            { personality: '你拥有深海般的情感深度和母亲般的关怀之心。巨蟹座太阳让你对情感的感知力远超常人——你能察觉他人最细微的情绪变化，并本能地给予支持和照顾。你高度重视家庭和亲密关系，"家"不仅是一个地方，更是你灵魂的根基。你的记忆力惊人，尤其对情感相关的记忆。外表看似柔和的你，内在拥有螃蟹般的坚硬外壳——当你所珍视的人受到威胁时，你会展现出令人惊讶的保护力量。',
+              love: '你在感情中是最深情和忠诚的伴侣之一。你爱的方式是全方位的照顾——从生活起居到情感支持，你无微不至。你渴望一个能给你安全感、与你共建温馨家庭的伴侣。你需要注意的是，不要让照顾他人变成情感上的控制，也不要在感情中牺牲自我来换取被需要的感觉。',
+              career: '你适合需要共情力和照护心的职业——心理咨询、教育、医疗护理、房地产、餐饮业或历史文化领域。你在团队中常常扮演"润滑剂"和"情感安全网"的角色。你的直觉在商业决策中也是一个不容忽视的优势。',
+              challenge: '最大的人生课题是学习在照顾他人与保护自己之间找到平衡。你的过度敏感有时会成为负担，学会设立情感边界、减少过度解读他人的行为，会让你的内心更加自在轻盈。' },
+            // 4 狮子
+            { personality: '你是天生的王者，自带聚光灯效果。狮子座太阳赋予你强大的自信、创造力和领导魅力。你走进任何房间都会成为焦点，不是因为刻意，而是你天然散发的光芒无法被忽视。你慷慨大方，喜欢与他人分享自己的成就和资源。你有着戏剧般的表达方式和对生活的热情投入——无论做什么，你都全力以赴、追求卓越。在你眼中，生命就是一场值得精彩演绎的大戏。',
+              love: '你在感情中热烈、慷慨，喜欢用宏大的方式表达爱——惊喜、浪漫约会、大方的礼物。你需要一个懂得欣赏你、给你充分关注和赞美的伴侣。你的自尊心很强，在感情中受到忽视或不被重视会让你深深受伤。真正成熟的狮子座，懂得在被爱的同时也无条件地给予爱。',
+              career: '你适合站在舞台中央的职业——表演艺术、企业管理、时尚设计、品牌营销或公关。你是天然的领导者，团队在你的带领下往往充满士气和方向感。你需要的是一个能让你施展才华的平台，以及来自同行的认可和尊重。',
+              challenge: '最大的人生课题是学习谦逊和倾听。当掌声消失、聚光灯熄灭时，你是否依然能保持内在的笃定和自我认同？真正的王者，不需要外界的认可来证明自己的价值。' },
+            // 5 处女
+            { personality: '你是精密运转的分析师和追求完美的匠人。处女座太阳赋予你非凡的观察力和对细节的极致追求，你能在他人忽视的地方发现问题、找到解法。你的头脑清晰、逻辑严密，是天生的问题解决者。你低调谦逊，不喜张扬，但你的实际贡献往往远超表面看到的。你对健康和生活品质有着独特的关注，追求的是一种有序、高效、精致的生活方式。',
+              love: '你在感情中含蓄而细腻，用实际行动而非甜言蜜语来表达爱。你会记住对方的每一个小习惯，默默为对方创造更好的生活条件。你对伴侣有较高的标准，但最苛刻的标准往往留给了自己。你需要学习接受不完美——无论是对方的不完美，还是自己的不完美。',
+              career: '你适合需要精确性和分析力的职业——数据分析、医疗健康、科研、编辑校对、会计审计或品质管理。你在工作中是最可靠的那个人，交给你的任务总是被精确完成。你的职业发展路径是"专精型"——在某个领域做到极致。',
+              challenge: '最大的人生课题是学习放下对"完美"的执念。过度的自我批判和对细节的焦虑会消耗你大量的精力。当你学会说"够好了"的时候，你会发现生活突然变得轻松许多。' },
+            // 6 天秤
+            { personality: '你是天生的和平使者和美的代言人。天秤座太阳赋予你卓越的审美天赋、社交直觉和追求公正的使命感。你在任何环境中都追求平衡与和谐，冲突和粗暴会让你感到不安。你的优雅和魅力来自内心真实的对美好事物的热爱。你善于看到事物的两面性，这让你成为出色的调解者和顾问。在你的世界里，美不是肤浅的装饰，而是一种生活的哲学。',
+              love: '你在感情中追求优雅、浪漫、对等的关系。你不喜欢单方面的付出或接受，而是渴望一段真正势均力敌的伴侣关系。你对伴侣的审美要求较高，但更重要的是精神层面的契合和文化品味的共鸣。你需要警惕的是：为了维持表面和平而压抑真实感受，或在两个选择之间反复纠结而错过最佳时机。',
+              career: '你适合需要审美判断、社交沟通和平衡协调的职业——设计、法律、外交、人力资源、艺术策展或品牌美学。你是团队中的"和谐调音师"，能让不同性格和立场的人找到共识。在你参与的环境中，人们会不自觉地变得更有教养和合作精神。',
+              challenge: '最大的人生课题是学习做出决定并坚持到底。你对两面性的过度考量有时会导致严重的犹豫不决。记住：一个不完美的决定，往往比一个迟来的完美答案更有价值。' },
+            // 7 天蝎
+            { personality: '你拥有夜空中最深邃的凝视和不可测度的内心力量。天蝎座太阳赋予你超凡的洞察力、意志力和情感深度。你能穿透他人的面具看到最真实的本质，这种能力让你在人群中独一无二。你做事时全力投入、绝不半途而废，这种彻底性既是你最大的优势，也是你最大的挑战。你对真相有着近乎执着的追求，讨厌虚伪和表面文章。在你看来，只有经历过真实的黑暗，才能真正理解光明的价值。',
+              love: '你在感情中是最深情、最专一的存在。当你爱上一个人，你会用灵魂而非表面去爱。你渴望的是灵魂层面的融合和绝对的忠诚，浅尝辄止的感情你宁可不要。你的占有欲和嫉妒心有时会让人感到窒息，但那只是因为你投入了全部的自己。学习在深爱的同时给对方自由呼吸的空间，是你感情中最重要的功课。',
+              career: '你适合需要深度探索和危机处理能力的职业——心理学、侦探调查、外科医学、金融风控、情报分析或深度研究。你在职场中是最不怕困难的那个人，越复杂、越有挑战的任务越能激发你的斗志。你的职业发展路径往往伴随着一次次的蜕变与重生。',
+              challenge: '最大的人生课题是学习释放和信任。你对控制感的强烈需求、对背叛的极度恐惧，有时会让你活在自己编织的防御体系中。当你学会放下戒备、接受脆弱也是一种力量时，你会发现世界远比你以为的更温柔。' },
+            // 8 射手
+            { personality: '你是天生的探险家和哲学家，灵魂深处燃烧着对自由与真理的渴望。射手座太阳赋予你无限的乐观精神、冒险欲望和对广阔世界的好奇心。你厌恶一切形式的束缚和局限——无论是身体上的还是精神上的。你的笑声是最好的药方，无论走到哪里都能把欢乐带到那里。你思维开阔，善于从宏观角度看待问题，对哲学、宗教、异域文化有天然的亲近感。',
+              love: '你在感情中需要的首先是自由——精神的自由和行动的自由。一个试图控制或限制你的伴侣会让你窒息。你需要一个能与你一起去探索世界、一起成长、一起讨论人生大问题的灵魂伴侣。你对爱情的态度是乐观豁达的，但有时你对"下一个冒险"的渴望会让你在感情中显得不够专注和深入。',
+              career: '你适合需要探索精神和跨文化视野的职业——旅游、学术研究、出版传媒、国际贸易、体育运动或宗教哲学领域。你在一个有广阔发展空间、允许你不断学习新事物的环境中才能真正绽放。办公桌前的朝九晚五会让你的灵魂枯萎。',
+              challenge: '最大的人生课题是学习在自由和承诺之间找到平衡。你对承诺的天然抗拒和"逃跑本能"有时会让你错过需要坚守才能获得的深层收获。学会留下来，有时比踏上新旅程需要更大的勇气。' },
+            // 9 摩羯
+            { personality: '你是时间的雕塑家和命运的建筑师。摩羯座太阳赋予你超凡的纪律、毅力和对长期目标的坚定追求。你是黄道十二宫中最有"大器晚成"气质的星座——年轻时可能经历比同龄人更多的挑战，但这些磨砺造就了你钢铁般的意志和超越常人的成熟度。你务实、可靠、言出必行，在你身上，时间是最好的盟友。你追求的不是一时的辉煌，而是经得起时间考验的成就。',
+              love: '你在感情中谨慎而深沉，不轻易交付真心，但一旦认定就会用长远的眼光去经营。你用实际行动——提供稳定的生活、认真规划未来——来表达爱情。你的感情观可能偏于传统，重视责任和承诺。你需要学习在严肃认真的爱中加入更多的轻松和幽默，让关系不只有"务实"，还有"趣味"。',
+              career: '你适合需要长期战略眼光和坚韧执行力的职业——企业高管、政府行政、建筑工程、法律、医学或学术领域。你在职场的上升路径可能缓慢但极其稳健，许多摩羯座在40岁之后才真正迎来事业的巅峰期。你是长跑选手，不是短跑冲刺者。',
+              challenge: '最大的人生课题是学习放松和享受当下。你内心深处对"不够好"的恐惧驱动着你不断工作，但真正的成功不仅仅是事业的高度，还包括内心的丰盛和快乐。允许自己偶尔"浪费时间"，你会发现那些看似无用的时光恰恰最能滋养灵魂。' },
+            // 10 水瓶
+            { personality: '你是来自未来的使者和人类社会的改革家。水瓶座太阳赋予你独立的思想、前瞻的视野和对人道主义的深切关怀。你的思维方式与众不同——当别人在问"怎么做"的时候，你已经在思考"为什么不换一种方式"。你有着强烈的个人主义倾向，拒绝被任何标签或框架定义。你对科技、社会变革和人类未来有着天然的敏感度和热情，常常走在时代的前沿。',
+              love: '你在感情中首先需要的是精神上的共鸣和思想上的平等。外表和物质条件对你来说远不如三观一致和精神契合重要。你的爱情方式可能有些"不按常理出牌"——你可能和最好的朋友相爱，或选择一段非传统的关系模式。你需要注意的是，不要用理性过度替代感性，有时候爱需要的不是分析，而是感受。',
+              career: '你适合需要创新思维和社会责任感的职业——科技研发、社会创业、非营利组织、航天航空、心理学或新媒体。你在一个鼓励创新、尊重个性的工作环境中才能发挥最大价值。你不适合等级森严的传统组织，自由和平等是你工作的底线。',
+              challenge: '最大的人生课题是学习从"为全人类着想"回到"为身边的人用心"。你的宏大视角有时会让你忽视近在咫尺的亲密关系需求。用你对陌生人的善意去温暖最亲近的人，你的人际关系会得到质的飞跃。' },
+            // 11 双鱼
+            { personality: '你是灵魂的诗人和宇宙情感的接收器。双鱼座太阳赋予你无与伦比的想象力、同理心和灵性感知力。你能感受到他人甚至整个空间的情绪氛围，仿佛拥有一种无形的天线。你的内心世界极其丰富，有时候活在梦境中比活在现实中更自在。你天生具有艺术家的灵魂——音乐、诗歌、绘画、电影，任何一种创造性的表达都能让你灵魂绽放。你的慈悲心和无条件的爱，是这个世界最温柔的力量。',
+              love: '你在感情中是最无条件的给予者。你的爱浪漫、深情、充满牺牲精神，你愿意为爱的人付出一切。你渴望灵魂层面的合一——一种超越言语的心灵感应。你需要警惕的是：不要在感情中完全迷失自我，也不要把"拯救对方"当成爱情的使命。健康的爱是两个完整的人彼此滋养，而非一个人溺水、另一个人跳下去陪葬。',
+              career: '你适合需要想象力和共情力的职业——艺术创作、音乐、心理治疗、社会工作、灵性教育或海洋相关领域。你在一个允许你发挥直觉和创造力的环境中才能真正发光。过于竞争性或纯商业化的环境会消耗你的灵魂能量。',
+              challenge: '最大的人生课题是学习在梦想与现实之间架起桥梁。你丰富的想象力是无价的天赋，但如果不落地，它只会成为逃避现实的避风港。学习设定具体的目标、培养执行力，你的梦想就不再只是梦想，而是可以触摸的现实。' }
+        ];
+
+        // ============ DETAILED PLANET INTERPRETATIONS ============
+        const PLANET_DETAIL = {
+            mercury: [
+                '水星白羊：你的思维犹如闪电般迅速，表达直率而有力。你习惯用最短的路径到达答案，讨论中喜欢直奔主题。这让你成为优秀的即兴演讲者和快速决策者，但有时也需要放慢脚步听完别人的话。',
+                '水星金牛：你的思维如同精心雕刻的翡翠，缓慢但深厚。你用感官去理解世界，记忆力出色，尤其擅长将抽象概念转化为具体可操作的方案。你的观点一旦形成就很难改变，但通常都经过了深思熟虑。',
+                '水星双子：你的大脑像一台高速运转的信息处理器，同时处理多个思绪。你的语言天赋出众，文字和口才都是你的利器。你永远对新知识充满饥渴，从不满足于只知道表层的信息。',
+                '水星巨蟹：你的思维深受情感影响，直觉是你最强大的认知工具。你的记忆力惊人，尤其对与情感相关的事件记忆犹新。你的表达方式温柔含蓄，善于用故事和类比来传达复杂的想法。',
+                '水星狮子：你的表达充满戏剧性和感染力，每一次发言都像是一场小型演讲。你善于用生动的画面和宏大的叙事来传达想法，天生具有说服力和号召力。你的思维自信且有创造力，但有时需要更多耐心去倾听不同的声音。',
+                '水星处女：你拥有十二星座中最精密的分析头脑。你的思维有条理、重逻辑，善于在复杂的信息中找到规律和错误。你的文字表达精准无误，是天生的编辑和审计。你对细节的敏感度有时会让你陷入过度分析的困境。',
+                '水星天秤：你的思维天然寻求平衡和公正，善于从多角度审视问题。你的表达优雅得体，懂得如何在不同立场之间找到共识。你在辩论中不偏不倚的态度让人信服，但做决定时的反复权衡有时会错失时机。',
+                '水星天蝎：你的思维拥有穿透表象的力量，任何试图隐瞒的真相在你面前都难以遁形。你的分析力深入骨髓，善于从蛛丝马迹中推断出完整的图景。你的文字具有催眠般的力量，能深深触动读者的内心。',
+                '水星射手：你的思维如同远方的篝火，永远照向广阔的地平线。你善于在不同文化、学科之间建立联系，看到别人看不到的宏观图景。你的表达热情洋溢、充满哲理，但有时需要更多对细节的关注。',
+                '水星摩羯：你的思维如同坚固的城墙，逻辑严密、实际可靠。你不相信没有根据的空话，每一个结论都建立在可验证的事实之上。你的表达谨慎但有权威感，善于制定长期计划和策略方案。',
+                '水星水瓶：你的思维来自未来，充满了打破常规的创新火花。你的想法常常超前于时代，让周围的人感到新奇甚至困惑。你善于系统性思考和逆向推理，在科技和社会创新领域有天然的优势。',
+                '水星双鱼：你的思维如同一幅水彩画，色彩丰富、边界柔和。你用直觉和感受去理解世界，善于捕捉那些无法用语言准确表达的微妙。你的创作灵感充沛，在诗歌、音乐和视觉艺术领域有天赋的表达能力。'
+            ],
+            venus: [
+                '金星白羊：你在爱情中直接而热烈，喜欢主动出击和征服。你的审美偏好大胆前卫，不走寻常路。感情中你需要刺激和新鲜感，一旦觉得无聊就容易失去兴趣。',
+                '金星金牛：你是金星的宠儿，对美和享受有天生的鉴赏力。你在爱情中忠诚而感性，用五感去表达和感受爱。你渴望稳定、真实、可以触摸到的爱情。',
+                '金星双子：你在爱情中需要智识的火花和不断的新鲜对话。你的审美多元而时尚，善于用言语传递情意。一成不变的关系会让你窒息，你需要一个能与你保持精神同频的伴侣。',
+                '金星巨蟹：你在爱情中温柔而深情，为所爱之人营造温暖安全的港湾。你的审美偏向温馨和怀旧，家的氛围感对你极为重要。你的爱是全包围式的照顾和呵护。',
+                '金星狮子：你在爱情中慷慨、戏剧性、充满浪漫主义色彩。你希望被崇拜，也愿意像对待皇室般宠爱对方。你的审美华丽大气，品味不凡。',
+                '金星处女：你在爱情中含蓄而务实，用细心照顾来表达爱。你的审美追求精致简约，注重品质而非数量。你对伴侣有较高的标准，但对自己的要求更加严格。',
+                '金星天秤：你是爱与美的化身，对和谐关系有天然的追求。你的审美优雅精致，社交场合中你总是最得体的那个人。你在感情中渴望绝对的公平和互相欣赏。',
+                '金星天蝎：你在爱情中深沉、专一、充满激情。你的爱是全有或全无的，没有中间地带。你渴望灵魂层面的绝对连接和忠诚，表面的浪漫满足不了你对深度的追求。',
+                '金星射手：你在爱情中自由奔放、充满冒险精神。你的审美开放而多元，对异域风情特别着迷。你需要一个能与你一起成长、一起探索世界的伴侣。',
+                '金星摩羯：你在爱情中谨慎而长远，不相信速成的感情。你的审美经典沉稳，偏好有质感和时间沉淀的事物。你用实际行动和长期承诺来证明你的爱。',
+                '金星水瓶：你在爱情中独立而前卫，不受传统规则约束。你的审美独特、有时甚至另类，你被那些与众不同的人和事物吸引。友情是你爱情的基础。',
+                '金星双鱼：你在爱情中浪漫到骨子里，渴望童话般的灵魂相遇。你的审美梦幻柔和，对美有一种近乎灵性的感知。你的爱无条件而深远，但需要注意不要在爱中迷失自我。'
+            ],
+            mars: [
+                '火星白羊：你的行动力如同火山爆发——迅猛、直接、无所畏惧。你是天生的先锋战士，面对挑战时的第一反应就是冲上去。你的竞争意识强烈，适合需要快速决策和独立行动的场景。',
+                '火星金牛：你的行动力如同推土机——缓慢但势不可挡。一旦启动，没有任何力量能阻止你。你的耐力惊人，在需要长期坚持的领域有巨大优势。你做事稳健而有效率，但启动阶段可能较慢。',
+                '火星双子：你的行动力分散在多个方向上，像同时下好几盘棋。你擅长多任务切换，用灵活的策略而非蛮力来达成目标。你的口才也是一种行动力——有时一番话比一次行动更有效。',
+                '火星巨蟹：你的行动力被情感深深驱动，保护所爱之人时你会爆发出惊人的力量。你的行动方式偏向间接和迂回，擅长在暗处布局。你的直觉指引着你的行动方向。',
+                '火星狮子：你的行动充满戏剧性和仪式感，做任何事都要做到最好、最有范儿。你天生具有号召力，能带动周围的人一起行动。你的骄傲心驱动着你不断超越自我。',
+                '火星处女：你的行动精准如手术刀，不浪费一丝多余的力气。你善于制定周密计划，然后严格执行。你的行动力体现在细节的完善和效率的极致追求上。',
+                '火星天秤：你的行动力在合作中得到最好的发挥，你善于协调团队、化解冲突、推动共识。你在竞争中追求公平，不喜欢用粗暴手段取胜。你的策略是智取而非力敌。',
+                '火星天蝎：你的行动力如同暗流涌动的深海，表面平静但内在力量巨大。你做事有着惊人的专注力和持久力，一旦锁定目标就绝不放弃。你善于在暗中积蓄力量，在关键时刻一击制胜。',
+                '火星射手：你的行动力如同疾驰的骏马，充满热情和方向感。你做事速度快、覆盖面广，适合开拓性和冒险性的任务。你的行动常常带有理想主义色彩，为信念而战是你最大的动力来源。',
+                '火星摩羯：你的行动力如同登山者——沉稳、坚定、目标明确。你不追求速度，但保证每一步都踏实可靠。你是长期战略的执行大师，在需要耐力和纪律的场景中无人能敌。',
+                '火星水瓶：你的行动力被独特的理念和社会使命所驱动。你不走常规路线，常常用出人意料的方式达成目标。你是改革者和创新者，在推动集体变革方面有天然的行动天赋。',
+                '火星双鱼：你的行动力柔和而富有弹性，如水般无孔不入。你不喜欢硬碰硬，更擅长以柔克刚、顺势而为。你的直觉是最好的行动指南，灵感驱动的行动往往比计划更有效。'
+            ]
+        };
+
+        const MOON_INTERPRETATIONS = [
+            { keywords: '热情·直接·独立', desc: '你的内心世界充满活力与冲动。情绪来去如疾风，直接且热烈。你需要通过行动来释放内心能量，独立自主是你情感安全感的来源。在亲密关系中，你渴望激情与刺激。',
+              detail: '月亮白羊的你在情绪上非常直率——开心就笑、生气就说，不会藏着掖着。你处理情绪的方式是"动起来"，运动、争论甚至发一通脾气都是你释放内在压力的途径。你在家庭中常常扮演"行动者"的角色，是那个说做就做的人。你的童年可能经历过需要独立面对的时刻，这塑造了你不依赖他人的情感模式。在亲密关系中，你需要一个不怕你的火爆脾气、能与你正面交锋的伴侣。' },
+            { keywords: '稳定·感官·安全感', desc: '你拥有稳定而持久的情绪基础，对安全感的渴望根深蒂固。美食、音乐、大自然都能抚慰你的心灵。你在爱情中忠诚可靠，需要对方给予同等稳定的承诺。',
+              detail: '月亮金牛的你用五感来感受世界和处理情绪——当你不安时，一杯热茶、一段优美的旋律或一次大自然中的散步就能让你重新找回内心的平静。你的情绪变化缓慢，但一旦积累到临界点就可能像火山一样爆发。你对物质的安全感需求很高，银行账户里的数字是你情绪稳定的基础之一。你的情感表达方式是通过"做"而非"说"——亲手为你爱的人做饭，就是你最深情的告白。' },
+            { keywords: '好奇·多变·沟通', desc: '你的内心世界丰富多变，思绪如蝴蝶般翩翩起舞。情绪需要通过沟通来表达和疏解。你对新鲜事物充满好奇，智识上的刺激是你情感满足感的重要来源。',
+              detail: '月亮双子的你内心有一个永远在运转的头脑，你用"想"和"说"来处理情绪。当你感到不安时，你会不停地分析、讨论、寻找信息。保持与他人的沟通连接是你情绪健康的关键——长时间的独处和沉默会让你感到焦虑。你的情绪变化快速，上一秒还在烦恼的事下一秒就能放下，旁人可能觉得你"不走心"，但那只是你处理情绪的独特方式。你在家庭中是信息中心，善于让气氛变得轻松。' },
+            { keywords: '敏感·家庭·照护', desc: '你的情感异常丰富细腻，拥有强烈的直觉和同理心。家庭与亲密关系是你情感世界的核心。你天生具有照护他人的本能，能深深感受到他人的喜怒哀乐。',
+              detail: '月亮巨蟹是月亮最舒适的位置，你的情感力量如同海洋一般深邃而广阔。你对家人和亲密之人的感受有着近乎超自然的感知力——他们心情的微妙变化你都能在第一时间捕捉到。你需要一个温暖安全的"巢穴"来安放你丰富的内心世界，家的感觉对你至关重要。你的记忆力中情感的部分格外发达，过去的温暖和伤痛你都会长久地珍藏或背负。学习适时放下旧的情感包袱，是你内心成长的重要课题。' },
+            { keywords: '热烈·表达·需要认可', desc: '你的情感世界充满戏剧性与热情，需要表达和被欣赏。当你感到被重视时，你会慷慨地分享自己的光芒。孤独或被忽视会令你感到受伤，你的爱是温暖而慷慨的。',
+              detail: '月亮狮子的你内心有一个需要掌声和聚光灯的孩子。你的情感表达方式热烈而富有戏剧性——当你开心时，全世界都能感受到你的快乐；当你受伤时，你的沉默比任何言语都更有力。你在感情中非常慷慨，愿意把最好的给你爱的人，但你也需要等量的回馈和认可。你的自尊心很强，在人前绝不会展示脆弱的一面。你需要学习的是：真正的爱不需要完美的表演，展示你的脆弱，反而会让关系更加亲密和真实。' },
+            { keywords: '细腻·分析·服务', desc: '你通过实际行动和细心服务来表达情感，而非言语。情绪倾向于内化和分析，有时会过度担忧。你对细节异常敏感，追求情感关系中的秩序与完善。',
+              detail: '月亮处女的你用"做有用的事"来处理情绪。当你感到不安时，你会开始整理房间、列清单、分析原因——用秩序感来对抗内心的混乱。你表达爱的方式是默默地为对方做事：记住对方的药物过敏、主动安排行程细节、在对方需要之前就准备好一切。你内心有一个严苛的批评者，对自己的要求远高于对他人。你需要学习的是：接受自己和生活的不完美，有时候"够好了"就真的够好了。' },
+            { keywords: '和谐·平衡·伴侣', desc: '你渴望和谐与平衡的情感关系，在独处时往往感到不安。对美与艺术的欣赏能滋养你的内心。你善于理解他人的需求，但也需要更直接地表达自己的感受。',
+              detail: '月亮天秤的你内心始终在寻求一种完美的平衡和和谐感。冲突和粗暴会深深伤害你的情感神经，你会不自觉地扮演"和事佬"来恢复周围的和平。你需要一个伴侣来完成你的情感拼图——独处对你来说不是享受，而是一种不完整感。你的审美直觉能直接影响你的情绪——丑陋的环境会让你心情低落，美丽的事物则能瞬间治愈你。你需要学习的是：偶尔的冲突和不和谐其实是关系深化的必经之路，不要为了表面的和平而压抑真实的感受。' },
+            { keywords: '深沉·强烈·转化', desc: '你拥有极其强烈而深沉的情感世界，感受事物的方式远比他人深刻。你的情感具有转化的力量，既能带来极度的亲密，也可能产生强烈的嫉妒。你渴望灵魂层面的真实连接。',
+              detail: '月亮天蝎的你拥有十二星座中最深沉、最强烈的情感体验。你的感受从不停留在表面——快乐是极致的快乐，痛苦是刻骨的痛苦。你对亲密关系有着近乎偏执的忠诚度要求，哪怕是微小的背叛都可能让你天翻地覆。你的直觉极其敏锐，几乎能闻到他人话语中的谎言。你处理情绪的方式是深深地潜入内心，独自消化。你需要学习的是：信任是一种选择而非确认，偶尔放下防御的盔甲，让爱以更轻盈的方式流动。' },
+            { keywords: '乐观·自由·探索', desc: '你的内心充满乐观与冒险精神，情绪如同自由的骏马奔腾不息。你需要精神上的自由空间，对束缚极度敏感。哲学思考、旅行和探索是你情感满足的重要源泉。',
+              detail: '月亮射手的你用乐观和幽默来处理一切情绪——悲伤的时候你会用笑话包装自己的眼泪，困难面前你总是看到"至少还有"。你的内心有一匹野马，渴望精神和地理上的广阔空间。被困在一个狭小的情感或物理空间里，会让你感到窒息。你的情感需求中,"意义"比"安全"更重要——你需要知道自己在为什么而活，为什么而爱。你需要学习的是：有时候停下奔跑，安静地待在原地感受当下的情绪，不逃避，也是一种勇气。' },
+            { keywords: '克制·责任·踏实', desc: '你的情感世界内敛而深沉，不轻易示弱。你通过踏实的行动和长期的承诺来表达爱意。早年的挑战塑造了你坚韧的性格，你渴望通过努力建立持久稳固的情感关系。',
+              detail: '月亮摩羯的你可能从很小的时候就学会了"坚强"和"不依赖他人"。你的情感世界有一座高墙，只有经过长时间考验的人才能进入。你用可靠的行动而非言语来表达爱：他们可能永远听不到你说"我爱你"，但你会默默承担家庭的责任、在凌晨为他们排忧解难。你的情感需要时间来解冻，年轻时你可能显得比同龄人更成熟和疏离，但随着年龄增长，你反而会变得越来越温暖和开放。你需要学习的是：脆弱不等于软弱，允许自己被照顾也是一种力量。' },
+            { keywords: '独立·前卫·理性', desc: '你的情感世界独特而前卫，需要相当的精神独立空间。你以理性的方式处理情绪，有时显得疏离。你重视平等的伴侣关系，渴望与伴侣进行深入的思想交流与精神共鸣。',
+              detail: '月亮水瓶的你处理情绪的方式很"特别"——你倾向于把感受当作一个需要理解的现象来分析，而非沉浸其中。这让你在情感上显得超然和冷静，但内心深处你渴望被真正理解。你的情感需求中，"精神自由"和"被尊重为独立个体"是最核心的。一段要求你放弃自我去融入对方的关系，你宁可独自一人。你对人类命运的关怀有时反而超过对身边人的关注，这是你需要平衡的部分。学习在理性之外，允许自己纯粹地"感受"。' },
+            { keywords: '梦幻·同理心·直觉', desc: '你拥有极度敏感的情感系统，仿佛能感知宇宙万物的悲喜。你的同情心和直觉力极为出众，但有时容易被他人的情绪所淹没。你需要独处来净化和恢复内心的平静。',
+              detail: '月亮双鱼的你就像一块情感的海绵，走进任何空间都会不自觉地吸收周围的情绪能量。你的同理心和直觉力是十二星座中最强的——有时你分不清哪些情绪是自己的，哪些是他人的。你的内心世界如同梦境般丰富，音乐和艺术是你灵魂的语言。你在感情中容易陷入"拯救者"模式，被那些需要帮助的人强烈吸引。你需要学习的是：建立清晰的情绪边界，定期"清空"吸收的外来能量，不是所有的悲伤都需要你来承担。冥想、接近水和自然是你最好的情绪净化方式。' }
+        ];
+
+        const RISING_INTERPRETATIONS = [
+            { keywords: '直接·热情·领先', desc: '你给人的第一印象是充满活力、直接坦率。你的出现往往能激活周围的能量，人们感受到你的热情与竞争力。你天然具有开拓者的气质，喜欢站在时代的前沿。',
+              detail: '白羊座上升的人就像一团行走的火焰——走进房间的那一刻，所有人的注意力都会被你的气场吸引。你的面部表情生动、步伐有力、说话时喜欢直视对方的眼睛。这种"我来了"的强大气场，让你在面试、第一次约会和社交场合中具有天然优势。但你也需要注意：第一印象中过于强势的一面，可能会让性格温和的人感到压力。学会在开场时柔化你的能量，会让你的人际关系更加顺畅。你的外在形象往往透着一股运动员般的精气神——无论实际是否爱运动，你看起来都充满行动力。' },
+            { keywords: '沉稳·优雅·可靠', desc: '你散发着沉稳而优雅的气质，给人踏实可靠的感觉。你的外表通常端庄大方，与人初次见面时往往显得谨慎有礼。你对美的品味常令人印象深刻。',
+              detail: '金牛座上升的人是社交场合中最让人感到"安心"的存在。你的声音可能低沉而悦耳，穿着打扮偏向质感而非花哨，整个人散发着一种"值得信赖"的沉稳能量。人们在你身边会不自觉地放松下来，仿佛世界的节奏在你周围变慢了一些。你对物质环境的品味极高——无论是穿着、饮食还是居住空间，你都追求一种看得见、摸得着的品质感。这种审美不是炫耀性的，而是源自你对"好东西"的天然识别力。你的缺点可能是初次接触时显得过于保守或慢热，但那正是你的魅力所在：值得等待的人，总是最值得信赖的。' },
+            { keywords: '机智·灵活·善于沟通', desc: '你的外在形象灵活多变，机智幽默，让人觉得你是个容易相处的人。你的眼神灵动，语言表达流畅，初次见面就能建立轻松愉快的氛围。',
+              detail: '双子座上升的人是天生的社交催化剂——有你在的地方，空气中总是弥漫着轻松的笑声和有趣的对话。你的眼神极其灵活，与人交流时会不自觉地用丰富的手势和表情来增强表达。你的外形往往显得比实际年龄年轻，有一种永远充满好奇心的少年感。你在任何场合都能迅速找到话题、与任何人搭上话，这让你成为社交场合的"万能胶"。但你也可能给人一种"蜻蜓点水"的感觉——什么都能聊，但似乎缺少深度。当你找到一个真正让你愿意深入的话题或人，你会展现出令人惊讶的专注和洞察力。' },
+            { keywords: '温柔·体贴·有保护欲', desc: '你给人温柔、体贴的印象，让人感到被关心和保护。你的外表柔和，举止温和，初次见面时常表现出内敛和谨慎的一面，但一旦信任建立，情感便会流露。',
+              detail: '巨蟹座上升的人给人的第一印象是"温暖"和"安全"。你的面部表情柔和，笑容特别有治愈力，让人感到被接纳和关怀。你的外在形象可能带有某种"居家感"——不是不修边幅，而是一种让人联想到舒适家庭的柔和气质。你在社交中会不自觉地照顾在场每一个人的感受，确保没有人被冷落。初次见面时你可能稍显害羞和保守，但一旦判定对方是"安全"的，你会像打开水闸一样倾注情感。你的保护本能也体现在外在形象上——你可能有意无意地给自己构建一层"外壳"（宽松的衣物、怀旧的配饰），作为情感的缓冲地带。' },
+            { keywords: '自信·威严·吸引眼球', desc: '你天然地吸引他人的目光，外表充满自信和威严。你走进任何房间都仿佛自带聚光灯，举手投足间散发着王者气息，令人既仰慕又尊重。',
+              detail: '狮子座上升的人就是行走的舞台——无论你的太阳星座多么低调，上升狮子都会赋予你一种不可忽视的存在感。你的头发、笑容或着装中总有一个特别引人注目的"亮点"，仿佛在无声地宣告："请注意我。"你在社交中天然地成为焦点，不是因为刻意表演，而是因为你散发的能量太过耀眼。你的姿态挺拔，说话时声音洪亮而有感染力，手势大方而戏剧性。人们在你身边会不自觉地想要追随你的节奏。你需要注意的是：有时候退一步让他人做焦点，反而能赢得更多真心的尊重。' },
+            { keywords: '整洁·精致·分析', desc: '你给人整洁、精致而有条理的印象。初次见面时，你的言行举止中透露出细致和理性。人们感受到你的可靠和专业，常常向你寻求实际的建议和帮助。',
+              detail: '处女座上升的人是社交场合中"专业可靠"的代名词。你的着装通常干净利落、搭配得当，没有多余的装饰但每个细节都经过考量。你说话的方式有条有理，表达精准，让人感到你是一个"知道自己在做什么"的人。初次见面时，你可能会不自觉地观察环境中的细节——谁把杯子放歪了、菜单上有没有错字——这种细致有时让你显得挑剔，但更多时候让人感到你的用心和专业。你的健康意识通常也体现在外表上：你的皮肤状态、体态姿势，往往透露着你对身体的严格自律。' },
+            { keywords: '优雅·迷人·平和', desc: '你的外在形象优雅迷人，仿佛是天生的外交家。你的笑容令人如沐春风，举止大方得体，能在任何社交场合游刃有余。你给人留下和平友善的深刻印象。',
+              detail: '天秤座上升的人是十二星座中公认的"第一印象之王"。你的外形通常匀称协调，五官或整体气质中有一种令人愉悦的对称感和平衡美。你在社交中像一面温暖的镜子——让每个与你交流的人都感到被看见和被尊重。你的穿着有品味且得体，很少犯错也很少冒险，给人一种"永远合适"的优雅感。你是天生的外交官和调和者，在两方冲突时常常被推选为居间人。你需要注意的是：过于追求讨好和平衡，可能会让真正的你隐藏在完美的社交面具之下。偶尔让人看到你"不那么完美"的一面，会让关系更加真实。' },
+            { keywords: '神秘·深沉·令人着迷', desc: '你散发着一种神秘而深沉的魅力，令人既好奇又着迷。你的眼神锐利而深邃，仿佛能洞察他人心灵。你不轻易打开心扉，这种神秘感反而让人欲罢不能。',
+              detail: '天蝎座上升的人是十二星座中最具"磁性"的存在。你走进一个房间时，可能没有任何张扬的举动，但不知为何，人们就是会注意到你。你的眼神是你最有力的社交工具——深邃、锐利、仿佛能穿透一切伪装。与你四目相对的人，要么被深深吸引，要么下意识回避——很少有中间状态。你的外表可能有一种"生人勿近"的距离感，但那恰恰是让人着迷的地方。你很少主动说话，但一旦开口，你的言辞精准而有力。你需要注意的是：适当降低你的"穿透力"——不是每个人都准备好被你的深邃所直视的。' },
+            { keywords: '开朗·积极·充满活力', desc: '你给人开朗、积极的印象，好像身边总是充满阳光。你的乐观情绪具有感染力，和你在一起，人们会感到轻松愉快。你天生的幽默感和对冒险的热情令人精神为之一振。',
+              detail: '射手座上升的人是社交圈中的"快乐播种机"。你的笑容宽阔而真诚，笑声爽朗而具有感染力，与你在一起的人会不自觉地感到世界更加明亮。你的穿着风格偏休闲和运动感，常常带有异域风情或冒险气息的元素。你说话时手舞足蹈，故事讲得生动有趣，常常逗得全场哄堂大笑。你对新事物的热情是无穷的，这让你在旅行、户外活动和跨文化交流中如鱼得水。你需要注意的是：你的直率和幽默有时可能无意中踩到别人的敏感点。在畅所欲言之前多一秒钟的思考，会让你的魅力锦上添花。' },
+            { keywords: '严肃·成熟·专业', desc: '你给人严肃、成熟而专业的印象，令人不自觉地产生敬意。你的举止稳重，言辞谨慎，初次见面时可能显得有些距离感，但随着了解加深，你内心的温柔和责任感会逐渐显露。',
+              detail: '摩羯座上升的人是那种"看起来就很靠谱"的存在。即便你的内心正在经历风暴，你的外表也能保持一种令人安心的沉稳和秩序感。你的面部线条可能比较分明，骨骼感强，整个人散发着一种"成熟"的气场——很多摩羯上升在年轻时看起来比实际年龄老成，但随着时间推移反而越来越显年轻。你在职场社交中有天然优势：你的专业形象和稳重举止会让上级和客户对你产生信任。你需要注意的是：你的严肃外表有时会让人误以为你不好接近。适当展示你的幽默感和温情，会让人更愿意走近你。' },
+            { keywords: '独特·前卫·与众不同', desc: '你的外在形象独特而前卫，与众不同是你的标签。你往往有着令人印象深刻的打扮或独特的表达方式，让人一眼便能记住你。你的独立和自由精神吸引着那些同样不走寻常路的灵魂。',
+              detail: '水瓶座上升的人是人群中最容易被"记住"的面孔——不一定因为你最漂亮或最帅，而是因为你身上有一种说不出来的"不一样"。可能是你的穿搭风格独树一帜，可能是你的发型与众不同，或者仅仅是你的气质让人感到你来自另一个时空。你在社交中有一种天然的"疏离美"——你对所有人都友好，但与所有人都保持着一定的距离。这种"近在眼前却远在天边"的感觉，反而让人更想了解你。你关心人类命运、社会议题，这些深层的关怀在你的外在形象中以一种独特的方式流露。' },
+            { keywords: '温柔·梦幻·灵性', desc: '你散发着一种温柔而梦幻的气息，仿佛从另一个世界而来。你的眼神柔和而深邃，举止飘逸，给人一种神秘而灵性的感觉。人们常在你身边感到心灵平静，被你的温柔所治愈。',
+              detail: '双鱼座上升的人身上笼罩着一层柔和的光晕，如同晨雾中的湖面——美丽、宁静、带有几分不真实感。你的眼神经常略带迷离，仿佛同时存在于此刻和另一个维度。你的外形轮廓通常较为柔和，穿着偏好柔软的面料和流动的款式。在社交中，你有一种让人自动卸下防备的能力——人们会不自觉地向你倾诉心事，仿佛你是天生的心灵疗愈师。你的存在本身就有一种抚慰人心的力量，这是十二个上升星座中最特别的礼物。你需要注意的是：设立清晰的边界，不要让别人的情绪和问题过度侵入你的能量场。' }
+        ];
+
+        const ANNUAL_THEMES = ['新年启航','深耕沉淀','春意萌动','活力绽放','丰收期待','夏日冲刺','反思调整','秋风转运','稳步前行','收束总结','冬藏蓄力','岁末圆满'];
+
+        // ============ MONTHLY FORECAST POOL ============
+        // 每月有多条备选详细解读，按月份索引（0-11），每月6条避免重复
+        const MONTHLY_DETAIL_POOL = [
+            // 一月
+            ['新年伊始，宇宙为你注入一股全新的起始能量。这个月适合设定年度目标、制定详细计划，但不宜仓促启动大型项目。1月的能量偏向内省和规划，你会清晰地看到过去一年中哪些做法需要延续，哪些模式需要改变。在人际关系方面，与老朋友的重聚可能带来意外的启发或机会。财运上宜稳守，避免冲动消费。',
+             '一月的星象为你打开了一扇审视内心的窗户。这个月你的直觉力特别敏锐，那些在忙碌中被忽视的内心声音，现在会清晰地浮现。建议你用这段时间做一次深度的人生复盘——你真正想要的是什么？目前的方向是否与内心一致？在工作中可能会面临一些来自上级或制度的压力，保持冷静和专业是最好的应对。',
+             '这个月的能量犹如黎明前的静谧，表面平静但暗藏强大的潜力。1月对你来说是积蓄力量的关键期，不必急于展示成果，但每一天的积累都在为接下来的爆发做准备。感情方面，单身者可能在社交场合遇到有缘人；有伴者适合共同制定新年愿望清单，增进默契。',
+             '新年的第一个月带着一种仪式感的庄重。你可能会感受到一种来自内心深处的使命感——有些事情今年必须去做，有些改变今年必须发生。这股动力是真实的，值得认真对待。职场上可能有新任务或新角色的出现，保持开放心态迎接变化。健康方面注意保暖和休息，冬季的寒冷不宜透支体力。',
+             '1月为你提供了一个重新定义自我的机会。过去一年的经历，无论是成功还是挫折，都已成为你人生的养分。这个月最重要的是：带着感恩和清醒，轻装上阵。财务上适合做年度预算规划，把大目标拆解为每月可执行的小步骤。社交方面建议精简圈子，深耕真正有价值的关系。',
+             '一月的宇宙氛围如同一本打开的新日记——空白的页面等待你的书写。这个月不要给自己太大压力，也不要急着比较别人的进度。每个人的时间表不同，专注于自己的节奏才是最高效的。在学习和技能提升方面，这个月开始的新课程或新习惯会有出奇好的坚持效果。'],
+            // 二月
+            ['二月的能量开始缓缓升温，如同冰雪下涌动的春水。你会发现上个月制定的计划开始在细节层面逐步清晰。这个月适合深入执行和打磨，而非继续停留在规划阶段。人际关系中可能出现需要坦诚面对的对话，不要回避——真诚的沟通反而能加深信任。爱情运势在月中有所提升，单身者留意身边低调但真诚的追求者。',
+             '这个月的星象赋予你一种稳健的深耕力量。不要被外界的热闹和喧嚣分心，把注意力集中在手头最重要的1-2件事上。二月的耐心将在三四月份带来可见的回报。财务上可能有一笔预期之外的支出，提前做好预算调整。职场中你的低调勤奋正在被重要人物注意到，继续保持。',
+             '二月的能量场鼓励你深入挖掘某个领域或关系。表面的了解已经不再满足你，你渴望更深层次的理解和连接。这是一个非常适合学习、阅读和技能提升的月份。感情方面，有伴者可能需要面对一些积累已久的小问题，耐心处理会让关系更上一层楼。',
+             '这是一个适合打基础的月份。二月看似平淡，但你在此刻建立的习惯、关系和工作基础，将在全年持续发挥作用。建议你在这个月建立一个可持续的日常作息节奏，把健康和效率放在第一位。社交方面不必强求，有质量的独处和少量深度社交是最佳搭配。',
+             '二月的宇宙节奏偏慢，但这正是你需要的。放慢脚步不是停滞，而是为了走得更稳。这个月适合修复上个月或更早时候遗留的问题——无论是工作中的漏洞、关系中的误解，还是身体上的疲劳。把"修补"当作这个月的主题词，你会在月末感到焕然一新。',
+             '这个月你可能会感到一种来自内心的沉淀需求。二月的能量不鼓励冒进，但特别支持深度工作和内在成长。利用这段时间整理你的知识体系、优化你的工作流程，或者认真思考一个一直困扰你的人生问题。答案往往在静默中到来。'],
+            // 三月
+            ['三月的能量如同春天的第一缕阳光，温暖而充满希望。前两个月的沉淀和准备开始见到端倪。这个月你的行动力和社交能量同步回升，是启动新项目、拓展新关系的好时机。但提醒自己不要在兴奋中忘记规划，热情需要策略的加持才能产生最大效果。感情方面，一段新的情缘可能在社交活动中悄然开始。',
+             '春意萌动的三月带来了久违的活力。你会发现自己的创意和灵感显著增加，工作中出现了新的可能性。建议你在这个月主动争取机会，不要等着机会来找你。财务方面运势稳中有升，可以考虑小额投资或开启一个副业尝试。健康方面，春季运动是恢复体能的最佳时机。',
+             '三月为你打开了一扇社交和合作的大门。这个月你会遇到一些有趣的新面孔，其中某些人可能在未来成为重要的合作伙伴或朋友。保持开放和真诚的态度去迎接每一次相遇。职场中可能有跨部门合作的机会，积极参与会让你的能力被更多人看到。',
+             '这是一个从冬到春的过渡月份，能量在流动中寻找新的方向。你可能需要在几个选择之间做出决定——新工作机会、新的学习方向或生活方式的调整。信任你的直觉，同时做足信息收集的功课。三月做出的选择，将影响你全年的走向。',
+             '三月的星象特别有利于自我表达和创意展示。如果你有一个一直想要分享但犹豫不决的作品、想法或项目，这个月是发布或启动的理想时机。你的表达力和说服力在三月都处于高峰，善加利用这股能量。',
+             '春天到了，你的内心也在苏醒。三月的能量鼓励你走出冬天的沉寂，重新与外部世界建立积极的连接。参加一次久违的聚会、报名一个新的兴趣班、或者尝试一种新的社交方式，都能让你在这个月收获意想不到的惊喜和能量。'],
+            // 四月
+            ['四月的能量如火如荼，你的行动力和创造力都达到了上半年的高峰。这是一个非常适合"做事"的月份——推进项目、签订合约、做出重要决定，都能在四月得到宇宙能量的加持。但也要注意节奏，不要在兴奋中忽略了休息的需要。感情方面热情升温，有伴者适合安排一次浪漫的约会或短途旅行。',
+             '活力绽放的四月让你感受到一种久违的自信和动力。上个月种下的种子在这个月开始发芽，你能看到努力的初步成果。继续保持势头，但不要因为心急而跳过重要的细节。职场中你的表现会得到关注，把握机会展示你的能力和愿景。',
+             '四月是一个充满活力的行动月。你的身体和精神都处于较好的状态，适合挑战自己的极限——无论是工作上的高难度项目、健身上的新目标，还是个人成长上的突破。这个月做出的努力会在几个月后结出甜美的果实。',
+             '这个月你可能会感到一种强烈的"此刻不做更待何时"的紧迫感。这种感觉是有道理的——四月的星象确实提供了一个行动力的窗口期。但紧迫不等于鲁莽，在大胆行动的同时保持头脑清醒。财务上可能出现增收的机会，仔细评估后果断出手。',
+             '四月的宇宙能量推动你向外扩展。这个月特别适合建立新的人脉、进入新的市场、学习新的技能。你的学习能力和适应力在四月特别突出，新事物的上手速度会让自己都感到惊喜。',
+             '这是一个让你的才华被看见的月份。不要把好的想法和成果藏起来，四月是展示和推广的好时机。无论是工作成果、创意作品还是个人品牌，勇于展示的人在这个月会得到超出预期的正面反馈。'],
+            // 五月
+            ['五月的能量开始从"冲刺"转向"收获"。前几个月的努力在这个月开始显现实质性的回报。你可能收到一笔奖金、一个晋升机会或一段关系的深化确认。享受这些成果的同时，也要为下半年做前瞻性的规划。健康方面建议增加户外活动，让身体在大自然中充电。',
+             '五月是一个适合巩固和享受的月份。你在前几个月建立的基础已经稳固，现在可以稍微放松一下，享受劳动的成果。但"放松"不等于"松懈"，保持基本的节奏和纪律是确保成果持续增长的关键。感情方面非常甜蜜，有伴者感情升温，单身者可能遇到让你怦然心动的人。',
+             '这个月的能量偏向稳定和丰盛。你会发现生活中的各个方面都在朝着好的方向发展，虽然速度不快但方向明确。五月特别适合做中期检视——回顾年初的目标，评估进度，必要时做出策略调整。财务运势良好，适合做一次理性的投资决策。',
+             '五月带来了一种令人愉悦的丰收感。你的付出正在被看见和回报，这种正向反馈将激励你在接下来的月份继续努力。但也要留意：不要因为当下的顺遂而掉以轻心。持续学习和自我提升是保持优势的不二法门。',
+             '这个月你的人际关系特别和谐，适合修复之前的误会或重新建立与重要人物的连接。五月的沟通运势极佳，那些一直不好意思开口的话、一直想要协商的事情，在这个月表达效果最好。',
+             '五月的宇宙能量鼓励你享受生活的美好。在努力工作的同时，别忘了犒劳自己——一次旅行、一顿美食、一件期待已久的物品。适度的享受不是浪费，而是对自己辛勤付出的必要回馈。'],
+            // 六月
+            ['六月是上半年的收官之月，能量催促你做最后的冲刺。那些在年初设定但尚未完成的目标，这个月需要加快节奏。工作中可能出现紧急但重要的任务，你的应变能力将得到考验。健康方面需要特别注意夏季的饮食和水分补充，过度劳累的信号不要忽视。感情方面，坦诚的对话能化解近期的小误解。',
+             '六月的能量如同正午的阳光——强烈、直接、无处可藏。这个月你可能需要做一些不容拖延的决定，面对一些回避已久的问题。勇敢面对吧，六月的星象支持那些选择直面真相的人。职场中可能有竞争或变动，保持你的专业态度和实力，是最好的应对策略。',
+             '夏日冲刺的六月要求你在热情和理性之间找到平衡。这个月你的行动力再次升高，但同时也容易因为天气和压力而烦躁。建议你在忙碌的间隙给自己安排清凉安静的休息时间。财务方面可能有预期之外的开支，灵活调整预算是明智之举。',
+             '六月是半年节点的总结月。这个月适合做一次全面的中期复盘：上半年的成就有哪些？哪些目标需要调整？下半年的优先级是什么？把这些问题想清楚，将为你的下半年奠定清晰的方向。社交方面可能有重要的聚会或活动，积极参加会带来正面的影响。',
+             '这个月你可能感到一种来自内外的双重压力——外部的截止日期和内部的自我期待。处理的关键是：分清主次，先完成最重要的三件事，其余的可以顺延。完美主义在这个月是你的敌人，"完成"比"完美"更重要。',
+             '六月的高温不仅在天气上，也在你的内心。这个月你可能经历一些情绪上的波动——工作压力、人际摩擦或者对进度的焦虑。记住：这些都是暂时的，不要在情绪高峰时做重大决定。给自己一天的冷静期，很多问题会自动找到出口。'],
+            // 七月
+            ['七月的能量邀请你放慢脚步，进入一段反思和调整的时期。上半年的快速运转需要一个喘息的机会。这不是偷懒，而是为下半年的加速蓄力。利用这个月审视你的方向、调整你的策略、修复你的身心。感情方面适合做深度的情感交流，把那些平时没时间说的心里话说出来。',
+             '七月是一个适合"向内看"的月份。这个月你的内省能力特别强，对自己的行为模式和深层动机会有更清晰的认知。建议你花时间写日记、冥想或做一次心理梳理。那些在忙碌中被忽略的内心需求，在这个月会浮出水面要求被关注。',
+             '反思调整的七月可能会让你对某些现状产生不满或质疑。这是好事——不满足是改变的前奏。但调整的方式应该是循序渐进的，而非颠覆性的。先从小处着手：调整一个不再有效的习惯、退出一段消耗你能量的关系、或者给自己增加一项滋养身心的新活动。',
+             '七月适合做减法。审视你的日程表、社交圈和物品清单，删去那些不再服务于你当下目标和幸福的事物。精简之后的空间和时间，将为下半年更重要的事情腾出位置。财务上同样适合做一次"断舍离"——取消不必要的订阅、优化固定支出。',
+             '这个月你的创造力和灵感可能在安静中悄然涌现。不要急于将它们变成行动，先记录下来、酝酿一段时间。七月的灵感是种子，需要在八九月的行动力中才能真正生根发芽。',
+             '七月的星象提醒你关注健康和休息。上半年的高速运转对身体的透支需要在这个月得到补偿。安排一次体检、调整作息时间、增加高质量的睡眠——这些看似平凡的举措，将在下半年给你带来持续的能量支持。'],
+            // 八月
+            ['八月的能量如同秋风初起，带来了新的方向感和动力。经过七月的调整期，你会发现自己的目标更加清晰、执行力更加强健。这是一个重新出发的好月份，无论是工作项目、学习计划还是人际关系，八月的新开始都有着特别好的星象加持。财务上可能迎来意外之财或新的收入渠道。',
+             '八月为你注入了一股稳健而持久的推进力。与年初的冲劲不同，这个月的能量更加成熟和有方向感。你不再需要尝试一切可能性，而是专注于那个被证明最有价值的方向。职场中你的稳定表现将获得认可，领导力的展现时机已经成熟。',
+             '秋风转运的八月带来了一些令人兴奋的变化信号。你可能收到一个意想不到的机会、认识一个重要的人，或者对某个问题突然有了全新的理解。保持敏锐和开放，这个月的"意外"往往是命运送给你的礼物。',
+             '这个月你的社交运势和工作运势同步上升。八月是一个适合"连接"的月份——连接新的人脉、连接不同的资源、连接你的过去和未来。那些看似不相关的人和事，在这个月可能奇妙地交汇在一起，产生令人惊喜的化学反应。',
+             '八月的能量鼓励你大胆地表达和行动。如果你一直在犹豫是否要做某个决定或说某句话，这个月是时候了。星象支持那些勇于突破的人，你的果断将在未来几个月内得到丰厚的回报。',
+             '这个月适合重新建立生活的节奏和规律。经过上个月的调整，你现在需要一个新的日常框架来支撑下半年的目标。建立一套高效的工作和生活节奏，让好的习惯成为自动化的力量。'],
+            // 九月
+            ['九月的能量沉稳而专注，适合进入"深度工作模式"。这个月你的注意力和执行力都处于良好状态，适合攻克那些需要持续专注的任务和项目。在人际关系方面，真诚和稳定的态度会赢得他人的深度信任。感情方面走向务实和深入，表面的浪漫让位于真实的生活共建。',
+             '九月是收获的前奏。前几个月种下的努力在这个月开始显现更为明确的成果走向。你能清楚地看到哪些方向在奏效、哪些需要调整。保持专注和耐心，不要在最后关头失去节奏。财务方面运势平稳，适合做长期储蓄和投资规划。',
+             '稳步前行的九月需要你拥有马拉松选手的心态——不追求瞬间的爆发力，而是维持持续而稳健的前进步伐。这个月可能没有惊天动地的大事件，但每一天的积累都在让你更接近年度目标。享受这种"稳中求进"的状态。',
+             '九月的星象特别有利于技能提升和知识深化。如果你一直想深入学习某个领域、考取某个证书或掌握某项技能，这个月的学习效率特别高。投资在自我成长上的时间和金钱，将在未来成倍回报给你。',
+             '这个月你的判断力特别准确，适合做一些需要深思熟虑的决策。无论是职业规划、投资方向还是人际关系的取舍，九月的理性和直觉会同时在线，帮助你做出最佳选择。',
+             '九月适合做一次中间检视：年度目标完成了多少？剩下的三个月如何分配精力？哪些优先级需要重新排列？这种有意识的复盘能让你的第四季度更加高效和有方向感。'],
+            // 十月
+            ['十月的能量开始进入收束期，你会自然而然地开始为这一年画上标点符号。进行中的项目适合加速收尾，新的大型计划建议推迟到来年。人际关系中需要做一些"盘点"——哪些关系值得继续投入？哪些已经完成了它们的使命？感情方面深度和质量比热度更重要。',
+             '十月是一个适合总结和传承的月份。你在这一年积累的经验和智慧，值得整理成可复用的方法论。无论是写一份工作总结、分享一次学习心得，还是给后辈提供一些建议——你的经验对他人有真实的价值。财务上适合做年终的财务审查和资产盘点。',
+             '收束总结的十月让你开始回望这一年的旅程。你会发现自己已经走了比想象中更远的路。给自己一些肯定和感恩吧——不是每一步都完美，但每一步都有它的价值。这种自我肯定的能量将成为你最后两个月的推进燃料。',
+             '这个月的能量偏向沉稳和内敛。十月适合处理那些"一直想做但一直没时间做"的事情——整理文件、归档资料、修复人际关系中的小裂缝。把这些收尾工作处理好，你会带着更轻松的状态进入年底。',
+             '十月可能带来一些关于明年方向的初步灵感。不要急于做决定，但可以开始收集信息和思考方向。与信赖的朋友或导师做一次深度对话，他们的视角可能帮你看到自己的盲区。',
+             '这个月在健康方面需要额外关注。秋季的气候变化对身体的影响不容忽视。建议调整饮食、增加防寒保暖措施、保持规律运动。一个健康的身体是你度过繁忙年底的最重要保障。'],
+            // 十一月
+            ['十一月的能量如同大地在冬季来临前的最后蓄力。这个月你会感受到一种紧迫感——有些事情必须在年底前完成。利用这股推动力来攻克最后的难关，但也要注意不要把自己逼得太紧。在人际关系方面，感恩和珍惜是这个月的主题词。感情方面可能有重要的进展或确认。',
+             '十一月的星象为你提供了一份特别的"蓄力包"。这个月适合储存能量而非消耗能量——无论是财务上的储蓄、知识上的学习，还是身体上的休养，都在为明年的你做准备。那些在十一月播下的种子，将在来年春天绽放。',
+             '冬藏蓄力的十一月是一个偏向内省的月份。你的内心世界在这个月特别活跃，可能会有一些关于人生意义、职业方向或关系本质的深层思考浮现。不要逃避这些思考——它们是你灵魂成长的重要信号。',
+             '这个月你可能需要在"完成"和"完善"之间做出选择。十一月的现实是：有些事情只能做到"够好"就必须收手，以便腾出精力处理更紧迫的事项。学会接受"够好"是这个月最重要的功课。',
+             '十一月适合做深度的人际连接。这个月走近你内心的那些关键人物——家人、挚友、导师——和他们进行一次有意义的对话。在繁忙的年底到来之前，先用温暖的连接来滋养你的心灵。',
+             '这个月的能量鼓励你开始思考来年的蓝图。虽然详细的规划可以等到一月，但现在就开始勾勒大方向——你希望明年在哪些方面有所突破？哪些习惯需要建立？哪些关系需要调整？提前的思考会让新年规划更加从容和深思熟虑。'],
+            // 十二月
+            ['十二月是圆满与感恩的月份。回顾这一年的所有经历——顺利的与坎坷的、收获的与失去的——它们共同编织成了你独一无二的年度故事。允许自己为这一年的成长感到骄傲，也允许自己为未达成的目标感到释然。年末适合做感恩练习，对帮助过你的人表达真诚的谢意。',
+             '十二月的星象带来了一种温暖的收束能量。这个月适合把所有松散的线索收拢，把该说的话说完，把该表达的感情表达出来。在财务上做年终结算，在工作上完成收尾，在关系上做出总结。带着一个整洁、清晰的状态迈入新的一年。',
+             '岁末圆满的十二月邀请你放下一切评判，纯粹地感受这一年生命的流动。不要只盯着"目标完成率"，也看看那些目标之外意外收获的——新的朋友、新的理解、新的内在力量。很多时候，最珍贵的成长恰恰发生在计划之外。',
+             '这个月你的内心可能会涌起一些复杂的情绪——对即将过去一年的不舍、对新一年的期待、对未完成事项的焦虑。允许这些情绪自然流动，不要压抑也不要放大。它们只是你丰富内心世界的自然表达，会在新年的钟声中找到安放的位置。',
+             '十二月适合做一件特别的事：给一年前的自己写一封信，告诉TA这一年发生了什么、学到了什么、最感恩什么。这个练习不仅能帮你完成心理上的年终总结，还能让你清晰地看到自己成长的轨迹。',
+             '这个月的重点是：休息、感恩、和展望。让自己在年底拥有足够的休息和陪伴，用温暖的心去感受节日的氛围。同时，在心中悄悄种下对新一年的期待和愿景——不必具体到细节，只需感受到那股向上生长的力量就够了。']
+        ];
+
+        // ============ NATAL CHART FUNCTIONS ============
+
+        function calculateNatalChart() {
+            const dateVal = document.getElementById('natalDate').value;
+            const timeVal = document.getElementById('natalTime').value || '12:00';
+            if (!dateVal) { alert('请选择出生日期'); return; }
+            const date = new Date(dateVal);
+            const parts = timeVal.split(':');
+            const hour = parseInt(parts[0]) + parseInt(parts[1]) / 60;
+            const positions = getPlanetPositions(date, hour);
+            const risingIdx = getRisingSignIndex(date, hour);
+            document.getElementById('natalSvgContainer').innerHTML = drawNatalSVG(positions, risingIdx);
+            buildPlanetTable(positions, risingIdx);
+            buildNatalInterpretations(positions, risingIdx);
+            document.getElementById('natalResult').classList.remove('hidden');
+            document.getElementById('natalResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function drawNatalSVG(positions, risingIdx) {
+            const W = 460, H = 460, cx = 230, cy = 230;
+            const outerR = 215, signR = 193, innerR = 162, planetR = 128, centerR = 52;
+            const zodiacSymbols = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+            const elemFill  = ['rgba(255,107,107,0.18)','rgba(85,239,196,0.13)','rgba(116,185,255,0.18)','rgba(162,155,254,0.18)','rgba(255,107,107,0.18)','rgba(85,239,196,0.13)','rgba(116,185,255,0.18)','rgba(162,155,254,0.18)','rgba(255,107,107,0.18)','rgba(85,239,196,0.13)','rgba(116,185,255,0.18)','rgba(162,155,254,0.18)'];
+            const elemStroke= ['#ff7675','#55efc4','#74b9ff','#a29bfe','#ff7675','#55efc4','#74b9ff','#a29bfe','#ff7675','#55efc4','#74b9ff','#a29bfe'];
+            const pMap = {};
+            PLANET_META.forEach(p => pMap[p.key] = p);
+
+            let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;display:block;margin:0 auto">`;
+            s += `<circle cx="${cx}" cy="${cy}" r="${outerR+8}" fill="#06061a"/>`;
+
+            for (let i = 0; i < 12; i++) {
+                const a1 = (i*30-90)*Math.PI/180, a2 = ((i+1)*30-90)*Math.PI/180;
+                const ox1=cx+outerR*Math.cos(a1),oy1=cy+outerR*Math.sin(a1);
+                const ox2=cx+outerR*Math.cos(a2),oy2=cy+outerR*Math.sin(a2);
+                const ix1=cx+signR*Math.cos(a2), iy1=cy+signR*Math.sin(a2);
+                const ix2=cx+signR*Math.cos(a1), iy2=cy+signR*Math.sin(a1);
+                s += `<path d="M${ox1} ${oy1} A${outerR} ${outerR} 0 0 1 ${ox2} ${oy2} L${ix1} ${iy1} A${signR} ${signR} 0 0 0 ${ix2} ${iy2}Z" fill="${elemFill[i]}" stroke="${elemStroke[i]}" stroke-width="0.6"/>`;
+                const mid=(i*30+15-90)*Math.PI/180, sR=(outerR+signR)/2;
+                s += `<text x="${cx+sR*Math.cos(mid)}" y="${cy+sR*Math.sin(mid)}" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#e0d5ff">${zodiacSymbols[i]}</text>`;
+                s += `<line x1="${cx+signR*Math.cos(a1)}" y1="${cy+signR*Math.sin(a1)}" x2="${cx+innerR*Math.cos(a1)}" y2="${cy+innerR*Math.sin(a1)}" stroke="#c9a227" stroke-width="0.5" opacity="0.4"/>`;
+            }
+            s += `<circle cx="${cx}" cy="${cy}" r="${outerR}" fill="none" stroke="#c9a227" stroke-width="1.5"/>`;
+            s += `<circle cx="${cx}" cy="${cy}" r="${signR}" fill="none" stroke="#c9a227" stroke-width="1"/>`;
+            s += `<circle cx="${cx}" cy="${cy}" r="${innerR}" fill="#08080f" fill-opacity="0.7" stroke="#c9a227" stroke-width="0.5" opacity="0.5"/>`;
+
+            // Ascendant line
+            const acA = (risingIdx*30+15-90)*Math.PI/180;
+            s += `<line x1="${cx}" y1="${cy}" x2="${cx+innerR*Math.cos(acA)}" y2="${cy+innerR*Math.sin(acA)}" stroke="#c9a227" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.7"/>`;
+            s += `<text x="${cx+(innerR+12)*Math.cos(acA)}" y="${cy+(innerR+12)*Math.sin(acA)}" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c9a227" font-weight="bold">AC</text>`;
+
+            // Planets
+            const placed = [];
+            Object.entries(positions).forEach(([key, deg]) => {
+                const meta = pMap[key];
+                if (!meta) return;
+                let pr = planetR;
+                const baseA = (deg - 90) * Math.PI / 180;
+                // simple collision nudge
+                let px = cx+pr*Math.cos(baseA), py = cy+pr*Math.sin(baseA);
+                for (const [ox,oy] of placed) {
+                    if (Math.sqrt((px-ox)**2+(py-oy)**2) < 30) { pr -= 30; px = cx+pr*Math.cos(baseA); py = cy+pr*Math.sin(baseA); break; }
+                }
+                placed.push([px,py]);
+                // dot on ring
+                const dR = signR - 5;
+                s += `<circle cx="${cx+dR*Math.cos(baseA)}" cy="${cy+dR*Math.sin(baseA)}" r="3.5" fill="${meta.color}" opacity="0.9"/>`;
+                // connector
+                s += `<line x1="${cx+(signR-10)*Math.cos(baseA)}" y1="${cy+(signR-10)*Math.sin(baseA)}" x2="${px}" y2="${py}" stroke="${meta.color}" stroke-width="0.5" opacity="0.25"/>`;
+                // planet circle
+                s += `<circle cx="${px}" cy="${py}" r="14" fill="#08080f" stroke="${meta.color}" stroke-width="1.5"/>`;
+                s += `<text x="${px}" y="${py}" text-anchor="middle" dominant-baseline="central" font-size="13" fill="${meta.color}">${meta.symbol}</text>`;
+            });
+
+            // Center
+            s += `<circle cx="${cx}" cy="${cy}" r="${centerR}" fill="#06061a" stroke="#c9a227" stroke-width="1.2"/>`;
+            s += `<text x="${cx}" y="${cy-9}" text-anchor="middle" font-size="11" fill="#c9a227" font-family="Cinzel,serif">本命星盘</text>`;
+            s += `<text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="9" fill="#9a8bb8">Natal Chart</text>`;
+            s += `<text x="${cx}" y="${cy+21}" text-anchor="middle" font-size="8" fill="#554466">≈ approx ≈</text>`;
+            s += '</svg>';
+            return s;
+        }
+
+        function buildPlanetTable(positions, risingIdx) {
+            const pMap = {};
+            PLANET_META.forEach(p => pMap[p.key] = p);
+            const rising = ZODIAC_SIGNS[risingIdx];
+            let html = `<h3 style="color:#c9a227;font-family:'Cinzel',serif;margin-bottom:18px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">行星位置表</h3>`;
+            html += `<div class="planet-row">
+                <div class="planet-icon" style="border-color:#c9a227;color:#c9a227;font-size:10px">AC</div>
+                <div class="planet-name-zh" style="color:#c9a227">上升</div>
+                <div>
+                    <div class="planet-sign-name">${rising.symbol} ${rising.name}</div>
+                    <div class="planet-sign-interp">${RISING_INTERPRETATIONS[risingIdx].keywords}</div>
+                </div></div>`;
+            Object.entries(positions).forEach(([key, deg]) => {
+                const meta = pMap[key];
+                if (!meta) return;
+                const sIdx = degreeToSignIndex(deg);
+                const sign = ZODIAC_SIGNS[sIdx];
+                const brief = PLANET_IN_SIGN_BRIEF[key];
+                html += `<div class="planet-row">
+                    <div class="planet-icon" style="border-color:${meta.color};color:${meta.color}">${meta.symbol}</div>
+                    <div class="planet-name-zh">${meta.name}</div>
+                    <div>
+                        <div class="planet-sign-name">${sign.symbol} ${sign.name}</div>
+                        <div class="planet-sign-interp">${brief ? brief[sIdx] : ''}</div>
+                    </div></div>`;
+            });
+            document.getElementById('planetTable').innerHTML = html;
+        }
+
+        function buildNatalInterpretations(positions, risingIdx) {
+            const sunIdx  = degreeToSignIndex(positions.sun);
+            const moonIdx = degreeToSignIndex(positions.moon);
+            const mercIdx = degreeToSignIndex(positions.mercury);
+            const venIdx  = degreeToSignIndex(positions.venus);
+            const marsIdx = degreeToSignIndex(positions.mars);
+            const sunSign  = ZODIAC_SIGNS[sunIdx];
+            const moonSign = ZODIAC_SIGNS[moonIdx];
+            const rising   = ZODIAC_SIGNS[risingIdx];
+            const sunDetail = SUN_SIGN_DETAIL[sunIdx];
+
+            let html = `<h3 style="color:#c9a227;font-family:'Cinzel',serif;margin-bottom:20px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;text-align:center;">✦ 核心星象解读 ✦</h3>`;
+
+            // Sun sign - detailed multi-section card
+            html += `<div class="natal-interp-card">
+                <div class="natal-interp-title">☉ 太阳星座 · 你的核心自我</div>
+                <div class="natal-interp-sign">${sunSign.symbol}  ${sunSign.name} · ${sunSign.enName}</div>
+                <div class="natal-interp-text">${sunDetail.personality}</div>
+                <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(201,162,39,0.15);">
+                    <div style="color:#d4af60;font-size:0.8rem;font-weight:bold;margin-bottom:6px;">♥ 感情与爱情</div>
+                    <div class="natal-interp-text">${sunDetail.love}</div>
+                </div>
+                <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(201,162,39,0.1);">
+                    <div style="color:#d4af60;font-size:0.8rem;font-weight:bold;margin-bottom:6px;">⚡ 事业与发展</div>
+                    <div class="natal-interp-text">${sunDetail.career}</div>
+                </div>
+                <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(201,162,39,0.1);">
+                    <div style="color:#d4af60;font-size:0.8rem;font-weight:bold;margin-bottom:6px;">✦ 人生课题</div>
+                    <div class="natal-interp-text">${sunDetail.challenge}</div>
+                </div>
+            </div>`;
+
+            // Moon sign
+            html += `<div class="natal-interp-card">
+                <div class="natal-interp-title">☽ 月亮星座 · 你的内在情感</div>
+                <div class="natal-interp-sign">${moonSign.symbol}  ${moonSign.name} · ${moonSign.enName}</div>
+                <div class="natal-interp-text">月亮在${moonSign.name}，${MOON_INTERPRETATIONS[moonIdx].desc}</div>
+            </div>`;
+
+            // Rising sign
+            html += `<div class="natal-interp-card">
+                <div class="natal-interp-title">↑ 上升星座 · 你的外在形象</div>
+                <div class="natal-interp-sign">${rising.symbol}  ${rising.name} · ${rising.enName}</div>
+                <div class="natal-interp-text">${rising.name}上升，${RISING_INTERPRETATIONS[risingIdx].desc}</div>
+            </div>`;
+
+            // Mercury, Venus, Mars detail cards
+            const extraPlanets = [
+                { symbol: '☿', label: '水星 · 你的思维与沟通方式', idx: mercIdx, detail: PLANET_DETAIL.mercury[mercIdx] },
+                { symbol: '♀', label: '金星 · 你的爱情与审美风格', idx: venIdx,  detail: PLANET_DETAIL.venus[venIdx] },
+                { symbol: '♂', label: '火星 · 你的行动力与竞争方式', idx: marsIdx, detail: PLANET_DETAIL.mars[marsIdx] }
+            ];
+            extraPlanets.forEach(p => {
+                const sign = ZODIAC_SIGNS[p.idx];
+                html += `<div class="natal-interp-card">
+                    <div class="natal-interp-title">${p.symbol} ${p.label}</div>
+                    <div class="natal-interp-sign">${sign.symbol}  ${sign.name} · ${sign.enName}</div>
+                    <div class="natal-interp-text">${p.detail}</div>
+                </div>`;
+            });
+
+            document.getElementById('natalInterpSection').innerHTML = html;
+        }
+
+        // ============ MOON & RISING TAB ============
+
+        function calculateMoonRising() {
+            const dateVal = document.getElementById('mrDate').value;
+            const timeVal = document.getElementById('mrTime').value || '12:00';
+            if (!dateVal) { alert('请选择出生日期'); return; }
+            const date = new Date(dateVal);
+            const parts = timeVal.split(':');
+            const hour = parseInt(parts[0]) + parseInt(parts[1]) / 60;
+            const positions = getPlanetPositions(date, hour);
+            const moonIdx   = degreeToSignIndex(positions.moon);
+            const risingIdx = getRisingSignIndex(date, hour);
+            const sunIdx    = degreeToSignIndex(positions.sun);
+            const moonSign  = ZODIAC_SIGNS[moonIdx];
+            const risingSign= ZODIAC_SIGNS[risingIdx];
+            const sunSign   = ZODIAC_SIGNS[sunIdx];
+
+            const defs = [
+                { ps: '☽', pn: '月亮星座', sign: moonSign,   interp: MOON_INTERPRETATIONS[moonIdx] },
+                { ps: '↑', pn: '上升星座', sign: risingSign,  interp: RISING_INTERPRETATIONS[risingIdx] }
+            ];
+            let cardsHtml = '';
+            defs.forEach(d => {
+                cardsHtml += `<div class="moonrising-card">
+                    <div class="moonrising-planet-symbol">${d.ps}</div>
+                    <div class="moonrising-planet-name">${d.pn}</div>
+                    <div class="moonrising-sign-symbol">${d.sign.symbol}</div>
+                    <div class="moonrising-sign-name">${d.sign.name} · ${d.sign.enName}</div>
+                    <div class="moonrising-keywords">${d.interp.keywords}</div>
+                    <div class="moonrising-description">${d.interp.desc}</div>
+                    ${d.interp.detail ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(201,162,39,0.12);font-size:0.8rem;color:#9a8bb8;line-height:1.75;">${d.interp.detail}</div>` : ''}
+                </div>`;
+            });
+            document.getElementById('moonRisingCards').innerHTML = cardsHtml;
+
+            // Determine element harmony
+            const sunElem = sunSign.element, moonElem = moonSign.element, risingElem = risingSign.element;
+            const sameCount = [sunElem, moonElem, risingElem].filter((v,i,a)=>a.indexOf(v)===i).length;
+            let harmonyNote = '';
+            if (sameCount === 1) harmonyNote = `三颗星全部落在${sunElem}元素中，你的性格高度统一，优势明显但也可能缺少其他元素的平衡。`;
+            else if (sunElem === moonElem) harmonyNote = `太阳和月亮同为${sunElem}元素，你的外在表达与内在情感高度一致，人们看到的你就是真实的你。上升${risingSign.name}则为你增添了${risingElem}的色彩。`;
+            else if (sunElem === risingElem) harmonyNote = `太阳和上升同属${sunElem}元素，你呈现给世界的形象与你的核心自我非常吻合。而月亮${moonSign.name}则在你最私密的情感世界中注入了${moonElem}的独特质感。`;
+            else if (moonElem === risingElem) harmonyNote = `月亮和上升都属于${moonElem}，你的外在形象与内在情感有相似的底色。而太阳${sunSign.name}则代表着你深层的人生目标和真正的自我追求方向。`;
+            else harmonyNote = `三颗星分布在不同的元素中，你是一个内在丰富而多面的人——在不同的情境下展现截然不同的特质，这正是你独特魅力的来源。`;
+
+            document.getElementById('moonRisingCombined').innerHTML = `
+                <div class="moonrising-combined-title">✦ 三星组合解读 ✦</div>
+                <div class="moonrising-combined-text">
+                    <p>你的太阳在<strong style="color:#c9a227">${sunSign.name}</strong>（${sunElem}），月亮在<strong style="color:#c9a227">${moonSign.name}</strong>（${moonElem}），上升星座是<strong style="color:#c9a227">${risingSign.name}</strong>（${risingElem}）。</p>
+                    <p style="margin-top:10px;">太阳${sunSign.name}代表你的核心自我与人生目标——这是你在最自在、最真实的状态下呈现的模样，也是你一生都在追求和成为的那个"我"。月亮${moonSign.name}掌管你最私密的情感世界——你在深夜独处时、在最亲密的人面前时，表现出来的那个真实而柔软的自己。上升${risingSign.name}则是你面对陌生世界时自动穿上的"社交盔甲"——人们初次见你时感受到的气质和印象。</p>
+                    <p style="margin-top:10px;">${harmonyNote}</p>
+                    <p style="margin-top:10px;">在日常生活中，这三者的互动可能表现为：你用${risingSign.name}的方式应对外部世界，用${sunSign.name}的态度做出重大人生决定，而在夜深人静或面对亲密之人时，${moonSign.name}月亮的情感需求才会真正浮出水面。理解这三者的关系，就是理解"完整的你"的钥匙。</p>
+                </div>`;
+
+            document.getElementById('moonRisingResult').classList.remove('hidden');
+            document.getElementById('moonRisingResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============ ANNUAL FORECAST TAB ============
+
+        function calculateAnnualForecast() {
+            const dateVal = document.getElementById('annualDate').value;
+            if (!dateVal) { alert('请选择出生日期'); return; }
+            const birthDate = new Date(dateVal);
+            const sign = getZodiacSign(birthDate);
+            const currentYear = new Date().getFullYear();
+
+            document.getElementById('annualYear').textContent = currentYear;
+            document.getElementById('annualSignLabel').textContent = `${sign.symbol} ${sign.name} · ${sign.enName}`;
+
+            const yearSeed = sign.id * 10000 + currentYear;
+            const yearRng  = seededRandom(yearSeed);
+            const overviews = [
+                `${currentYear}年，${sign.name}将迎来全面突破的时期。木星的祝福带来扩展与机遇，是开拓新领域的绝佳时机。上半年适合大胆尝试新方向、建立新连接；下半年则需要将这些尝试系统化、深入化。在坚守本心的同时，勇敢迈出改变的步伐，幸运之门将为你敞开。事业方面可能出现重要的转折点，感情方面也有望迈入新阶段。这一年的关键词是"扩展"——让你的视野、能力和影响力都上升到一个新的高度。`,
+                `${currentYear}年对${sign.name}而言是深耕沉淀的一年。土星的力量要求你以踏实的态度对待每一个目标。虽然前进的步伐有时会感到缓慢，但每一步都将成为未来腾飞的基石。这一年的成长不在表面，而在根基——你可能看不到惊天动地的外在变化，但你的内在实力正在质变。财务上适合保守稳健的策略，感情上则需要更多耐心和深度的投入。请记住：大器晚成不是一句安慰，而是属于你的真理。`,
+                `${currentYear}年${sign.name}的运势如同璀璨的流星，在关键时刻迸发出耀眼的光芒。保持灵活应变的态度，把握稍纵即逝的机遇，你将在多个领域取得令人瞩目的成就。上半年可能经历一些考验和选择，但每一次考验都在为下半年的高光时刻做铺垫。人际关系方面，某个重要人物的出现将为你带来全新的视角和资源。这一年的关键词是"蜕变"——旧的你在某些方面将彻底翻篇。`,
+                `${currentYear}年是${sign.name}重新审视人生方向的重要年份。放下过去的束缚，在自我探索中找到真正渴望的生活方式，这一年的转化将为未来数年打下坚实的基础。你可能会发现自己对某些事物的热情在消退，而对另一些领域的兴趣在觉醒——这不是迷失，而是成长的自然过程。勇敢地告别不再适合你的模式，拥抱那个正在成为的、更真实的自己。`,
+                `${currentYear}年的星象为${sign.name}带来了一份珍贵的礼物：内在智慧的觉醒。你会比以往任何时候都更清楚地知道自己要什么、不要什么，以及什么才是真正重要的。这种清醒将帮助你在职场上做出精准的选择、在感情上建立更深的连接、在个人成长上实现质的飞跃。这一年的主题是"清晰"——当你的内心足够清明，外在的世界也会为你让路。`,
+                `${currentYear}年${sign.name}将经历一段丰盛而多元的旅程。这一年的关键在于"平衡"——在事业与生活之间、在进取与休息之间、在付出与接受之间找到最适合你的节奏。年初可能需要做出一些重要的取舍决定，年中迎来成果的初步显现，年末则在满足和感恩中收束。财务运势整体向好，建议建立被动收入渠道。感情上注重深度而非广度，用心经营一段有质量的关系。`
+            ];
+            document.getElementById('annualOverview').innerHTML = `
+                <div class="annual-overview-title">✦ ${currentYear}年整体运势 ✦</div>
+                <div class="annual-overview-text">${overviews[Math.floor(yearRng() * overviews.length)]}</div>`;
+
+            const monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+            let monthsHtml = '';
+            for (let m = 0; m < 12; m++) {
+                const rng  = seededRandom(sign.id * 10000 + currentYear * 100 + m);
+                const stars = Math.ceil(rng() * 5);
+                const pool  = MONTHLY_DETAIL_POOL[m];
+                const text  = pool[Math.floor(rng() * pool.length)];
+                monthsHtml += `<div class="month-card">
+                    <div class="month-header">
+                        <div class="month-name">${monthNames[m]}</div>
+                        <div class="month-stars">${getStarRating(stars)}</div>
+                    </div>
+                    <div class="month-theme">${ANNUAL_THEMES[m]}</div>
+                    <div class="month-text">${text}</div>
+                </div>`;
+            }
+            document.getElementById('monthsGrid').innerHTML = monthsHtml;
+            document.getElementById('annualResult').classList.remove('hidden');
+            document.getElementById('annualResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============ STARFIELD ANIMATION ============
+        function initStarfield() {
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (2 + Math.random() * 2) + 's';
+                starfield.appendChild(star);
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initStarfield();
+            initDailyEnergy();
+        });
+
+        // Set today's date as default for fortune tab
+        document.getElementById('fortuneDate').valueAsDate = new Date();
+
+        // Pre-fill new tabs with a sample birth date
+        const sampleBirth = '1995-07-28';
+        document.getElementById('natalDate').value   = sampleBirth;
+        document.getElementById('mrDate').value      = sampleBirth;
+        document.getElementById('annualDate').valueAsDate = new Date();
+
+        // Pre-fill compatibility test dates: 白羊座 (1990-03-25) vs 狮子座 (1995-07-28)
+        document.getElementById('date1').value = '1990-03-25';
+        document.getElementById('date2').value = '1995-07-28';
+    </script>
+</body>
+</html>

@@ -1,0 +1,2619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>塔罗仪式 · 命运之牌</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+/* ── Reset & Base ─────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#09080f;color:#e8e0f0;font-family:'Georgia',serif}
+
+/* ── Canvas overlay (stars) ─────────────────────── */
+#starCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* ── Page containers ──────────────────────────────── */
+.page{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.hidden{display:none!important}
+
+/* ── Page 1: Spread Selection ─────────────────────── */
+#spreadSelectPage{background:transparent}
+.page1-title{font-size:clamp(1.6rem,4vw,2.6rem);letter-spacing:0.18em;color:#d4b896;text-align:center;margin-bottom:0.3em;text-shadow:0 0 24px #c8a06080}
+.page1-sub{font-size:0.9rem;color:#9b8faa;letter-spacing:0.12em;margin-bottom:2.6em;text-align:center}
+.spread-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.2rem;max-width:900px;width:90vw;padding:0 1rem}
+.spread-card{background:linear-gradient(145deg,#1a1228 60%,#241a38);border:1px solid #3d2f55;border-radius:12px;padding:1.4rem 1rem 1.2rem;cursor:pointer;text-align:center;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;overflow:hidden}
+.spread-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#7b4fa620 0%,transparent 70%);opacity:0;transition:opacity .3s}
+.spread-card:hover{transform:translateY(-5px);box-shadow:0 8px 32px #7b4fa640;border-color:#7b4fa6}
+.spread-card:hover::before{opacity:1}
+.spread-icon{font-size:2rem;margin-bottom:0.6rem;display:block}
+.spread-name{font-size:1rem;color:#d4b896;letter-spacing:0.08em;margin-bottom:0.4rem}
+.spread-en{font-size:0.72rem;color:#6b5f7a;letter-spacing:0.1em;margin-bottom:0.8rem}
+.spread-desc{font-size:0.75rem;color:#9b8faa;line-height:1.5}
+.spread-count{position:absolute;top:0.6rem;right:0.8rem;font-size:0.68rem;color:#7b4fa6;border:1px solid #7b4fa640;border-radius:20px;padding:0.1em 0.5em}
+
+/* ── Page 2: Ritual Scene ─────────────────────────── */
+#ritualPage{background:transparent;justify-content:flex-start}
+#ritualHeader{width:100%;display:flex;align-items:center;justify-content:space-between;padding:0.8rem 1.4rem;z-index:20;background:linear-gradient(180deg,#09080f 60%,transparent)}
+.ritual-spread-name{font-size:0.85rem;color:#c8a060;letter-spacing:0.12em}
+.ritual-state-hint{font-size:0.78rem;color:#7b6fa8;letter-spacing:0.08em;text-align:center;flex:1}
+#btnRestart{background:none;border:1px solid #3d2f55;color:#9b8faa;border-radius:20px;padding:0.3em 0.9em;font-size:0.72rem;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:0.08em}
+#btnRestart:hover{border-color:#7b4fa6;color:#d4b896}
+
+/* ── Table ─────────────────────────────────────────── */
+#tableWrap{position:relative;width:min(700px,92vw);height:min(440px,56vw);margin:0 auto;flex-shrink:0}
+#table{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 40% 35%,#2a1e3e 0%,#170e28 60%,#0e0818 100%);border:2px solid #3d2f5580;box-shadow:0 0 60px #7b4fa620,inset 0 0 40px #00000060}
+#tableDecor{position:absolute;inset:0;pointer-events:none}
+#ghostContainer{position:absolute;inset:0;pointer-events:none}
+#cardsContainer{position:absolute;inset:0}
+
+/* ── Hint bar ──────────────────────────────────────── */
+#hintBar{font-size:0.82rem;color:#9b8faa;letter-spacing:0.1em;margin-top:0.7rem;text-align:center;min-height:1.3em;padding:0.3em 0.8em;background:#09080f90;border-radius:20px}
+
+/* ── Ghost positions ───────────────────────────────── */
+.ghost{position:absolute;border:1.5px dashed #7b4fa660;border-radius:6px;background:#7b4fa608;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:#7b4fa660;letter-spacing:0.06em;transform:translate(-50%,-50%);transition:border-color .3s,background .3s;pointer-events:none}
+.ghost.filled{border-color:#c8a06080;background:#c8a06015}
+.ghost.active-target{border-color:#c8a060;background:#c8a06025;animation:ghostPulse 1.2s infinite}
+@keyframes ghostPulse{0%,100%{box-shadow:0 0 0 0 #c8a06040}50%{box-shadow:0 0 12px 4px #c8a06040}}
+
+/* ── Cards ─────────────────────────────────────────── */
+.card-wrap{position:absolute;transform-origin:center center;cursor:pointer}
+.card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.7s cubic-bezier(.4,0,.2,1)}
+.card-wrap.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;border-radius:6px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.card-back{background:#1a1228}
+.card-front{transform:rotateY(180deg);background:#1a1228}
+
+/* ── Side panel ────────────────────────────────────── */
+#sidePanel{position:fixed;right:0;top:0;height:100%;width:min(300px,38vw);background:linear-gradient(180deg,#130e22 0%,#0e0818 100%);border-left:1px solid #3d2f5560;z-index:30;padding:1.4rem 1.2rem;overflow-y:auto;transform:translateX(100%);transition:transform .5s cubic-bezier(.4,0,.2,1)}
+#sidePanel.open{transform:translateX(0)}
+.sp-header{font-size:0.72rem;color:#7b4fa6;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.5rem}
+.sp-number{font-size:2rem;color:#c8a060;margin-bottom:0.2rem}
+.sp-name-zh{font-size:1.3rem;color:#e8e0f0;letter-spacing:0.1em;margin-bottom:0.2rem}
+.sp-name-en{font-size:0.78rem;color:#7b6fa8;letter-spacing:0.12em;margin-bottom:1rem}
+.sp-keywords{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.sp-kw{background:#2a1e3e;border:1px solid #3d2f55;border-radius:20px;padding:0.2em 0.7em;font-size:0.68rem;color:#c8a060}
+.sp-desc{font-size:0.8rem;color:#b0a0c0;line-height:1.7;margin-bottom:1rem}
+.sp-position{font-size:0.72rem;color:#9b8faa;margin-bottom:0.5rem;letter-spacing:0.08em}
+.sp-advice{background:#1a1228;border:1px solid #3d2f5560;border-radius:8px;padding:0.8rem;font-size:0.78rem;color:#d4b896;line-height:1.6}
+.sp-divider{height:1px;background:linear-gradient(90deg,transparent,#3d2f5580,transparent);margin:1rem 0}
+.sp-reversed{color:#c06060;font-size:0.72rem;letter-spacing:0.08em;margin-bottom:0.5rem}
+/* ── Deep consultation panel additions ─────────────── */
+.sp-elem-badge{display:inline-flex;align-items:center;gap:0.3em;font-size:0.7rem;padding:0.2em 0.6em;border-radius:16px;margin-bottom:0.6rem;border:1px solid}
+.sp-journey{font-size:0.72rem;color:#8a7ca0;line-height:1.5;margin-bottom:0.8rem;padding:0.5rem;background:#1a122880;border-radius:6px;border-left:2px solid #7b4fa640}
+.sp-rev4d-label{font-size:0.65rem;letter-spacing:0.1em;margin-bottom:0.3rem;padding:0.15em 0.5em;border-radius:10px;display:inline-block}
+.sp-rev4d-label.blocked{background:#8B000030;color:#c07070}
+.sp-rev4d-label.opposite{background:#DAA52030;color:#c8a060}
+.sp-rev4d-label.shadow{background:#4B008230;color:#9370DB}
+.sp-rev4d-label.internal{background:#00808030;color:#5fc4c4}
+.sp-rev4d-text{font-size:0.78rem;color:#b0a0c0;line-height:1.7;margin-bottom:0.8rem}
+/* ── Hard truth warning box ─────────────────────── */
+.sp-hard-truth{background:linear-gradient(135deg,#2a0a0a,#1a0818);border:1px solid #8B000060;border-left:3px solid #c05050;border-radius:8px;padding:0.7rem 0.9rem;margin-bottom:0.8rem}
+.sp-hard-truth-label{font-size:0.62rem;color:#c05050;letter-spacing:0.12em;margin-bottom:0.4rem;display:flex;align-items:center;gap:0.3em}
+.sp-hard-truth-text{font-size:0.76rem;color:#d0a0a0;line-height:1.65}
+/* ── AI reading section ──────────────────────────── */
+.ai-reading-wrap{max-width:700px;width:100%;margin:1.2rem auto 0}
+.ai-reading-panel{background:linear-gradient(145deg,#0e1a2e,#0a1020);border:1px solid #2a4a7a60;border-radius:12px;padding:1.4rem}
+.ai-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.ai-panel-title{font-size:0.82rem;color:#4a9eff;letter-spacing:0.14em}
+.ai-tier-badge{font-size:0.62rem;padding:0.2em 0.6em;border-radius:10px;letter-spacing:0.08em}
+.ai-tier-badge.free{background:#4a9eff20;color:#4a9eff;border:1px solid #4a9eff40}
+.ai-tier-badge.premium{background:#c8a06020;color:#c8a060;border:1px solid #c8a06040}
+.ai-key-wrap{display:flex;gap:0.5rem;margin-bottom:0.8rem}
+#aiKeyInput{flex:1;background:#0d0d1a;border:1px solid #2a4a7a;border-radius:8px;padding:0.5rem 0.8rem;font-size:0.78rem;color:#e8e0f0;font-family:'Georgia',serif;outline:none;transition:border-color .2s}
+#aiKeyInput:focus{border-color:#4a9eff}
+#aiKeyInput::placeholder{color:#3a4a6a;font-size:0.72rem}
+.ai-run-btn{background:linear-gradient(135deg,#1a4a8a,#0d2a5a);border:1px solid #4a9eff60;border-radius:8px;color:#4a9eff;font-size:0.78rem;padding:0.5rem 1.1rem;cursor:pointer;letter-spacing:0.08em;transition:all .2s;white-space:nowrap}
+.ai-run-btn:hover{background:linear-gradient(135deg,#2a5a9a,#1a3a6a);box-shadow:0 0 16px #4a9eff30}
+.ai-run-btn.premium-btn{background:linear-gradient(135deg,#3a2060,#241840);border-color:#c8a06060;color:#c8a060}
+.ai-run-btn.premium-btn:hover{box-shadow:0 0 16px #c8a06030}
+.ai-run-btn:disabled{opacity:0.4;cursor:not-allowed}
+.ai-loading{text-align:center;padding:1.5rem;color:#4a9eff80;font-size:0.78rem;letter-spacing:0.12em;animation:loaderFade 1.4s infinite}
+.ai-result{font-size:0.82rem;color:#c0d0e8;line-height:1.85;white-space:pre-wrap}
+.ai-result b{color:#4a9eff}
+.ai-result-section{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #2a4a7a40}
+.ai-result-section:last-child{border-bottom:none;margin-bottom:0}
+.ai-section-label{font-size:0.68rem;color:#4a9eff;letter-spacing:0.14em;margin-bottom:0.4rem}
+.ai-disclaimer{font-size:0.65rem;color:#3a4a6a;text-align:center;margin-top:0.8rem;line-height:1.5}
+.ai-prompt-toggle{font-size:0.65rem;color:#3a6a9a;cursor:pointer;text-align:right;margin-top:0.4rem;text-decoration:underline}
+.ai-prompt-box{background:#060810;border:1px solid #1a2a4a;border-radius:6px;padding:0.7rem;font-size:0.65rem;color:#4a6a9a;font-family:monospace;line-height:1.6;margin-top:0.5rem;max-height:180px;overflow-y:auto;display:none;white-space:pre-wrap}
+/* ── Summary element analysis ──────────────────────── */
+.elem-analysis{max-width:700px;width:100%;margin:1.2rem auto 0;background:linear-gradient(145deg,#1a1228,#130e22);border:1px solid #3d2f55;border-radius:12px;padding:1.2rem}
+.elem-bar-wrap{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem}
+.elem-bar-label{font-size:0.72rem;width:2.8em;text-align:right;flex-shrink:0}
+.elem-bar{flex:1;height:8px;background:#1a1228;border-radius:4px;overflow:hidden}
+.elem-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.elem-bar-count{font-size:0.65rem;color:#9b8faa;width:1.5em;text-align:center}
+.elem-insight{font-size:0.78rem;color:#b0a0c0;line-height:1.7;margin-top:0.8rem}
+.journey-analysis{max-width:700px;width:100%;margin:1rem auto 0;background:linear-gradient(145deg,#1e1530,#130e22);border:1px solid #7b4fa630;border-radius:12px;padding:1.2rem;text-align:center}
+.ja-title{font-size:0.78rem;color:#7b4fa6;letter-spacing:0.12em;margin-bottom:0.6rem}
+.ja-text{font-size:0.8rem;color:#c0b0d0;line-height:1.7}
+/* ── Pattern Analysis Panel ─────────────────────────── */
+.pattern-analysis{max-width:700px;width:100%;margin:1rem auto 0;background:linear-gradient(145deg,#140f24,#0e0a1e);border:1px solid #4a3060;border-radius:12px;padding:1.2rem}
+.pa-title{font-size:0.75rem;color:#8a6fc0;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.9rem;text-align:center}
+.pa-row{display:grid;grid-template-columns:7em 6em 1fr;gap:0.5rem;align-items:baseline;margin-bottom:0.55rem;font-size:0.76rem;line-height:1.5}
+.pa-label{color:#7b6090;font-size:0.7rem}
+.pa-val{color:#c8a0e0;font-weight:600}
+.pa-note{color:#a090b8;font-size:0.72rem}
+.pa-row.warn .pa-val{color:#c06060}
+.pa-row.warn .pa-note{color:#b08080}
+.pa-subtitle{font-size:0.7rem;color:#7a5fa0;margin:0.8rem 0 0.5rem;padding-top:0.6rem;border-top:1px solid #2a1f40;letter-spacing:0.1em}
+.pa-row.elem-strengthen .pa-val{color:#60c080}
+.pa-row.elem-weaken .pa-val{color:#d06060}
+
+/* ── Question focus page ────────────────────────────── */
+#questionPage{background:transparent}
+.q-title{font-size:clamp(1.4rem,3.5vw,2.2rem);color:#d4b896;letter-spacing:0.18em;text-align:center;margin-bottom:0.3em;text-shadow:0 0 24px #c8a06080}
+.q-sub{font-size:0.82rem;color:#9b8faa;letter-spacing:0.12em;margin-bottom:1.8em;text-align:center}
+.cat-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:0.6rem;margin-bottom:1.4rem;max-width:560px}
+.cat-chip{background:#1a1228;border:1px solid #3d2f55;border-radius:20px;padding:0.45em 1.1em;font-size:0.82rem;color:#9b8faa;cursor:pointer;transition:all .2s;letter-spacing:0.06em;user-select:none}
+.cat-chip:hover{border-color:#7b4fa6;color:#d4b896}
+.cat-chip.active{background:linear-gradient(135deg,#3d2060,#241840);border-color:#c8a060;color:#c8a060;box-shadow:0 0 12px #c8a06030}
+.q-guide-box{background:#1a122890;border:1px solid #3d2f5560;border-left:3px solid #7b4fa6;border-radius:8px;padding:0.8rem 1rem;max-width:560px;width:90vw;margin-bottom:1.2rem;font-size:0.78rem;color:#9b8faa;line-height:1.65;white-space:pre-line}
+.q-input-wrap{position:relative;max-width:560px;width:90vw;margin-bottom:0.8rem}
+#questionInput{width:100%;background:#130e22;border:1px solid #3d2f55;border-radius:10px;padding:0.9rem 1rem;font-size:0.85rem;color:#e8e0f0;font-family:'Georgia',serif;resize:none;height:90px;outline:none;transition:border-color .2s;line-height:1.6}
+#questionInput:focus{border-color:#7b4fa6}
+#questionInput::placeholder{color:#4a3f5a}
+.q-tip{font-size:0.72rem;color:#6b5f7a;letter-spacing:0.08em;max-width:560px;margin-bottom:1.4rem;text-align:center}
+#btnBeginReading{background:linear-gradient(135deg,#7b4fa6,#4a2a7a);border:none;border-radius:24px;color:#fff;font-size:0.9rem;letter-spacing:0.12em;padding:0.75em 2.5em;cursor:pointer;box-shadow:0 4px 24px #7b4fa640;transition:transform .2s,box-shadow .2s}
+#btnBeginReading:hover{transform:translateY(-2px);box-shadow:0 8px 32px #7b4fa660}
+.q-skip{font-size:0.7rem;color:#4a3f5a;cursor:pointer;margin-top:0.8rem;letter-spacing:0.08em;text-decoration:underline}
+.q-skip:hover{color:#9b8faa}
+/* ── Summary overlay ───────────────────────────────── */
+#summaryOverlay{position:fixed;inset:0;z-index:50;background:#09080fec;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-y:auto;padding:2rem 1rem}
+.summary-title{font-size:clamp(1.4rem,3.5vw,2.2rem);color:#c8a060;letter-spacing:0.18em;margin-bottom:0.4rem;text-align:center}
+.summary-sub{font-size:0.82rem;color:#7b6fa8;letter-spacing:0.12em;margin-bottom:2rem;text-align:center}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;max-width:900px;width:100%}
+.summary-card{background:linear-gradient(145deg,#1a1228,#130e22);border:1px solid #3d2f55;border-radius:10px;padding:1.1rem;text-align:center}
+.sc-pos{font-size:0.7rem;color:#7b4fa6;letter-spacing:0.12em;margin-bottom:0.3rem}
+.sc-num{font-size:1.4rem;color:#c8a060;margin-bottom:0.1rem}
+.sc-name{font-size:0.9rem;color:#e8e0f0;letter-spacing:0.08em;margin-bottom:0.4rem}
+.sc-kw{font-size:0.72rem;color:#9b8faa;margin-bottom:0.6rem}
+.sc-mini-svg{margin:0 auto 0.6rem;display:block}
+.sc-advice{font-size:0.75rem;color:#b0a0c0;line-height:1.5}
+.summary-overall{max-width:700px;width:100%;margin:1.5rem auto 0;background:linear-gradient(145deg,#1e1530,#130e22);border:1px solid #7b4fa640;border-radius:12px;padding:1.4rem;text-align:center}
+.so-title{font-size:0.82rem;color:#7b4fa6;letter-spacing:0.15em;margin-bottom:0.8rem}
+.so-text{font-size:0.85rem;color:#c0b0d0;line-height:1.8}
+#btnNewReading{margin:1.8rem auto 0;display:block;background:linear-gradient(135deg,#7b4fa6,#4a2a7a);border:none;border-radius:24px;color:#fff;font-size:0.9rem;letter-spacing:0.12em;padding:0.75em 2.5em;cursor:pointer;box-shadow:0 4px 24px #7b4fa640;transition:transform .2s,box-shadow .2s}
+#btnNewReading:hover{transform:translateY(-2px);box-shadow:0 8px 32px #7b4fa660}
+
+/* ── Progress dots ─────────────────────────────────── */
+#progressBar{display:flex;gap:0.5rem;align-items:center;margin-top:0.6rem}
+.prog-dot{width:7px;height:7px;border-radius:50%;background:#3d2f55;transition:background .4s,transform .3s}
+.prog-dot.selected{background:#c8a060;transform:scale(1.3)}
+
+/* ── Shuffle deck area ─────────────────────────────── */
+#deckArea{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);pointer-events:none}
+
+/* ── Loader ─────────────────────────────────────────── */
+#loader{position:fixed;inset:0;z-index:100;background:#09080f;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+.loader-text{color:#7b4fa6;letter-spacing:0.2em;font-size:0.85rem;animation:loaderFade 1.4s infinite}
+@keyframes loaderFade{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── Misc ─────────────────────────────────────────── */
+.glow-text{text-shadow:0 0 20px currentColor}
+.particle{position:fixed;pointer-events:none;border-radius:50%}
+</style>
+</head>
+<body>
+
+<!-- Back Navigation -->
+<a href="index.html" id="backNav" style="position:fixed;top:1rem;left:1.5rem;z-index:9999;display:inline-flex;align-items:center;gap:.4em;font-size:.75rem;color:#9b8faa;text-decoration:none;letter-spacing:.08em;padding:.4em .9em;border:1px solid #3d2f5560;border-radius:20px;background:#09080f80;backdrop-filter:blur(8px);transition:all .3s;" onmouseover="this.style.borderColor='#c8860a';this.style.color='#c8860a'" onmouseout="this.style.borderColor='#3d2f5560';this.style.color='#9b8faa'">← 占卜帐篷</a>
+
+<canvas id="starCanvas"></canvas>
+<div id="loader"><div class="loader-text">命运之轮正在旋转…</div></div>
+
+<!-- ━━━ PAGE 0: QUESTION FOCUS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="page hidden" id="questionPage">
+  <div class="q-title glow-text">✦ 聚焦你的意图 ✦</div>
+  <div class="q-sub">FOCUS YOUR INTENTION · 问题越清晰，指引越精准</div>
+  <div class="cat-wrap" id="catWrap">
+    <div class="cat-chip" data-cat="love">💕 感情关系</div>
+    <div class="cat-chip" data-cat="career">🌿 事业职场</div>
+    <div class="cat-chip" data-cat="finance">✨ 财务物质</div>
+    <div class="cat-chip" data-cat="growth">🔮 个人成长</div>
+    <div class="cat-chip active" data-cat="other">⭐ 其他问题</div>
+  </div>
+  <div class="q-guide-box" id="qGuideBox"></div>
+  <div class="q-input-wrap">
+    <textarea id="questionInput" placeholder="描述你的具体问题或困惑…&#10;例：关于是否换工作，我需要什么指引？"></textarea>
+  </div>
+  <div id="aiAutoHint" style="display:none;font-size:0.7rem;color:#7b4fa6;letter-spacing:0.08em;max-width:560px;margin-bottom:0.5rem;text-align:center;transition:opacity .3s"></div>
+  <div class="q-tip">✦ 好的问题不问"会不会发生"，而问"我该如何面对"</div>
+  <button id="btnBeginReading">选择牌阵 →</button>
+  <div class="q-skip" id="qSkip">跳过，直接开始</div>
+</div>
+
+<!-- ━━━ PAGE 1: SPREAD SELECTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="page hidden" id="spreadSelectPage">
+  <div class="page1-title glow-text">✦ 塔罗仪式 ✦</div>
+  <div class="page1-sub">TAROT RITUAL · 请选择你的牌阵</div>
+  <div class="spread-grid" id="spreadGrid"></div>
+</div>
+
+<!-- ━━━ PAGE 2: RITUAL SCENE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="page hidden" id="ritualPage">
+  <div id="ritualHeader">
+    <div class="ritual-spread-name" id="ritualSpreadName"></div>
+    <div class="ritual-state-hint" id="stateHint"></div>
+    <button id="btnRestart">↩ 重选</button>
+  </div>
+  <div id="tableWrap">
+    <div id="table">
+      <svg id="tableDecor" viewBox="0 0 700 440" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="tableGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#7b4fa6" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#7b4fa6" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="350" cy="220" rx="340" ry="208" fill="url(#tableGlow)"/>
+        <ellipse cx="350" cy="220" rx="310" ry="188" fill="none" stroke="#7b4fa620" stroke-width="1"/>
+        <ellipse cx="350" cy="220" rx="270" ry="164" fill="none" stroke="#7b4fa615" stroke-width="1" stroke-dasharray="6,8"/>
+        <!-- Ornate center star -->
+        <g transform="translate(350,220)" opacity="0.18">
+          <line x1="-50" y1="0" x2="50" y2="0" stroke="#c8a060" stroke-width="0.8"/>
+          <line x1="0" y1="-50" x2="0" y2="50" stroke="#c8a060" stroke-width="0.8"/>
+          <line x1="-35" y1="-35" x2="35" y2="35" stroke="#c8a060" stroke-width="0.8"/>
+          <line x1="35" y1="-35" x2="-35" y2="35" stroke="#c8a060" stroke-width="0.8"/>
+          <circle r="8" fill="none" stroke="#c8a060" stroke-width="0.8"/>
+          <circle r="22" fill="none" stroke="#c8a060" stroke-width="0.5"/>
+          <circle r="42" fill="none" stroke="#c8a060" stroke-width="0.4"/>
+        </g>
+      </svg>
+    </div>
+    <div id="ghostContainer"></div>
+    <div id="cardsContainer"></div>
+  </div>
+  <div id="hintBar">准备召唤命运之牌…</div>
+  <div id="progressBar"></div>
+</div>
+
+<!-- ━━━ SIDE PANEL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div id="sidePanel">
+  <div class="sp-header">当前牌位</div>
+  <div id="spNumber" class="sp-number"></div>
+  <div id="spNameZh" class="sp-name-zh"></div>
+  <div id="spNameEn" class="sp-name-en"></div>
+  <div id="spElemBadge" class="sp-elem-badge"></div>
+  <div id="spKeywords" class="sp-keywords"></div>
+  <div id="spJourney" class="sp-journey"></div>
+  <div class="sp-divider"></div>
+  <div class="sp-header">解读</div>
+  <div id="spPosition" class="sp-position"></div>
+  <div id="spDesc" class="sp-desc"></div>
+  <div id="spRev4dWrap" style="display:none">
+    <div id="spRev4dLabel" class="sp-rev4d-label"></div>
+    <div id="spRev4dText" class="sp-rev4d-text"></div>
+  </div>
+  <div id="spHardTruth" class="sp-hard-truth" style="display:none">
+    <div class="sp-hard-truth-label">⚠ 需要正视的真相</div>
+    <div id="spHardTruthText" class="sp-hard-truth-text"></div>
+  </div>
+  <div id="spAdvice" class="sp-advice"></div>
+  <div class="sp-divider"></div>
+  <div id="spNext" style="font-size:0.75rem;color:#7b4fa6;letter-spacing:0.08em;cursor:pointer;text-align:center">→ 翻开下一张</div>
+</div>
+
+<!-- ━━━ SUMMARY OVERLAY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div class="page hidden" id="summaryOverlay">
+  <div class="summary-title glow-text">✦ 命运解读 ✦</div>
+  <div class="summary-sub" id="summarySpreadName"></div>
+  <div id="summaryQuestion" style="font-size:0.8rem;color:#9b8faa;margin-bottom:1.4rem;text-align:center;max-width:600px;padding:0.5rem 1rem;background:#1a122860;border-radius:20px;display:none"></div>
+  <div class="summary-grid" id="summaryGrid"></div>
+  <div class="summary-overall">
+    <div class="so-title">✦ 综合解读</div>
+    <div class="so-text" id="overallReading"></div>
+  </div>
+  <!-- AI 解读区 -->
+  <div class="ai-reading-wrap">
+    <!-- 免费版：A+C -->
+    <div class="ai-reading-panel" id="aiPanelFree">
+      <div class="ai-panel-header">
+        <div class="ai-panel-title">✦ AI 深度解读</div>
+        <div class="ai-tier-badge free">免费版</div>
+      </div>
+      <div class="ai-key-wrap">
+        <input id="aiKeyInput" type="password" placeholder="输入你的 Claude API Key (sk-ant-...)"/>
+        <button class="ai-run-btn" id="btnRunAI">生成解读</button>
+      </div>
+      <div id="aiResultFree" style="display:none">
+        <div id="aiLoadingFree" class="ai-loading" style="display:none">✦ 正在解读命运之牌…</div>
+        <div id="aiTextFree" class="ai-result"></div>
+        <div class="ai-disclaimer">以上解读由 Claude AI 根据专业塔罗框架生成，仅供参考与内省，不构成任何生活决策建议。</div>
+        <div class="ai-prompt-toggle" onclick="togglePrompt('free')">查看本次使用的提示词 ›</div>
+        <div class="ai-prompt-box" id="aiPromptFree"></div>
+      </div>
+    </div>
+    <!-- 付费版：A+C+B 两轮批判 -->
+    <div class="ai-reading-panel" id="aiPanelPremium" style="margin-top:0.8rem;border-color:#c8a06030">
+      <div class="ai-panel-header">
+        <div class="ai-panel-title" style="color:#c8a060">✦ AI 精准批判版</div>
+        <div class="ai-tier-badge premium">深度版（2轮）</div>
+      </div>
+      <p style="font-size:0.73rem;color:#7b6fa8;line-height:1.6;margin-bottom:0.8rem">第一轮生成解读，第二轮 AI 批判自身的回避与粉饰，第三轮重写。结果更诚实，但需要约2倍时间与费用。</p>
+      <button class="ai-run-btn premium-btn" id="btnRunAIPremium">精准批判解读</button>
+      <div id="aiResultPremium" style="display:none;margin-top:0.8rem">
+        <div id="aiLoadingPremium" class="ai-loading" style="display:none">✦ 第一轮生成中…</div>
+        <div id="aiTextPremium" class="ai-result"></div>
+        <div class="ai-disclaimer">以上解读经过两轮 AI 自我批判优化，仅供参考与内省。</div>
+      </div>
+    </div>
+  </div>
+
+  <button id="btnNewReading">✦ 开始新的占卜</button>
+</div>
+
+<script>
+'use strict';
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONSTANTS & DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const CARD_W = 76, CARD_H = 124;
+
+const MAJOR_ARCANA = [
+  {num:'0',  zh:'愚者',    en:'The Fool',         kw:['新开始','冒险','纯真'],       color:'#FFD700',
+   up:'一段充满可能性的新旅程正在向你敞开，勇敢踏出第一步，不必顾虑结果，此刻的纯粹心境本身就是最大的礼物。',
+   rev:'鲁莽冲动、逃避责任，需要为行动多一份思量。',
+   advice:'遵从内心最天真的直觉，放下对"失败"的恐惧。'},
+  {num:'Ⅰ', zh:'魔法师',  en:'The Magician',     kw:['意志力','创造','主动'],       color:'#FF4500',
+   up:'你拥有实现目标所需的一切工具和才能。此刻宇宙能量汇聚于你，只需专注意志并付诸行动，一切皆可化为现实。',
+   rev:'才能被搁置，或有欺骗与操控的阴影需要警惕。',
+   advice:'盘点你所拥有的资源，然后全力以赴。'},
+  {num:'Ⅱ', zh:'女祭司',  en:'The High Priestess',kw:['直觉','神秘','内在智慧'],   color:'#9370DB',
+   up:'此刻不适合急于行动，而应聆听内心深处的低语。直觉正在给你传递重要信息，在沉默中等待，答案自会浮现。',
+   rev:'信息被压制，或过度依赖理性而忽略直觉的警示。',
+   advice:'每天给自己10分钟的静默，让潜意识说话。'},
+  {num:'Ⅲ', zh:'女皇',    en:'The Empress',      kw:['丰盛','养育','感官享受'],    color:'#228B22',
+   up:'你正处于丰盛与创造力迸发的时期。无论是爱情、财富还是艺术创作，周围的一切都充满生命力，值得尽情享受。',
+   rev:'创造力受阻，或在关系中过度依赖与控制。',
+   advice:'与大自然接触，让自己的感官苏醒，拥抱生命的丰盈。'},
+  {num:'Ⅳ', zh:'皇帝',    en:'The Emperor',      kw:['权威','结构','稳定'],        color:'#CC0000',
+   up:'是时候建立秩序和规则了。坚定的边界和清晰的目标会为你带来真正的安全感，此刻需要的是执行力而非等待。',
+   rev:'权力滥用、过于专横或无法建立权威。',
+   advice:'设定清晰的规则和边界，对自己负责。'},
+  {num:'Ⅴ', zh:'教皇',    en:'The Hierophant',   kw:['传统','信仰','指引'],        color:'#DAA520',
+   up:'传统智慧与精神指引正向你靠近。寻求有经验者的建议，或遵循经过时间验证的路径，此刻的答案往往在传承之中。',
+   rev:'盲目服从规则、教条主义，或对传统的过度反叛。',
+   advice:'向你尊敬的导师或前辈寻求建议。'},
+  {num:'Ⅵ', zh:'恋人',    en:'The Lovers',       kw:['选择','联结','价值观'],      color:'#FF69B4',
+   up:'一个重要的选择摆在面前——它关乎价值观与内心的真实渴望。无论是关系还是人生方向，忠于自己才是唯一正确的答案。',
+   rev:'价值观冲突、关系破裂或错误的选择带来后悔。',
+   advice:'在做决定之前，先问自己：这真的是我内心真正想要的吗？'},
+  {num:'Ⅶ', zh:'战车',    en:'The Chariot',      kw:['胜利','意志','掌控'],        color:'#4169E1',
+   up:'凭借坚定的意志和不懈的努力，你即将取得突破性的胜利。保持专注，驾驭内心相互对立的力量，前进的道路已经为你开启。',
+   rev:'失去方向感、内心冲突或用错误方式追求控制。',
+   advice:'把注意力放在终点而非障碍，保持行动的连贯性。'},
+  {num:'Ⅷ', zh:'力量',    en:'Strength',         kw:['内在力量','温柔','勇气'],    color:'#FF8C00',
+   up:'真正的力量不是压制，而是温柔地驾驭。你内心的恐惧与野性不是敌人，而是等待被拥抱的部分——温柔地接纳它们。',
+   rev:'软弱无力、自我怀疑或用蛮力压制内心恐惧。',
+   advice:'今日面对那个你一直在回避的情绪，给它一个温柔的拥抱。'},
+  {num:'Ⅸ', zh:'隐者',    en:'The Hermit',       kw:['内省','孤独','寻求真相'],    color:'#708090',
+   up:'是时候从外部世界的喧嚣中抽离，转向内在寻找真正的答案。独处与沉思不是逃避，而是此刻你最需要的智慧来源。',
+   rev:'过度孤立、与世界断联或拒绝接受他人的帮助。',
+   advice:'安排一段独处的时间，不带手机，让心安静下来。'},
+  {num:'Ⅹ', zh:'命运之轮',en:'Wheel of Fortune', kw:['循环','转机','命运'],        color:'#9400D3',
+   up:'命运的轮盘正在转动，一个新的周期即将开启。无论当前处境如何，变化是唯一的常数——保持内心的稳定，迎接即将到来的转机。',
+   rev:'厄运、被动抵抗变化或因循守旧错失时机。',
+   advice:'接受你无法控制的，把精力集中在你能影响的事情上。'},
+  {num:'Ⅺ', zh:'正义',    en:'Justice',          kw:['公平','真相','因果'],        color:'#B22222',
+   up:'因果法则正在运作，真相终将浮出水面。此刻需要以冷静和客观来处理眼前的问题，公正不偏颇的态度会带来最终的平衡。',
+   rev:'不公正、逃避责任或拒绝承认自己的错误。',
+   advice:'诚实地审视自己在这个局面中扮演的角色。'},
+  {num:'Ⅻ', zh:'倒吊人',  en:'The Hanged Man',   kw:['暂停','新视角','牺牲'],      color:'#006400',
+   up:'主动选择暂停，以不同的视角看待眼前的困局。此刻的停滞并非失败，而是内在转化的过程——放下旧的执念，全新的理解正在萌芽。',
+   rev:'僵局延续、无谓的牺牲或拒绝从不同角度思考。',
+   advice:'试着把脑海中最执着的那个"应该"颠倒过来看。',
+   hardTruth:'你很可能不是在"有意义地等待"，而是在用"等待"回避一个你已经知道答案、但不敢面对的决定。区别在于：真正的停滞有内在的成长，而逃避式的悬停只有消耗。'},
+  {num:'ⅩⅢ',zh:'死神',    en:'Death',            kw:['结束','转化','重生'],        color:'#2F4F4F',
+   up:'某件事将会结束——不以你希望的方式，也不按你的时间表。试图阻止这个结束只会让过程更漫长也更痛苦。死神牌不是隐喻，它描述真实的终止：一段关系、一个阶段、一个你认同的身份。',
+   rev:'拒绝改变、停滞不前或对结束的过度恐惧。',
+   advice:'写下一件你已经知道需要放手却还在坚持的事。',
+   hardTruth:'你正在消耗巨大的能量维持一件已经死去的事物。这不是"坚持"，是拒绝。你越晚承认它已经结束，就越晚能开始真正的新事物。'},
+  {num:'ⅩⅣ',zh:'节制',    en:'Temperance',       kw:['平衡','耐心','整合'],        color:'#00CED1',
+   up:'宇宙正在引导你走向内心的平衡与整合。不要急于求成，以耐心和节制调和生活中相互矛盾的元素，最终的和谐将超越你的预期。',
+   rev:'极端主义、缺乏节制或内外失衡。',
+   advice:'今天选择"刚刚好"，而不是"越多越好"。'},
+  {num:'ⅩⅤ',zh:'恶魔',    en:'The Devil',        kw:['束缚','阴影','物质欲望'],    color:'#8B0000',
+   up:'某种习惯、关系或执念正在消耗你的能量。注意那些让你感到被困住却又难以放手的事——认清束缚的本质，是解脱的第一步。',
+   rev:'从束缚中解脱、面对阴影或打破成瘾模式。',
+   advice:'识别并命名那个让你感到"没有它不行"的东西。',
+   hardTruth:'恶魔最核心的真相是：你知道是什么在束缚你。不是不知道，是不愿意放手。那个"没有它不行"的感觉，本身就是枷锁。成瘾的本质不是无知，是选择。'},
+  {num:'ⅩⅥ',zh:'塔',      en:'The Tower',        kw:['突变','崩塌','启示'],        color:'#DC143C',
+   up:'某件建立在不诚实基础上的事物将会崩塌——不是缓慢衰退，是突然而无法回避。塔牌不问你是否准备好，它只是到来。这场震动不是"宇宙帮你清理"的礼物，它是真实的破坏，真实的损失。',
+   rev:'避免必要的变革，或在灾难来临前刻意忽视警示。',
+   advice:'那些正在"崩塌"的事物，也许早就该结束了。',
+   hardTruth:'现在有什么东西是你心里知道建在虚假基础上、却一直不肯承认的？塔出现的时候，它通常不是意外——它是你已经感知到、但选择忽视的裂缝的最终结果。'},
+  {num:'ⅩⅦ',zh:'星星',    en:'The Star',         kw:['希望','疗愈','灵感'],        color:'#4682B4',
+   up:'在经历黑暗之后，星光照耀而来。希望与疗愈的能量正在流入你的生命，这是宇宙给你的许诺——你值得被滋养，未来充满美好。',
+   rev:'失去希望、感到遗弃或对自我价值的怀疑。',
+   advice:'今晚在星空下许一个对自己的承诺。'},
+  {num:'ⅩⅧ',zh:'月亮',    en:'The Moon',         kw:['幻象','恐惧','潜意识'],      color:'#778899',
+   up:'事情并非表面上看起来那样。潜意识中的恐惧与幻象正在影响你对现实的判断，需要直面那些藏在黑暗中的情绪，让光照进去。',
+   rev:'混乱减退、真相浮现或恐惧开始消散。',
+   advice:'记录你昨晚的梦，潜意识正在传递重要信息。',
+   hardTruth:'月亮最难正视的真相是：你此刻相信的事情，很可能是扭曲的。不是被别人欺骗——而是你的恐惧正在替你重写现实。最危险的不是外部的谎言，而是你对自己说的那个你已经相信了的谎。'},
+  {num:'ⅩⅨ',zh:'太阳',    en:'The Sun',          kw:['喜悦','成功','活力'],        color:'#FFA500',
+   up:'光明、喜悦与成功的能量笼罩着你！这是一张纯粹正面的牌——信心满满地展现真实的自己，你的努力将迎来应有的荣耀与认可。',
+   rev:'过度乐观、自我中心或喜悦被乌云遮蔽。',
+   advice:'做一件让你真正感到开心的事，不需要任何理由。'},
+  {num:'ⅩⅩ', zh:'审判',   en:'Judgement',        kw:['觉醒','召唤','救赎'],        color:'#B8860B',
+   up:'一次灵魂层面的觉醒与召唤正在发生。过去的一切经历都是为了这一刻的转化与升华——倾听那个来自深处的召唤，勇敢地回应它。',
+   rev:'自我怀疑阻止觉醒，或拒绝聆听内心的召唤。',
+   advice:'问自己：如果不害怕评判，你最想成为什么样的人？'},
+  {num:'ⅩⅪ',zh:'世界',    en:'The World',        kw:['圆满','整合','成就'],        color:'#8B008B',
+   up:'一个重要的旅程已经圆满结束，你站在成就与整合的高峰。庆祝这段旅程赋予你的一切成长，然后带着全新的智慧，迈向下一个轮回。',
+   rev:'旅程尚未完成，或无法承认自己取得的成就。',
+   advice:'回顾你走过的路，为自己的成长感到骄傲。'},
+];
+
+const SPREADS = [
+  {id:'single',  name:'单张问题牌',  en:'Single Card',   icon:'🌙', desc:'专注当下一个问题', count:1,
+   positions:[{xPct:50,yPct:50,label:'当下'}]},
+  {id:'three',   name:'三张牌阵',    en:'Three Card',    icon:'⚡', desc:'过去·现在·未来',   count:3,
+   positions:[{xPct:30,yPct:50,label:'过去'},{xPct:50,yPct:50,label:'现在'},{xPct:70,yPct:50,label:'未来'}]},
+  {id:'love',    name:'爱情牌阵',    en:'Love Spread',   icon:'💫', desc:'感情现状全面解析',  count:5,
+   positions:[{xPct:50,yPct:32,label:'双方现状'},{xPct:28,yPct:58,label:'你的感受'},{xPct:72,yPct:58,label:'对方感受'},{xPct:30,yPct:80,label:'关系阻碍'},{xPct:70,yPct:80,label:'建议方向'}]},
+  {id:'career',  name:'事业牌阵',    en:'Career Spread', icon:'🔮', desc:'职场发展方向指引',  count:5,
+   positions:[{xPct:50,yPct:28,label:'核心挑战'},{xPct:25,yPct:52,label:'当前资源'},{xPct:75,yPct:52,label:'外部环境'},{xPct:35,yPct:76,label:'建议行动'},{xPct:65,yPct:76,label:'潜在结果'}]},
+  {id:'celtic',  name:'凯尔特十字', en:'Celtic Cross',  icon:'✨', desc:'全面深度人生解读', count:10,
+   positions:[
+     {xPct:46,yPct:50,label:'核心',rotate:0},{xPct:46,yPct:50,label:'交叉',rotate:90},
+     {xPct:46,yPct:26,label:'头顶'},{xPct:46,yPct:74,label:'脚下'},
+     {xPct:24,yPct:50,label:'过去'},{xPct:68,yPct:50,label:'未来'},
+     {xPct:88,yPct:78,label:'自身'},{xPct:88,yPct:60,label:'外部'},
+     {xPct:88,yPct:42,label:'希望'},{xPct:88,yPct:24,label:'结果'}
+   ]},
+  {id:'week',   name:'周运牌阵',   en:'Week Ahead',    icon:'📅', desc:'本周七天能量预测', count:8,
+   positions:[
+     {xPct:50,yPct:50,label:'本周主题'},
+     {xPct:50,yPct:18,label:'周一'},{xPct:74,yPct:28,label:'周二'},{xPct:82,yPct:50,label:'周三'},
+     {xPct:74,yPct:72,label:'周四'},{xPct:50,yPct:82,label:'周五'},{xPct:26,yPct:72,label:'周六'},
+     {xPct:18,yPct:50,label:'周日'}
+   ]},
+  {id:'month',  name:'月运牌阵',   en:'Month Ahead',   icon:'🌙', desc:'四周能量演变观察', count:8,
+   positions:[
+     {xPct:20,yPct:35,label:'第1周·事件'},{xPct:35,yPct:35,label:'第1周·内在'},
+     {xPct:55,yPct:35,label:'第2周·事件'},{xPct:70,yPct:35,label:'第2周·内在'},
+     {xPct:20,yPct:68,label:'第3周·事件'},{xPct:35,yPct:68,label:'第3周·内在'},
+     {xPct:55,yPct:68,label:'第4周·事件'},{xPct:70,yPct:68,label:'第4周·内在'}
+   ]},
+  {id:'chakra', name:'脉轮牌阵',   en:'Chakra Spread', icon:'🧘', desc:'七脉轮身心灵平衡', count:7,
+   positions:[
+     {xPct:50,yPct:88,label:'根轮·安全'},{xPct:50,yPct:76,label:'脐轮·创造'},
+     {xPct:50,yPct:64,label:'太阳轮·力量'},{xPct:50,yPct:50,label:'心轮·爱'},
+     {xPct:50,yPct:38,label:'喉轮·表达'},{xPct:50,yPct:26,label:'眉心轮·直觉'},
+     {xPct:50,yPct:14,label:'顶轮·灵性'}
+   ]},
+  {id:'year',   name:'年运牌阵',   en:'Year Ahead',     icon:'🌟', desc:'十二月份年度预测', count:13,
+   positions:[
+     {xPct:50,yPct:50,label:'年度主题'},
+     {xPct:50,yPct:15,label:'1月'},{xPct:63,yPct:18,label:'2月'},{xPct:73,yPct:27,label:'3月'},
+     {xPct:78,yPct:40,label:'4月'},{xPct:78,yPct:55,label:'5月'},{xPct:73,yPct:68,label:'6月'},
+     {xPct:63,yPct:77,label:'7月'},{xPct:50,yPct:82,label:'8月'},{xPct:37,yPct:77,label:'9月'},
+     {xPct:27,yPct:68,label:'10月'},{xPct:22,yPct:55,label:'11月'},{xPct:22,yPct:40,label:'12月'}
+   ]},
+  {id:'zodiac', name:'十二宫牌阵', en:'Zodiac Houses',   icon:'♈', desc:'十二宫位全方位审视', count:12,
+   positions:[
+     {xPct:50,yPct:15,label:'1宫·自我'},{xPct:66,yPct:18,label:'2宫·财务'},
+     {xPct:78,yPct:28,label:'3宫·沟通'},{xPct:82,yPct:43,label:'4宫·家庭'},
+     {xPct:78,yPct:58,label:'5宫·创造'},{xPct:66,yPct:70,label:'6宫·健康'},
+     {xPct:50,yPct:78,label:'7宫·伴侣'},{xPct:34,yPct:70,label:'8宫·转化'},
+     {xPct:22,yPct:58,label:'9宫·信仰'},{xPct:18,yPct:43,label:'10宫·事业'},
+     {xPct:22,yPct:28,label:'11宫·社群'},{xPct:34,yPct:18,label:'12宫·潜意识'}
+   ]},
+  {id:'tree',   name:'生命之树',   en:'Tree of Life',    icon:'🌳', desc:'卡巴拉十质点灵性地图', count:10,
+   positions:[
+     {xPct:50,yPct:8,label:'王冠·神性'},
+     {xPct:68,yPct:20,label:'智慧·灵感'},{xPct:32,yPct:20,label:'理解·形式'},
+     {xPct:68,yPct:38,label:'仁慈·扩展'},{xPct:32,yPct:38,label:'严厉·约束'},
+     {xPct:50,yPct:48,label:'美·平衡'},
+     {xPct:68,yPct:58,label:'胜利·持久'},{xPct:32,yPct:58,label:'荣耀·共鸣'},
+     {xPct:50,yPct:70,label:'基础·潜意识'},
+     {xPct:50,yPct:88,label:'王国·物质'}
+   ]},
+];
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   QUESTION FOCUS SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const CAT_GUIDE = {
+  love:    {icon:'💕',name:'感情关系',
+            tip:'有效问法：「关于这段关系，我需要什么样的指引？」\n而非「他/她爱我吗？」——塔罗更擅长揭示能量与模式，而非预测他人的行为。\n建议聚焦在你能掌控的：你的感受、你的行动、你的内在需求。'},
+  career:  {icon:'🌿',name:'事业职场',
+            tip:'有效问法：「关于职业发展，此刻我最需要关注的是什么？」\n将焦点放在你能影响的行动和态度上，而非外部结果（升职/录取/合同）。\n塔罗擅长揭示职场中的能量阻碍与潜在资源。'},
+  finance: {icon:'✨',name:'财务物质',
+            tip:'有效问法：「关于我的财务方向，我需要什么调整？」\n塔罗能揭示你与金钱、物质关系中的深层行为模式。\n星币牌组会直接对应你的物质议题。'},
+  growth:  {icon:'🔮',name:'个人成长',
+            tip:'有效问法：「此刻我最需要关注的灵魂功课是什么？」\n开放式的问题往往能获得最深刻的洞见——不预设答案，让牌给你带来惊喜。\n大阿卡纳在这类问题中尤其具有指引意义。'},
+  other:   {icon:'⭐',name:'其他问题',
+            tip:'无论你的问题是什么，都值得被认真看待。\n试着把它完整地写下来——仅仅是清晰地表达问题，有时就已经是解答的一半了。\n不需要"正确"的提问方式，诚实就足够了。'},
+};
+
+/* 问题类别对应的牌位语义强化 */
+const CAT_POS_CONTEXT = {
+  love:    {过去:'这段关系的过去',现在:'此刻关系的状态',未来:'关系的走向',阻碍:'你们之间的核心障碍',建议:'改善关系的方向',当下:'当前感情能量'},
+  career:  {过去:'职业路径的过去',现在:'当前职场状态',未来:'事业的潜在走向',阻碍:'职业发展的阻力',建议:'行动建议',当下:'当前职业能量'},
+  finance: {过去:'财务模式的过去',现在:'当前物质状态',未来:'财务的潜在走向',阻碍:'财务阻碍',建议:'财务行动建议',当下:'当前财务能量'},
+  growth:  {过去:'灵魂旅程的过去',现在:'此刻的内在状态',未来:'成长的潜在方向',阻碍:'内在成长的阻力',建议:'灵魂行动建议',当下:'当前成长能量'},
+  other:   {},
+};
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   56 MINOR ARCANA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const MINOR_ARCANA=[
+  // ━━━ 权杖 WANDS (Fire) ━━━
+  {isMajor:false,suit:'wands',numVal:1, num:'A',   zh:'权杖首牌',  en:'Ace of Wands',     color:'#D4721A',element:'fire',  kw:['灵感','创造之火','新开端'],
+   up:'一束纯粹的创造火花向你递出——新项目、新激情或全新方向就此点燃。此刻不是分析的时机，而是行动的时机。',
+   rev:'灵感受阻或被搁置，创造力找不到出口。先清除那个压制你热情的障碍，火种就在那里等待。',
+   advice:'做那件你已经想了很久却一直没开始的事，今天就开始。'},
+  {isMajor:false,suit:'wands',numVal:2, num:'2',   zh:'权杖二',    en:'Two of Wands',     color:'#D4721A',element:'fire',  kw:['规划','眺望远方','长远决策'],
+   up:'你已取得了初步成果，但目光正望向更辽阔的地平线。此刻是制定长远计划、考量合作方向的最佳时机。',
+   rev:'计划停滞或对未知的恐惧阻止了你迈步。先把愿景写下来，让抽象的方向变得具体。',
+   advice:'画出你未来三年的方向地图，哪怕只是草图。'},
+  {isMajor:false,suit:'wands',numVal:3, num:'3',   zh:'权杖三',    en:'Three of Wands',   color:'#D4721A',element:'fire',  kw:['扩张','合作','等待成果'],
+   up:'你播下的种子正在萌芽，更广阔的合作与机遇正向你驶来。扩展你的视野，主动出击迎接更大的可能。',
+   rev:'扩张受阻，合作计划出现延迟。不是放弃，而是调整航向——检查方向是否准确。',
+   advice:'主动联系一位能拓展你边界的合作者。'},
+  {isMajor:false,suit:'wands',numVal:4, num:'4',   zh:'权杖四',    en:'Four of Wands',    color:'#D4721A',element:'fire',  kw:['庆祝','稳定','里程碑'],
+   up:'一个重要的阶段已圆满完成，值得真心庆祝。稳固的基础已建立，在欢庆中充电，然后继续前行。',
+   rev:'庆祝被推迟，或内心感受不到应有的满足。也许成就未被认可，或你不允许自己停下来歇一歇。',
+   advice:'为自己创造一个小小的庆祝仪式，不管是否有人在场。'},
+  {isMajor:false,suit:'wands',numVal:5, num:'5',   zh:'权杖五',    en:'Five of Wands',    color:'#D4721A',element:'fire',  kw:['竞争','摩擦','多方角力'],
+   up:'各方力量的碰撞与摩擦正在发生——这是成长的催化剂。在混乱中寻找最强的方案，而非逃避冲突。',
+   rev:'冲突被回避演变为内耗，或无谓的争斗消耗能量。寻找真正的合作共识，而非各自为战。',
+   advice:'在下一次争论中，试着先真正理解对方的立场，再表达自己的。'},
+  {isMajor:false,suit:'wands',numVal:6, num:'6',   zh:'权杖六',    en:'Six of Wands',     color:'#D4721A',element:'fire',  kw:['胜利','公开认可','领导'],
+   up:'你的努力正在获得公开的认可与赞赏。领导力得到肯定，乘着这股顺势之风自信地继续前进。',
+   rev:'胜利被低估或认可迟迟未到。不要让别人的沉默动摇你对自身价值的判断。',
+   advice:'大方接受一次来自他人的赞美，不必谦虚推辞。'},
+  {isMajor:false,suit:'wands',numVal:7, num:'7',   zh:'权杖七',    en:'Seven of Wands',   color:'#D4721A',element:'fire',  kw:['坚守立场','防守','高地优势'],
+   up:'你处于一个需要捍卫自己立场的位置。虽然压力巨大，但你拥有优势——坚持你相信的，不轻易退让。',
+   rev:'过度防御或疲于应战。评估这场战斗是否真的值得你全部的能量。',
+   advice:'今天对一件重要的事说出你真实的立场，不管对方反应如何。'},
+  {isMajor:false,suit:'wands',numVal:8, num:'8',   zh:'权杖八',    en:'Eight of Wands',   color:'#D4721A',element:'fire',  kw:['快速推进','行动','信息涌来'],
+   up:'事情正在以飞快的速度推进，机会和信息如箭雨飞来。趁着这股势头全力冲刺，不要犹豫拖延。',
+   rev:'行动被卡住，沟通出现障碍或信息混乱。先让局面稳定下来，厘清方向后再重新加速。',
+   advice:'清空待办清单中拖延最久的那件事，今天就做。'},
+  {isMajor:false,suit:'wands',numVal:9, num:'9',   zh:'权杖九',    en:'Nine of Wands',    color:'#D4721A',element:'fire',  kw:['坚韧','接近终点','守住阵地'],
+   up:'你已伤痕累累却仍在坚守，距离终点只有最后一步之遥。不需要蛮力，只需要韧性——守住阵地。',
+   rev:'过于警惕甚至偏执，或已精疲力竭。暂时撤退不是失败，而是为最后冲刺保存能量。',
+   advice:'盘点你还拥有的资源，而不是关注已经失去的。'},
+  {isMajor:false,suit:'wands',numVal:10,num:'10',  zh:'权杖十',    en:'Ten of Wands',     color:'#D4721A',element:'fire',  kw:['负担过重','责任','学会放下'],
+   up:'你承担的责任已远超自己的能力范围，是时候认真评估哪些担子真正属于你，学会放下或委托。',
+   rev:'拒绝放下不属于自己的负担，或终于开始减轻重荷。放下执念是力量，不是软弱。',
+   advice:'今天列出你承担的所有责任，并在其中划掉至少一项不该由你扛的。',
+   hardTruth:'以这种承载量继续下去，崩溃不是"如果"，是"何时"。你现在感受到的那种"撑着"的感觉，不是意志力的证明，是警告信号。'},
+  {isMajor:false,suit:'wands',numVal:11,num:'侍从',zh:'权杖侍从',  en:'Page of Wands',    color:'#D4721A',element:'fire',  kw:['热情探索','新消息','勇于尝试'],
+   up:'充满热情与好奇心的能量临近——一个新想法、好消息或冒险的邀约。带着开放的心去探索，无需完美准备。',
+   rev:'热情缺失或畏惧行动，想法未成熟就急于表达。先深化你的想法，再带着热情呈现给世界。',
+   advice:'追随一个让你感到兴奋的想法，哪怕它看起来还不成熟。'},
+  {isMajor:false,suit:'wands',numVal:12,num:'骑士',zh:'权杖骑士',  en:'Knight of Wands',  color:'#D4721A',element:'fire',  kw:['极致行动力','冒险','热情冲劲'],
+   up:'极致的行动能量涌动，充满魅力与冒险精神。速度可能超越判断——在全力冲刺的同时务必确认方向。',
+   rev:'鲁莽冲动、虎头蛇尾，或热情骤然熄灭。检查你的行动是否有真正的方向，还是在逃避某件重要的事。',
+   advice:'在采取行动前，用30秒确认这真的是你想要的方向，然后再冲。'},
+  {isMajor:false,suit:'wands',numVal:13,num:'王后',zh:'权杖王后',  en:'Queen of Wands',   color:'#D4721A',element:'fire',  kw:['自信魅力','创造力','感召他人'],
+   up:'以温暖的自信与创造力感召周围的人，真实做自己就是你最大的魅力，内在的火焰稳定而有方向。',
+   rev:'失去自信或精力耗尽，或以强势掩盖内心的不安全感。回到最初点燃你热情的那件事上。',
+   advice:'今天展现一次你真实的热情，不必在意别人是否理解。'},
+  {isMajor:false,suit:'wands',numVal:14,num:'国王',zh:'权杖国王',  en:'King of Wands',    color:'#D4721A',element:'fire',  kw:['远见领导力','创业精神','成熟热情'],
+   up:'以成熟的远见和魅力领导宏大的愿景，你有能力激励他人共同实现伟大目标，此刻是带领前进的时机。',
+   rev:'专横霸道或无法坚持到底。真正的领导力需要倾听，而不只是命令。',
+   advice:'分享你的愿景，邀请一个你信任的人给出真实的反馈。'},
+  // ━━━ 圣杯 CUPS (Water) ━━━
+  {isMajor:false,suit:'cups',numVal:1, num:'A',   zh:'圣杯首牌',  en:'Ace of Cups',      color:'#4A8DD4',element:'water', kw:['新感情','爱','灵性开启'],
+   up:'纯粹的爱与情感能量正向你涌来——新的感情连接、灵性体验或创造灵感。完全向爱敞开心扉，不要设防。',
+   rev:'情感能量受阻，对爱与联结设防。是时候问自己：是什么让你不敢完全打开心扉？',
+   advice:'今天对一个你在乎的人表达一次真实的感受，不需要完美的措辞。'},
+  {isMajor:false,suit:'cups',numVal:2, num:'2',   zh:'圣杯二',    en:'Two of Cups',      color:'#4A8DD4',element:'water', kw:['深度联结','相互吸引','伙伴关系'],
+   up:'深度的情感联结或灵魂级的伙伴关系正在形成，这种共鸣是真实的——珍视这份互相看见的连接。',
+   rev:'关系出现裂痕或吸引力减退。深入沟通是修复的第一步，也许双方都需要被真正聆听。',
+   advice:'安排一次与重要之人的深度对话，放下手机，真正在场。'},
+  {isMajor:false,suit:'cups',numVal:3, num:'3',   zh:'圣杯三',    en:'Three of Cups',    color:'#4A8DD4',element:'water', kw:['庆祝','友情','共享喜悦'],
+   up:'这是分享喜悦、与挚友庆祝的时刻，社交连接带来真实的幸福，允许自己完全沉浸在这份快乐中。',
+   rev:'孤立自己或社交疲惫，或人际圈中出现了背后的算计与流言。辨别真正的友谊。',
+   advice:'联系一位许久未见的朋友，约一次不带任何目的的聚会。'},
+  {isMajor:false,suit:'cups',numVal:4, num:'4',   zh:'圣杯四',    en:'Four of Cups',     color:'#4A8DD4',element:'water', kw:['冷漠','忽视机会','内省停滞'],
+   up:'你可能陷入了情感的停滞，忽视了身边真实的礼物与机会。抬起头，看看宇宙正在给你什么。',
+   rev:'终于意识到被忽视的可能性，从冷漠中走出来，重新参与生命的邀请。',
+   advice:'今天特别留意一件你通常会忽略的美好小事，并感谢它。'},
+  {isMajor:false,suit:'cups',numVal:5, num:'5',   zh:'圣杯五',    en:'Five of Cups',     color:'#4A8DD4',element:'water', kw:['失落','悲伤','执着于过去'],
+   up:'你的目光停留在倒下的杯子上——失去的、破碎的。但身后还有满杯仍在。允许悲伤，然后转身看见剩下的。',
+   rev:'开始从悲伤中走出，接受失去并重建希望。或者悲痛被压抑而非真正被处理。',
+   advice:'写下你失去的，然后在旁边写下你仍然拥有的。',
+   hardTruth:'你还没准备好放下，这没问题。但需要直视的是：悲伤已经开始成为一个身份认同，而不只是一种情绪。你有多久了，每次谈到这件事时，都在重新经历而不是走过它？'},
+  {isMajor:false,suit:'cups',numVal:6, num:'6',   zh:'圣杯六',    en:'Six of Cups',      color:'#4A8DD4',element:'water', kw:['童年记忆','纯真','过去的善意'],
+   up:'温暖的记忆与来自过去的善意回到你生命中，以纯真的心接受这份礼物，让怀旧滋养你的当下。',
+   rev:'沉溺于过去无法自拔，理想化童年而逃避当下的责任。美好的过去是养分而非避难所。',
+   advice:'回忆一件童年时让你感到纯粹快乐的事，让那种感觉滋养今天的你。'},
+  {isMajor:false,suit:'cups',numVal:7, num:'7',   zh:'圣杯七',    en:'Seven of Cups',    color:'#4A8DD4',element:'water', kw:['幻想','选择困难','白日梦'],
+   up:'面对诱人的多种可能性，你陷入了美丽的幻想。但其中有一个选项是真实的机会——用直觉辨别它。',
+   rev:'从幻想回到现实，开始做出实际的选择。或者幻想加剧，难以分辨什么是真正想要的。',
+   advice:'列出你所有的"想要"，然后问：这是我的真心，还是我对某种恐惧的回避？'},
+  {isMajor:false,suit:'cups',numVal:8, num:'8',   zh:'圣杯八',    en:'Eight of Cups',    color:'#4A8DD4',element:'water', kw:['离开','寻找意义','放下旧情'],
+   up:'带着成熟的心离开那些已不再滋养你的情感依附。这不是失败，而是选择了更深的意义和真实的自我。',
+   rev:'无法离开或重返已不健康的情境。是什么让你留下——是真爱还是对改变的恐惧？',
+   advice:'问自己：如果没有恐惧和罪恶感，我会选择留下还是离开？'},
+  {isMajor:false,suit:'cups',numVal:9, num:'9',   zh:'圣杯九',    en:'Nine of Cups',     color:'#4A8DD4',element:'water', kw:['愿望实现','满足感','情感丰盛'],
+   up:'你一直在努力的事情正在开花结果，情感上的满足感真实到来。这是当之无愧的丰盛，尽情享受。',
+   rev:'表面满足却内心空虚，或为维持"幸福"形象而忽视真实感受。真正的满足从诚实开始。',
+   advice:'今天允许自己享受一件让你感到深深满足的事，不带任何内疚。'},
+  {isMajor:false,suit:'cups',numVal:10,num:'10',  zh:'圣杯十',    en:'Ten of Cups',      color:'#4A8DD4',element:'water', kw:['圆满幸福','家庭和谐','情感完整'],
+   up:'情感层面的圆满——家庭、关系与内心的和谐共同构成了真实的幸福，这是值得深深珍视的生命礼物。',
+   rev:'理想中的幸福与现实有落差，或家庭/关系中存在表面和谐下的张力。',
+   advice:'今天告诉那个让你感到"家"的人，你有多珍视他/她。'},
+  {isMajor:false,suit:'cups',numVal:11,num:'侍从',zh:'圣杯侍从',  en:'Page of Cups',     color:'#4A8DD4',element:'water', kw:['情感消息','直觉初探','创意萌芽'],
+   up:'一条关于感情或创意的消息即将到来，以孩童般的好奇和开放的心探索情感世界，直觉正在觉醒。',
+   rev:'情感消息被压制，或以孩子气的方式处理情感——任性、过于敏感或逃避面对。',
+   advice:'今天记录下一个关于直觉或梦境的感受，不评判，只观察。'},
+  {isMajor:false,suit:'cups',numVal:12,num:'骑士',zh:'圣杯骑士',  en:'Knight of Cups',   color:'#4A8DD4',element:'water', kw:['浪漫追求','情感行动','理想主义'],
+   up:'以浪漫与理想主义行进，充满魅力地追求内心的渴望。但记得：感情也需要落地，不只是幻想。',
+   rev:'情感化的冲动决策、痴迷，或浪漫主义变成了逃避现实的方式。',
+   advice:'用行动而非语言向某人展示你在乎——今天就做一件具体的事。'},
+  {isMajor:false,suit:'cups',numVal:13,num:'王后',zh:'圣杯王后',  en:'Queen of Cups',    color:'#4A8DD4',element:'water', kw:['深度直觉','情感智慧','同理心'],
+   up:'以深厚的直觉和温柔的同理心接纳自己与他人，你能感知言语之外的一切，以爱治愈是你最大的天赋。',
+   rev:'情感淹没自我、过度共情失去边界，或直觉被焦虑所取代。先照顾好自己，才能真正滋养他人。',
+   advice:'今天为自己做一件单纯的自我照顾之事，不为任何人，只为你自己。'},
+  {isMajor:false,suit:'cups',numVal:14,num:'国王',zh:'圣杯国王',  en:'King of Cups',     color:'#4A8DD4',element:'water', kw:['情感成熟','平衡感性理性','稳定锚点'],
+   up:'以成熟的情感智慧驾驭深水，心中有深情，外表沉稳自持，你是他人情感上可靠的锚点。',
+   rev:'情感压抑、情绪操控，或以冷漠掩盖内心的汹涌。真正的成熟包括允许自己被看见脆弱。',
+   advice:'在一个需要你坚强的场合，允许自己表达一点脆弱。'},
+  // ━━━ 宝剑 SWORDS (Air) ━━━
+  {isMajor:false,suit:'swords',numVal:1, num:'A',   zh:'宝剑首牌',  en:'Ace of Swords',    color:'#7880A8',element:'air',   kw:['真相','清晰','思维突破'],
+   up:'清晰的真相如利刃穿透迷雾，全新的思维视角带来突破。是时候说出你的真心话，斩断混乱的束缚。',
+   rev:'真相被压制或语言被滥用。有什么重要的话你一直没有说出口？沉默的代价可能远超你的想象。',
+   advice:'今天说出一句你一直想说却没有说的真实想法。'},
+  {isMajor:false,suit:'swords',numVal:2, num:'2',   zh:'宝剑二',    en:'Two of Swords',    color:'#7880A8',element:'air',   kw:['僵局','回避','艰难抉择'],
+   up:'你在两个选项之间僵持，用"暂时不看"来回避一个艰难的决定。信息已经足够了——是勇气让你裹足。',
+   rev:'终于摘下眼罩，愿意直面困难的真相与选择。或者僵局加深，需要第三方的客观视角。',
+   advice:'列出两个选项各自的最坏结果，你发现哪个其实没有那么可怕？'},
+  {isMajor:false,suit:'swords',numVal:3, num:'3',   zh:'宝剑三',    en:'Three of Swords',  color:'#7880A8',element:'air',   kw:['心碎','悲痛','误解伤害'],
+   up:'心碎是真实的，也是必须被经历的。允许自己感受这份痛苦，它是疗愈的入口，而非弱点的证明。',
+   rev:'拒绝正视悲伤，或伤痛开始慢慢愈合。悲伤不会因为被压抑而消失——它需要被见证。',
+   advice:'今天给自己10分钟，允许自己为那件事感到悲伤，然后回来继续。',
+   hardTruth:'这个伤害是真实的，不是误解，不是"想太多"，不会自己消失。回避它或合理化它只会让它在地下运作得更深。'},
+  {isMajor:false,suit:'swords',numVal:4, num:'4',   zh:'宝剑四',    en:'Four of Swords',   color:'#7880A8',element:'air',   kw:['休息','思维修复','主动暂停'],
+   up:'你的思维需要主动的休憩。从焦虑和冲突中抽离，在沉静中让神经系统真正恢复能量。',
+   rev:'休息被强迫结束或无法好好休息。也许是时候回到行动了，但要带着新的清醒。',
+   advice:'安排一段不做任何"有用"之事的时间——哪怕只有20分钟。'},
+  {isMajor:false,suit:'swords',numVal:5, num:'5',   zh:'宝剑五',    en:'Five of Swords',   color:'#7880A8',element:'air',   kw:['代价惨重','皮洛士胜利','冲突后果'],
+   up:'这场冲突的代价高昂，即便赢了也付出了沉重的代价。是时候问：这场战斗真的值得吗？',
+   rev:'终于选择放弃无谓的争斗，或双方在失败后寻求和解。"输了"这场争论，反而赢回了更重要的东西。',
+   advice:'想想你正在进行的某个争论——赢了之后你真正得到了什么？'},
+  {isMajor:false,suit:'swords',numVal:6, num:'6',   zh:'宝剑六',    en:'Six of Swords',    color:'#7880A8',element:'air',   kw:['过渡','离开风波','平静前行'],
+   up:'你正在离开动荡，向着平静的彼岸前进。这段过渡期本身就是疗愈，虽然平静了，但水底仍有涟漪。',
+   rev:'离开被推迟，或不愿意放下过去的风波。也许方向还不够清晰，不必急于强行渡河。',
+   advice:'今天做一件能帮助你"向前一步"的具体小事。'},
+  {isMajor:false,suit:'swords',numVal:7, num:'7',   zh:'宝剑七',    en:'Seven of Swords',  color:'#7880A8',element:'air',   kw:['策略','欺骗','投机取巧'],
+   up:'有人正在采取规避直接对抗的策略，审视这种"聪明"背后是否有不诚实的成分，包括审视你自己。',
+   rev:'欺骗被揭露，或终于决定以直接和诚实的方式面对局面。真正的坦诚往往比最精明的策略更有力。',
+   advice:'有什么事情你一直用"策略"在回避直接面对？今天试着直说。',
+   hardTruth:'宝剑七最不受欢迎的问题是：你有没有在对自己不诚实？用"我只是在找最好的时机"来掩盖逃避，用"我在保护自己"来掩盖对真相的回避——这种自我欺骗比外部欺骗更难发现，也更难承认。'},
+  {isMajor:false,suit:'swords',numVal:8, num:'8',   zh:'宝剑八',    en:'Eight of Swords',  color:'#7880A8',element:'air',   kw:['自我设限','思维牢笼','无力感'],
+   up:'那些束缚你的枷锁，很大程度上是你自己建构的思维监狱。真正的障碍远比你想象的要小。',
+   rev:'开始看清自己的限制性信念，第一步迈出了。或者仍在自我囚禁——你需要一面客观的镜子。',
+   advice:'写下一个你深信的"我不能"，然后问：这是事实，还是我的恐惧？'},
+  {isMajor:false,suit:'swords',numVal:9, num:'9',   zh:'宝剑九',    en:'Nine of Swords',   color:'#7880A8',element:'air',   kw:['焦虑','噩梦','过度担忧'],
+   up:'深夜的焦虑将一切放大到失真的比例。大多数担忧的事情永远不会发生——你比现在感受到的更坚强。',
+   rev:'开始走出焦虑的阴影，或焦虑被压抑而非真正化解。焦虑需要的不是压制，而是陪伴与理解。',
+   advice:'今晚睡前写下你最大的担忧，然后写下：即使最坏的情况发生，我可以如何应对？',
+   hardTruth:'这已经不只是"想太多"了。宝剑九描述的是真实的心理痛苦——可能已经影响了你的睡眠和日常判断力。这不是软弱，是一个需要被认真对待的信号，而不只是被"调整心态"处理掉的事。'},
+  {isMajor:false,suit:'swords',numVal:10,num:'10',  zh:'宝剑十',    en:'Ten of Swords',    color:'#7880A8',element:'air',   kw:['强制终结','触底','无法挽回'],
+   up:'某件事将以痛苦的、强制性的方式走到终点——不按你的计划，不给你缓冲时间。宝剑十不是比喻：它描述真实的终止，字面意义上的结束。触底的唯一真相是：已经到底了，无可再低。',
+   rev:'拒绝承认结束已来临，或已经开始从触底中缓缓恢复。黎明就在最深的黑暗之后。',
+   advice:'承认这件事已经结束了。然后问自己：一年后，我希望那时的自己是什么样子？',
+   hardTruth:'宝剑十不是"黎明前的黑暗"这种励志语——它是整副牌里最彻底的终结牌。如果它出现在未来或结果位，它在说：当前这条路，如果不改变，会以最痛苦的方式走到终点。这不是在吓你，是给你改变方向的最后机会。'},
+  {isMajor:false,suit:'swords',numVal:11,num:'侍从',zh:'宝剑侍从',  en:'Page of Swords',   color:'#7880A8',element:'air',   kw:['警觉','批判思维','信息搜集'],
+   up:'以敏锐的思维和旺盛的好奇心搜集信息，警觉而机敏。但注意语言的刀刃——未经打磨的直接会伤人。',
+   rev:'八卦流言、言语伤害，或思维过于活跃导致无法做出决策。先想清楚，再开口。',
+   advice:'在表达一个强烈的想法之前，先问自己：我确定这是真的吗？'},
+  {isMajor:false,suit:'swords',numVal:12,num:'骑士',zh:'宝剑骑士',  en:'Knight of Swords', color:'#7880A8',element:'air',   kw:['直接行动','逻辑冲刺','高效推进'],
+   up:'以强硬的逻辑和高速的行动直冲目标，效率极高，但可能缺乏对他人的考量，请在冲刺中保留一份同理心。',
+   rev:'言语过于锋利造成伤害，或被过度分析所瘫痪。有时候停下来，比冲更重要。',
+   advice:'在一次重要的谈话中，先听完对方的全部话，再开口回应。'},
+  {isMajor:false,suit:'swords',numVal:13,num:'王后',zh:'宝剑王后',  en:'Queen of Swords',  color:'#7880A8',element:'air',   kw:['清晰洞察','智慧独立','理性判断'],
+   up:'以冷静、清晰的智慧透视复杂局面，你不被情绪左右，善于看穿表象直达本质，这是你的权力。',
+   rev:'冷酷超越了理智，或将过去的伤痛变成了对外界的防御墙。独立不等于孤立。',
+   advice:'今天做一个决定，完全以事实为依据，暂时搁置情绪的影响，观察结果。'},
+  {isMajor:false,suit:'swords',numVal:14,num:'国王',zh:'宝剑国王',  en:'King of Swords',   color:'#7880A8',element:'air',   kw:['权威判断','真相守护','最高理性'],
+   up:'以最高的理性标准和权威判断力维护真相与正义，在复杂的权力场中，你的清晰是最强的武器。',
+   rev:'利用智识进行权力操控，或将理性当作武器打压他人。知识的力量需要以道德为根基。',
+   advice:'在一个复杂的情境中，只陈述事实，不添加情绪色彩，观察结果有何不同。'},
+  // ━━━ 星币 PENTACLES (Earth) ━━━
+  {isMajor:false,suit:'pentacles',numVal:1, num:'A',   zh:'星币首牌',  en:'Ace of Pentacles', color:'#5A9E38',element:'earth', kw:['物质新机遇','播种','现实起点'],
+   up:'物质层面的新机遇正在向你呈现——财务、职业或健康方面的新起点。播下种子，以耐心和实际行动浇灌它。',
+   rev:'物质机遇被错过，或急于求成导致计划失败。在现实层面，时机和准备同等重要。',
+   advice:'今天为一个长期目标迈出一个具体的、可落地的小步骤。'},
+  {isMajor:false,suit:'pentacles',numVal:2, num:'2',   zh:'星币二',    en:'Two of Pentacles', color:'#5A9E38',element:'earth', kw:['多线平衡','灵活应变','资源管理'],
+   up:'你正在同时处理多个现实层面的事务，维持着微妙的平衡，灵活和适应性是你现在最重要的能力。',
+   rev:'平衡被打破，事务失控或决策混乱。先把最重要的那一件事放在首位，其余的可以等。',
+   advice:'今天评估你正在进行的所有项目——哪一个最值得你全力投入？'},
+  {isMajor:false,suit:'pentacles',numVal:3, num:'3',   zh:'星币三',    en:'Three of Pentacles',color:'#5A9E38',element:'earth', kw:['精湛技艺','团队合作','被认可'],
+   up:'你的专业能力与团队合作正在创造真实的成果，技艺得到认可，这是精进与协作共同结出的果实。',
+   rev:'合作不顺，技能被低估，或单打独斗的孤岛困境。寻找能真正欣赏你能力的合作者。',
+   advice:'主动向一位你尊重的人请教一项你想提升的技能。'},
+  {isMajor:false,suit:'pentacles',numVal:4, num:'4',   zh:'星币四',    en:'Four of Pentacles',color:'#5A9E38',element:'earth', kw:['守财执着','围墙效应','物质囚禁'],
+   up:'对物质安全的执着已变成"围墙效应"——过度保守正在阻止真正的丰盛流动进来和流出去。',
+   rev:'终于开始松手让资源流动，或失去控制感带来不安。真正的安全不是握紧，而是建立根基。',
+   advice:'今天做一件"给予"的事——时间、金钱或知识——不求回报。'},
+  {isMajor:false,suit:'pentacles',numVal:5, num:'5',   zh:'星币五',    en:'Five of Pentacles',color:'#5A9E38',element:'earth', kw:['物质困境','被遗落','求助'],
+   up:'物质或财务上的困境正在经历，但援助就在你身边，你只需要抬起头。不要因为自尊而拒绝帮助。',
+   rev:'困境开始好转，或终于愿意寻求帮助。有时候，接受支持需要最大的勇气。',
+   advice:'今天向一个人坦白你正在面对的一个现实困难，不必假装一切都好。'},
+  {isMajor:false,suit:'pentacles',numVal:6, num:'6',   zh:'星币六',    en:'Six of Pentacles', color:'#5A9E38',element:'earth', kw:['慷慨流动','给予接受','资源平衡'],
+   up:'财富与资源正在流动，无论你是给予者还是接受者，都在参与宇宙丰盛的循环。慷慨是一种投资。',
+   rev:'给予或接受中存在不平等，或施予背后夹带着控制与依附。真正的慷慨不附带条件。',
+   advice:'今天以不求回报的心做一件小小的慷慨之举。'},
+  {isMajor:false,suit:'pentacles',numVal:7, num:'7',   zh:'星币七',    en:'Seven of Pentacles',color:'#5A9E38',element:'earth', kw:['耐心等待','评估投资','长期积累'],
+   up:'你付出的心血正在缓慢但确实地积累结果，这是评估投资方向的时刻——是继续还是适时调整？',
+   rev:'对进展的不耐烦导致过早放弃，或在错误的方向上继续消耗。停下来真正评估你在做什么。',
+   advice:'计算你在某件事上已投入了多少，然后诚实评估：这个方向值得继续吗？'},
+  {isMajor:false,suit:'pentacles',numVal:8, num:'8',   zh:'星币八',    en:'Eight of Pentacles',color:'#5A9E38',element:'earth', kw:['精进技能','工匠精神','专注打磨'],
+   up:'全身心投入精益求精的工作，打磨你的技能。这种工匠精神不是苦役，而是通往卓越的修行之路。',
+   rev:'技能磨练受阻，工作质量下降，或陷入机械重复的无意义劳动。找回驱动你精进的初心。',
+   advice:'今天在你的工作中找到一个可以刻意练习的具体细节，专注于它。'},
+  {isMajor:false,suit:'pentacles',numVal:9, num:'9',   zh:'星币九',    en:'Nine of Pentacles',color:'#5A9E38',element:'earth', kw:['物质独立','自给自足','成熟丰盛'],
+   up:'你凭借自身的努力与纪律建造了属于自己的丰盛花园，享受这份自给自足的成就与独立。',
+   rev:'物质独立的假象，或内心深处的孤独感未被直视。丰盛不只是物质，还需要真实的情感联结。',
+   advice:'为自己的一项成就感到骄傲，并允许自己享受它，不附带任何"但是"。'},
+  {isMajor:false,suit:'pentacles',numVal:10,num:'10',  zh:'星币十',    en:'Ten of Pentacles', color:'#5A9E38',element:'earth', kw:['传承根基','长久稳定','世代丰盛'],
+   up:'物质层面的圆满与代代相传的根基——家庭的稳定、财富的积累与长久的繁荣共同呈现。',
+   rev:'家族中的财务或传承问题，或为物质稳定牺牲了真正重要的事。根基不只是金钱，还有价值观。',
+   advice:'想想你希望为家人或下一代留下什么——不一定是金钱，可以是一种精神或习惯。'},
+  {isMajor:false,suit:'pentacles',numVal:11,num:'侍从',zh:'星币侍从',  en:'Page of Pentacles',color:'#5A9E38',element:'earth', kw:['务实探索','学习','实用消息'],
+   up:'对物质世界充满好奇的学习能量临近，一条关于财务、职业或健康的实用信息即将到来。',
+   rev:'学业或职业目标推迟，或缺乏实际落地的行动力。再好的计划，不落地就只是幻想。',
+   advice:'今天学习一个与你长期目标相关的具体技能或知识点。'},
+  {isMajor:false,suit:'pentacles',numVal:12,num:'骑士',zh:'星币骑士',  en:'Knight of Pentacles',color:'#5A9E38',element:'earth', kw:['稳健可靠','坚定推进','方法论'],
+   up:'以缓慢但坚定的步伐推进，可靠与责任感是你的标志，效率虽慢，但每一步都打实。',
+   rev:'顽固保守拒绝改变，或因追求完美而停滞不前。有时候"足够好"比"完美"更有价值。',
+   advice:'在一件等待"完美时机"的事上，今天就迈出第一步，哪怕不完美。'},
+  {isMajor:false,suit:'pentacles',numVal:13,num:'王后',zh:'星币王后',  en:'Queen of Pentacles',color:'#5A9E38',element:'earth', kw:['务实智慧','资源滋养','照料他人'],
+   up:'以务实的智慧与温暖的双手滋养周围的人和事，善于将有限资源转化为最大的安全感与丰盛。',
+   rev:'过度给予耗尽自身，或用物质取代情感上的真实联结。先填满你自己的杯子，才能真正给予。',
+   advice:'今天照顾好自己的身体——真实的照顾：好好吃一顿饭，好好睡一觉。'},
+  {isMajor:false,suit:'pentacles',numVal:14,num:'国王',zh:'星币国王',  en:'King of Pentacles',color:'#5A9E38',element:'earth', kw:['物质权威','稳健繁荣','商业智慧'],
+   up:'以经验与纪律建立了长久繁荣的物质王国，是可靠的资源领导者，稳健中蕴含着真正的力量。',
+   rev:'以金钱衡量一切的守旧心态，或拒绝任何必要的创新。陈旧而呆板的模式正在阻碍真正的增长。',
+   advice:'评估一个你长期坚持的做事方式——它真的是最优方案，还是只是习惯使然？'},
+];
+
+/* 合并78张牌 */
+const ALL_CARDS = [...MAJOR_ARCANA.map((c,i)=>({...c,isMajor:true,arcanaIdx:i})), ...MINOR_ARCANA];
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AI 解读系统 · 难牌检测数据库
+   用于 Method C：动态提示注入
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// 每张难牌出现时，强制注入AI提示词的警告文本
+const HARD_CARD_WARNINGS = {
+  '塔':    '这是整副牌中最具破坏性的牌之一，代表真实的、无法回避的崩塌，不是比喻，不是"成长机遇"。必须直接告知用户，不能用"清除障碍"来粉饰其破坏性。',
+  '宝剑十':'极端终结牌——强制性的、彻底的结束。在未来/结果位出现是最严肃的警告。绝不能用"黎明前的黑暗"来软化其真实重量，它的意思就是字面意思：某事将以痛苦的方式彻底终止。',
+  '月亮':  '此牌在任何位置都意味着：用户此刻相信的事情很可能是被恐惧扭曲过的。必须明确指出这个可能性——用户可能在对自己说谎，即使这不受欢迎。',
+  '恶魔':  '成瘾或有毒依附的直接信号。必须指出：用户知道是什么在束缚他/她，问题不是不知道，而是不愿放手。',
+  '宝剑九':'真实的心理痛苦信号，不只是"想太多"，可能已影响睡眠和判断力。不要轻描淡写——这需要被认真对待，不是被"调整心态"处理。',
+  '宝剑三':'真实的伤害或背叛——不是误解，不是感知上的痛苦，是实际发生的事。必须承认其真实性，不要建议用户"换个角度看"。',
+  '权杖十':'严重过载警告——以当前状态继续，崩溃是时间问题，不是"如果"。必须明确说出这一点。',
+  '死神':  '某件事将会结束，不按用户的计划，不给缓冲时间。试图阻止这个结束只会让过程更痛苦。必须直接陈述，不要仅仅强调"重生"。',
+  '宝剑七':'必须提出自我欺骗的可能性——用户是否在用"策略"回避直接面对某个他/她已经知道答案的问题？这是此牌最难正视、也最重要的含义。',
+  '宝剑五':'这场冲突的代价已经或将会非常高昂。即使赢了，也不是真正的胜利。',
+  '圣杯五':'执着于失去的事物已经成为停留在原地的理由，不只是悲伤，而是一种身份认同。需要直接指出。',
+  '宝剑八':'思维牢笼是真实的，但其中很大一部分是自我建构的。用户有能力走出来，但需要先承认这个牢笼有多少是自己建的。',
+};
+
+// 多牌同时出现时，额外注入的组合警告
+const DANGEROUS_COMBOS = [
+  {cards:['宝剑十','圣杯骑士'], warning:'未来位的强制终结 + 逆位结果的理想主义无法落地——这个组合是整次牌阵最重要的警告：当前路径的终点大概率是痛苦的未完成，而非成功。必须作为核心信息传达，不可回避。'},
+  {cards:['塔','月亮'],         warning:'崩塌 + 幻象：用户可能完全没有意识到危机即将到来，活在自建的叙事里。有义务直接点明。'},
+  {cards:['恶魔','宝剑三'],     warning:'有毒束缚 + 真实伤害同时出现：这段关系或处境对用户造成了真实的伤害，不只是"有些困难"。需要直接说。'},
+  {cards:['宝剑十','塔'],       warning:'双重终结信号：这是全套牌中最强烈的"当前方向必须改变"组合之一，两张牌的破坏性叠加，不可互相抵消或分别软化。'},
+  {cards:['月亮','宝剑七'],     warning:'幻象 + 自我欺骗双重叠加：用户几乎可以确定正在对自己说谎，并且用"聪明的策略"掩盖这一事实。'},
+  {cards:['宝剑九','宝剑十'],   warning:'心理痛苦已经到达顶点，宝剑九到宝剑十的能量路径是焦虑积累到最终崩溃。'},
+];
+
+// AI系统提示词（方案A：结构化输出约束 + 诚实身份设定）
+const AI_SYSTEM_PROMPT = `你是一位执业十五年的专业塔罗咨询师，以直率、不粉饰但充满智慧著称。你的口碑建立在"说别人不敢说的真话"上。
+
+核心诚实原则——每次解读必须遵守：
+1. 负面的牌是礼物，因为它让来访者有机会在事情发生前做出改变。回避或美化负面牌，是对来访者的不尊重。
+2. 你的职责是说真话，不是让人感觉良好。感觉良好是结果，不是目标。
+3. 逆位牌和高难度牌必须以其完整的重量呈现，不可以用"转化机遇"偷换主题。
+4. 永远不要把警告牌的负面含义推迟到段落最后——把最重要的话放在最前面。
+5. 如果牌阵的总体信息是"当前方向有严重问题"，你必须清晰说出来，不要用"需要一些调整"这样的措辞稀释它。
+
+牌阵模式读法（先看整阵，再看单牌）：
+- 大牌占多数：问题触及人生路径与内在成长，不只是日常事务；大牌少则重点在现实操作层面。
+- 主导花色即主战场：权杖=行动事业，圣杯=情感关系，宝剑=思维判断冲突，星币=现实资源稳定。
+- 缺失花色是警报：缺星币→落地不足；缺权杖→行动力不足；缺圣杯→情感断连；缺宝剑→判断模糊。
+- 重复数字被放大：多个5=冲突主题强烈；多个8=执行加速但需警惕透支；多个10=重大周期收尾。
+- 逆位多≠坏，意味着能量受阻、时机未熟、或需要先向内整合，不要一律读成"灾难"，但也不要一律美化。
+
+元素能量互动（判断牌与牌的协同或冲突）：
+- 同元素相遇：能量叠加放大，同花色间相互强化。
+- 火+风（权杖+宝剑）：互相推动，行动与思维加速。
+- 水+土（圣杯+星币）：相互滋养，情感落地与现实扎根。
+- 火+水（权杖+圣杯）：张力冲突，热情与情感需要整合。
+- 风+土（宝剑+星币）：互相拉扯，分析思维与现实落地之间存在摩擦。
+
+输出格式（严格按此结构，不可省略任何一项）：
+
+【整阵模式】
+先给出整阵的宏观信号：大小牌比例、主导花色说明什么、是否有缺失花色或重复数字，这些模式整体在说什么。（2-3句）
+
+【核心张力】
+本次牌阵中最重要的矛盾或冲突——两张或多张牌之间的张力是什么。
+
+【最需警惕的信号】
+选出本次牌阵中最严肃的警告牌（1-2张），给出其完整的、不美化的含义。如果强制注意事项中有标注，必须在此处充分体现。
+
+【逆位牌的真实信息】
+对每张逆位牌：先写负面维度的完整含义（最少2句），再写可能的转化方向（最多1句）。顺序不可颠倒。如果没有逆位牌，写"本次牌阵无逆位牌"。
+
+【如果现状不改变】
+基于牌阵走势，描述最可能发生的负面结果。用具体语言，不用"可能会面临挑战"这类模糊措辞。
+
+【清醒的建议】
+综合以上，给出有支持性但完全不回避现实的具体行动建议。建议必须针对用户的具体问题，不是通用的鼓励。`;
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DEEP CONSULTATION FRAMEWORK
+   基于系统论塔罗咨询——元素、原型与四维逆位解析
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── 元素系统 Element System ─────────────────────── */
+const ELEMENTS = {
+  fire:  {zh:'火',icon:'🔥',color:'#FF6B35',trait:'灵感·意志·行动力·热情',
+          shadow:'鲁莽、傲慢、精疲力竭、缺乏方向',
+          desc:'火元素代表纯粹的创造冲动与行动力。当火元素密集出现时，暗示此刻的核心议题与意志力、热情和主动出击密切相关。'},
+  water: {zh:'水',icon:'💧',color:'#4A90D9',trait:'情感·直觉·关系·精神性',
+          shadow:'情绪化、幻灭、沉溺幻想、冷漠',
+          desc:'水元素掌管情感的流动与深层直觉。水元素密集暗示当前最需要关注的是内心情感、关系联结与灵性层面的修复。'},
+  air:   {zh:'风',icon:'🌬️',color:'#87CEEB',trait:'逻辑·智力·交流·冲突',
+          shadow:'心理压力、过度思考、言语伤害、残酷',
+          desc:'风元素主宰思维与沟通。风元素密集揭示此刻的核心矛盾在于认知层面——可能是信息不对称、沟通僵局或精神压力过载。'},
+  earth: {zh:'土',icon:'🌿',color:'#8B7355',trait:'物质·稳定·财务·身体',
+          shadow:'贪婪、僵化、守旧、过度物欲',
+          desc:'土元素关联物质现实与稳定根基。土元素密集意味着当下的问题与财务安全、身体健康或事业根基直接相关。'}
+};
+
+/* ── 每张大阿卡纳的元素归属、愚者旅程阶段 & 四维逆位解析 ── */
+const CARD_META = [
+  // 0 愚者 — Air
+  {elem:'air', journey:'起点：纯粹潜能的爆发，灵魂选择踏上未知之旅',
+   rev4d:{
+     blocked:'内心渴望新的开始，却被恐惧或外在责任死死束缚，迈不出第一步。试着识别那些"假的"障碍。',
+     opposite:'纯真的冒险精神走向了反面——鲁莽冲动、不计后果的行动正在制造风险。需要在自由与责任之间找到平衡。',
+     shadow:'以"追求自由"为名逃避一切承诺，用表面的洒脱掩盖内心对深度联结的恐惧。',
+     internal:'一场深层的内在革新正在悄然发生。虽然外部生活看似平静，但你的灵魂已经开始为重大转变做准备。'
+   }},
+  // 1 魔法师 — Air
+  {elem:'air', journey:'觉醒：意识到自身拥有创造现实的全部工具',
+   rev4d:{
+     blocked:'你明明拥有实现目标的所有才能，却因某种外在限制或自我怀疑而无法施展。当前的环境在压制你的创造力。',
+     opposite:'才能被用于操控与欺骗，或者你正在被某个"魔法师"式的人物所蒙蔽。审视你身边是否存在利用信息差的权力不对等。',
+     shadow:'过度自信导致的狂妄——认为自己可以掌控一切，忽视了合作与谦逊的力量。',
+     internal:'你正在内心整合各种能力与资源，为一次精准的出击做准备。这是蓄力阶段，不是行动的时机。'
+   }},
+  // 2 女祭司 — Water
+  {elem:'water', journey:'内观：学习聆听内在智慧，信任直觉的引导',
+   rev4d:{
+     blocked:'直觉的声音被外界噪音淹没。重要的信息正在被压制——可能是他人刻意隐瞒，也可能是你自己拒绝面对。',
+     opposite:'过度依赖理性分析，完全忽略了内心的警示信号。逻辑无法触及的领域，正是你最需要关注的地方。',
+     shadow:'神秘感变成了疏离——用冷漠和不可接近来保护自己，却也隔绝了真实的联结。',
+     internal:'深层直觉正在觉醒，你开始能感知到那些言语之外的信息。给自己更多沉默和独处的时间。'
+   }},
+  // 3 女皇 — Earth
+  {elem:'earth', journey:'滋养：拥抱生命的丰盛，学习给予与接收',
+   rev4d:{
+     blocked:'创造力与丰盛感受到阻碍。可能是缺乏自我照顾，或外在环境不支持你的成长。先从滋养自己开始。',
+     opposite:'丰盛变成了过度——可能是关系中的窒息式关怀，或对物质享受的沉溺。给爱和丰盛一个健康的边界。',
+     shadow:'以"照顾他人"为名控制一切，或在关系中制造依赖来满足自己被需要的欲望。',
+     internal:'你正在重新学习如何滋养自己的内在。真正的丰盛不是外求的，而是从自我接纳中自然生长出来的。'
+   }},
+  // 4 皇帝 — Fire
+  {elem:'fire', journey:'建构：在外部世界建立秩序、权威与安全的结构',
+   rev4d:{
+     blocked:'你试图建立的秩序和权威遇到了外在阻力。目前的环境不允许你按照自己的规则行事，需要策略性地迂回。',
+     opposite:'权力正在被滥用——无论是你自己还是你周围的权威人物。专横的控制正在窒息生命力。',
+     shadow:'对秩序的执着变成了对自由的扼杀。规则不应该成为创造力的牢笼。',
+     internal:'你正在内心建立自律的根基。外在的权威尚未显现，但内在的"自我管理"系统正在成形。'
+   }},
+  // 5 教皇 — Earth
+  {elem:'earth', journey:'传承：在传统智慧中寻找指引，建立信仰体系',
+   rev4d:{
+     blocked:'来自传统或权威的指导路径被堵住了。你需要的导师可能暂时不可得，需要自己寻找替代的智慧来源。',
+     opposite:'盲目服从过时的规则，或者走向另一个极端——为了反叛而反叛，忽视了传统中真正有价值的智慧。',
+     shadow:'教条主义的陷阱——用"这就是规矩"来回避真正的思考和个人责任。',
+     internal:'你正在内心构建属于自己的精神框架，不再依赖外部权威来定义你的信仰。这是精神独立的标志。'
+   }},
+  // 6 恋人 — Air
+  {elem:'air', journey:'抉择：在二元对立中做出忠于内心的选择',
+   rev4d:{
+     blocked:'一个重要的选择被悬置了。外在压力或信息不足让你无法做出决定。但拖延本身也是一种选择。',
+     opposite:'错误的选择已经造成了后果——价值观的背离、关系的裂痕。需要勇气去承认并修正方向。',
+     shadow:'以"我别无选择"为借口逃避对自身决定的责任。每一个处境中，你都有选择的自由。',
+     internal:'你正在内心深处校准自己的价值观。真正的选择不是两害相权，而是发现什么才是你灵魂真正渴望的。'
+   }},
+  // 7 战车 — Water
+  {elem:'water', journey:'征途：以坚定意志驾驭内心的矛盾力量，向胜利前进',
+   rev4d:{
+     blocked:'前进的动力受到阻碍。方向不明或内心冲突让你停滞不前。需要先解决内在的对立，才能重新启程。',
+     opposite:'失去控制——你正被事件推着走，而非主动驾驭局面。方向盘不在你手中。',
+     shadow:'以胜利为唯一目标，不惜碾压一切障碍（包括他人的感受）。控制欲正在吞噬你的同理心。',
+     internal:'你正在内心整合那些看似矛盾的力量。外在的征途需要等待，直到内在达成统一。'
+   }},
+  // 8 力量 — Fire
+  {elem:'fire', journey:'驯服：以温柔的勇气拥抱内心的恐惧与野性',
+   rev4d:{
+     blocked:'你明明拥有内在力量，却因自我怀疑或过去的创伤而无法触及它。疗愈那些让你觉得自己"不够强"的记忆。',
+     opposite:'力量变成了蛮力——用压制代替拥抱，用强硬掩盖脆弱。真正的勇气是允许自己柔软。',
+     shadow:'表面的坚强掩盖了深层的恐惧。越是展现"无所不能"，越是在逃避真实的脆弱。',
+     internal:'你正在内心深处与自己的恐惧和解。这是一场安静的革命——不需要向任何人证明。'
+   }},
+  // 9 隐者 — Earth
+  {elem:'earth', journey:'寻真：暂别喧嚣，在孤独中发现真正的内在光芒',
+   rev4d:{
+     blocked:'你需要独处却无法获得它，或者已经准备好回归世界却走不出来。内省的时间已经足够，是时候带着发现回来了。',
+     opposite:'孤独变成了孤僻——从健康的内省滑入了与世界的断联。独处是为了更好地回来，不是永远离开。',
+     shadow:'以"寻求真相"为名逃避人际关系的复杂性。灯塔的光是为了照亮他人，不是只照自己。',
+     internal:'一盏内在的灯正在被点亮。你不需要去任何地方寻找答案——它就在你此刻驻足之处。'
+   }},
+  // 10 命运之轮 — Fire
+  {elem:'fire', journey:'转折：意识到命运的循环，学习在变化中保持内心稳定',
+   rev4d:{
+     blocked:'一个必要的转变被推迟了。你或许在抵抗命运的轮转，但试图阻止变化只会延长痛苦。',
+     opposite:'厄运的阴影——一个不利的周期正在运作。但记住：每一个低谷都是新周期的起点。',
+     shadow:'将一切归咎于"命运"而放弃个人的能动性。轮盘在转，但你仍然可以选择如何面对。',
+     internal:'你正在内心深处理解因果循环的法则。外在的起伏不再能轻易动摇你的根基。'
+   }},
+  // 11 正义 — Air
+  {elem:'air', journey:'衡量：面对因果真相，以清明的心做出公正裁决',
+   rev4d:{
+     blocked:'正义被延迟了。你等待的公平结果可能需要更多时间，或者有人正在阻挠真相浮出水面。',
+     opposite:'不公正的处境——规则被扭曲，或者你自己在逃避应当承担的后果。因果法则终会运作。',
+     shadow:'以"公正"之名行审判之实——对自己或他人过于严苛，忽视了慈悲在正义中的位置。',
+     internal:'你正在内心深处审视自己的行为与其后果。诚实地面对自己，是一切外在公正的前提。'
+   }},
+  // 12 倒吊人 — Water
+  {elem:'water', journey:'倒悬：主动放弃旧视角，在停滞中获得全新的理解',
+   rev4d:{
+     blocked:'你被困住了但并非出于主动选择——这是被迫的停滞而非有意义的暂停。需要找到将困境转化为洞察的钥匙。',
+     opposite:'僵局已经持续太久，继续等待不再有意义。是时候采取行动了，即便信息不完整。',
+     shadow:'将"牺牲"浪漫化——享受殉道者的角色，用自我牺牲来获取道德优越感。',
+     internal:'一场根本性的视角转换正在内心发生。那些曾经看似确定的事物，正在被重新定义。'
+   }},
+  // 13 死神 — Water
+  {elem:'water', journey:'终结：旧时代的必要谢幕，为新生命腾出空间',
+   rev4d:{
+     blocked:'一段已经走到终点的关系、项目或生活模式拒绝死去。这种"僵而不死"正在消耗大量能量。',
+     opposite:'恐惧变化到了病态的程度——为了维持现状不惜付出任何代价。但拒绝结束就是拒绝新的开始。',
+     shadow:'以"断舍离"为名过度切割——不给事物应有的告别仪式，冷酷地丢弃包括人在内的一切。',
+     internal:'你的内心正在悄然完成一次蜕变。旧的自我认同正在瓦解，但新的身份尚在孕育中。'
+   }},
+  // 14 节制 — Fire
+  {elem:'fire', journey:'整合：在对立之间找到和谐的第三条路',
+   rev4d:{
+     blocked:'平衡被外力打破。你试图调和的两种力量暂时无法融合，需要更多耐心和更巧妙的方法。',
+     opposite:'走向极端——要么完全放纵、要么过度克制。"适度"这个词似乎从你的字典中消失了。',
+     shadow:'表面的平衡掩盖了深层的压抑。真正的整合不是压制一方来成全另一方。',
+     internal:'你的内在炼金术正在运作——将过去的伤痛转化为智慧，将矛盾整合为完整。'
+   }},
+  // 15 恶魔 — Earth
+  {elem:'earth', journey:'直面阴影：认清那些束缚你的锁链，其实可以随时取下',
+   rev4d:{
+     blocked:'你意识到了束缚的存在，但似乎暂时无法挣脱。这不是失败——觉察本身就是解脱的第一步。',
+     opposite:'打破枷锁！从成瘾、有毒关系或限制性信念中解放出来。你正在夺回属于自己的力量。',
+     shadow:'以"享乐主义"合理化自毁行为。某种上瘾模式正在伪装成"热爱生活"来蚕食你的自由。',
+     internal:'你正在内心深处审视自己的阴影面——那些不愿承认的欲望和恐惧。勇敢地看见它们。'
+   }},
+  // 16 塔 — Fire
+  {elem:'fire', journey:'崩塌：虚假结构的必要瓦解，雷霆中的启示',
+   rev4d:{
+     blocked:'危机的信号已经出现但尚未爆发。你还有一个窗口期来主动拆除那些不稳固的结构。',
+     opposite:'你正在刻意回避一场必要的崩塌——维持一座已经千疮百孔的"塔"需要付出的代价越来越高。',
+     shadow:'对"毁灭"上瘾——不断制造危机来感受活着的刺激，或者无意识地破坏自己建立的一切。',
+     internal:'一个根深蒂固的信念正在内心崩塌。这是痛苦的，但之后你会发现那面墙后面是更广阔的天空。'
+   }},
+  // 17 星星 — Air
+  {elem:'air', journey:'希望：暴风雨后的星光，灵魂的疗愈与重生',
+   rev4d:{
+     blocked:'希望的光芒被暂时遮蔽。疗愈的过程可能比预期更漫长，但星星从未消失——只是被乌云挡住了。',
+     opposite:'失去信心——在希望的门槛前退缩，觉得自己不值得被滋养和疗愈。',
+     shadow:'不切实际的乐观——用"一切都会好的"来回避解决实际问题的责任。希望不是逃避。',
+     internal:'一颗内在的星正在点亮。你开始重新相信自己的价值和未来的可能性。'
+   }},
+  // 18 月亮 — Water
+  {elem:'water', journey:'迷雾：穿越潜意识的深水，直面最深的恐惧与幻象',
+   rev4d:{
+     blocked:'潜意识中的恐惧正在干扰你的判断，但你尚未找到面对它们的勇气。被压抑的情绪需要一个安全的出口。',
+     opposite:'迷雾正在散去——那些曾经困扰你的幻象、谎言和恐惧开始失去力量。真相正在浮现。',
+     shadow:'沉溺于幻觉和逃避现实——用"我很敏感"来合理化对真相的拒绝。',
+     internal:'你正在深层潜意识中做一次重要的清理。梦境和直觉此刻特别活跃，注意聆听它们。'
+   }},
+  // 19 太阳 — Fire
+  {elem:'fire', journey:'辉煌：真我的展现，生命力的全面绽放',
+   rev4d:{
+     blocked:'内在的光芒被压抑——可能是环境让你无法做真实的自己，也可能是自我怀疑在遮蔽你的光辉。',
+     opposite:'过度膨胀的自我——乐观变成了自大，自信变成了不听劝阻。太阳太强也会灼伤。',
+     shadow:'强迫自己"正能量"——不允许自己有低落和脆弱，用永远的阳光笑脸掩盖真实的情绪。',
+     internal:'内在的小太阳正在恢复光芒。你不需要外在的认可就能感受到自身的价值和快乐。'
+   }},
+  // 20 审判 — Fire
+  {elem:'fire', journey:'觉醒：灵魂层面的召唤，旧我的彻底蜕变',
+   rev4d:{
+     blocked:'一次灵魂层面的觉醒被延迟了。你隐约感到被某种更高的使命召唤，却因恐惧或旧习而迟疑不前。',
+     opposite:'自我怀疑阻止了蜕变——你不相信自己配得上更好的版本。审判的号角在响，但你捂住了耳朵。',
+     shadow:'以"更高目标"为名审判他人——将自己的觉醒体验强加于周围的人。',
+     internal:'你正在经历一次安静但深刻的内在审判——重新评估过去的每一个选择，为全新的自己奠基。'
+   }},
+  // 21 世界 — Earth
+  {elem:'earth', journey:'圆满：旅程的完成，所有碎片整合为完整的自我',
+   rev4d:{
+     blocked:'一段旅程的尾声被拖延了——可能是最后一个障碍尚未清除，或者你无法认可自己已经取得的成就。',
+     opposite:'旅程远未结束，但你正在自欺欺人地宣告"圆满"。诚实面对那些尚未完成的功课。',
+     shadow:'对"完美"的执着阻止了真正的完成——你永远在修改、永远觉得不够好，无法画上句号。',
+     internal:'一段内在的旅程已经悄然完成。你可能尚未意识到，但你已经不是出发时的那个人了。'
+   }},
+];
+
+/* ── 牌位→逆位维度映射 Position→Reverse Dimension ── */
+// 根据牌位语义选择最相关的逆位解析维度
+const POS_DIM_MAP = {
+  '当下':'shadow',   '现在':'shadow',  '核心':'shadow',
+  '过去':'blocked',  '脚下':'blocked',
+  '未来':'opposite', '结果':'opposite','潜在结果':'opposite',
+  '交叉':'blocked',  '关系阻碍':'blocked','核心挑战':'blocked',
+  '建议方向':'internal','建议行动':'internal','希望':'internal',
+  '你的感受':'internal','自身':'internal',
+  '对方感受':'shadow',  '外部':'opposite','外部环境':'opposite',
+  '头顶':'opposite', '当前资源':'internal','双方现状':'shadow',
+};
+
+/* ── 元素互动诊断 Element Interaction ──────────── */
+const ELEM_INTERACT = {
+  'fire+fire':'双火共燃——行动力极强但容易冲动燃尽，需要水元素的冷却来保持可持续性。',
+  'fire+water':'水火淬炼——激情与情感的深度碰撞正在产生转化性的能量，这是内在炼金术的运作。',
+  'fire+air':'风助火势——思维点燃了行动的火焰，灵感与执行力相辅相成。但需警惕风向不定导致火势失控。',
+  'fire+earth':'火炼大地——意志力正在为你的物质基础注入变革能量。行动与稳定之间需要找到节奏。',
+  'water+water':'深水回流——情感层面的议题占据了中心位置。直觉极其敏锐，但也最容易被情绪淹没。',
+  'water+air':'雾气弥漫——思维与情感的交汇产生了迷雾。你需要学会区分"我想的"和"我感受到的"。',
+  'water+earth':'沃土生长——情感找到了稳定的载体。这是一个适合培育长期关系和深度项目的组合。',
+  'air+air':'思维风暴——逻辑与分析能力达到巅峰，但过度思考可能导致行动瘫痪。让想法落地。',
+  'air+earth':'务实智慧——理论与实践的完美结合。这是做出明智决策和建立可行计划的黄金组合。',
+  'earth+earth':'磐石不移——稳定性极强但灵活性不足。物质安全感充裕，但可能抗拒所有必要的变化。',
+};
+function getElemInteract(e1,e2){
+  const key1=e1+'+'+e2, key2=e2+'+'+e1;
+  return ELEM_INTERACT[key1]||ELEM_INTERACT[key2]||'';
+}
+
+/* ── 愚者旅程阶段分析 Fool's Journey ────────────── */
+const JOURNEY_PHASES = [
+  {range:[0,7],   name:'起始阶段 (0-Ⅶ)',  desc:'灵魂正处于外在世界的探索期——建立自我、发展意志、做出关键抉择。此阶段的牌暗示你面临的是基础性的人生议题：身份认同、价值选择和行动方向。'},
+  {range:[8,14],  name:'内省阶段 (Ⅷ-ⅩⅣ)', desc:'旅程转向内在——力量、孤独、命运、正义、牺牲、转化与整合。此阶段的牌揭示灵魂正在进行深层的自我认知与精神淬炼。'},
+  {range:[15,21], name:'超越阶段 (ⅩⅤ-ⅩⅪ)', desc:'灵魂面对最深的阴影并最终达成宇宙意识——束缚、崩塌、希望、幻象、辉煌、觉醒与圆满。此阶段的牌指向灵性层面的终极课题。'},
+];
+function getJourneyPhase(arcanaIdx){
+  for(const p of JOURNEY_PHASES) if(arcanaIdx>=p.range[0]&&arcanaIdx<=p.range[1]) return p;
+  return JOURNEY_PHASES[2];
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEEDED RNG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function mulberry32(seed){
+  return function(){
+    seed|=0; seed=seed+0x6D2B79F5|0;
+    let t=Math.imul(seed^seed>>>15,1|seed);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;
+  };
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SVG GENERATORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function svgBack(){
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 124" width="${CARD_W}" height="${CARD_H}">
+  <defs>
+    <radialGradient id="bg0" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#241838"/><stop offset="100%" stop-color="#120a22"/>
+    </radialGradient>
+  </defs>
+  <rect width="76" height="124" rx="6" fill="url(#bg0)"/>
+  <rect x="4" y="4" width="68" height="116" rx="5" fill="none" stroke="#7b4fa680" stroke-width="0.8"/>
+  <rect x="7" y="7" width="62" height="110" rx="4" fill="none" stroke="#c8a06040" stroke-width="0.5"/>
+  <!-- Mandala -->
+  <g transform="translate(38,62)" stroke="#c8a060" fill="none" opacity="0.7">
+    <circle r="6"  stroke-width="0.7"/><circle r="14" stroke-width="0.5"/>
+    <circle r="22" stroke-width="0.5"/><circle r="28" stroke-width="0.4" stroke-dasharray="2,3"/>
+    <line x1="-28" y1="0" x2="28" y2="0" stroke-width="0.4"/>
+    <line x1="0" y1="-28" x2="0" y2="28" stroke-width="0.4"/>
+    <line x1="-20" y1="-20" x2="20" y2="20" stroke-width="0.4"/>
+    <line x1="20" y1="-20" x2="-20" y2="20" stroke-width="0.4"/>
+    <polygon points="0,-22 6,-6 22,0 6,6 0,22 -6,6 -22,0 -6,-6" stroke-width="0.6" stroke="#7b4fa6"/>
+    <polygon points="0,-14 4,-4 14,0 4,4 0,14 -4,4 -14,0 -4,-4" stroke-width="0.5"/>
+  </g>
+  <!-- Corner stars -->
+  <text x="8" y="17" font-size="7" fill="#c8a06060" font-family="serif">✦</text>
+  <text x="60" y="17" font-size="7" fill="#c8a06060" font-family="serif">✦</text>
+  <text x="8" y="120" font-size="7" fill="#c8a06060" font-family="serif">✦</text>
+  <text x="60" y="120" font-size="7" fill="#c8a06060" font-family="serif">✦</text>
+</svg>`;
+}
+
+const CARD_THEMES = [
+  // 0 Fool
+  `<circle cx="38" cy="45" r="16" fill="none" stroke="#FFD700" stroke-width="1.5"/>
+   <path d="M22,80 Q38,55 54,80" fill="none" stroke="#FFD700" stroke-width="1.2"/>
+   <circle cx="38" cy="28" r="5" fill="#FFD70060"/>
+   <line x1="38" y1="33" x2="38" y2="55" stroke="#FFD700" stroke-width="1"/>`,
+  // 1 Magician
+  `<text x="38" y="38" text-anchor="middle" font-size="20" fill="#FF4500">∞</text>
+   <rect x="22" y="48" width="32" height="2" fill="#FF450060"/>
+   <line x1="38" y1="50" x2="38" y2="70" stroke="#FF4500" stroke-width="1.2"/>
+   <circle cx="38" cy="75" r="4" fill="none" stroke="#FF4500" stroke-width="1"/>`,
+  // 2 High Priestess
+  `<path d="M24,35 L24,80" stroke="#9370DB" stroke-width="2"/>
+   <path d="M52,35 L52,80" stroke="#9370DB" stroke-width="2"/>
+   <path d="M24,50 Q38,40 52,50" fill="none" stroke="#9370DB" stroke-width="1"/>
+   <circle cx="38" cy="62" r="8" fill="none" stroke="#9370DB" stroke-width="1.2"/>
+   <path d="M30,62 Q38,55 46,62" fill="#9370DB40"/>`,
+  // 3 Empress
+  `<circle cx="38" cy="55" r="20" fill="none" stroke="#228B22" stroke-width="1"/>
+   <circle cx="38" cy="55" r="6" fill="#228B2240"/>
+   <path d="M38,35 Q55,45 55,62 Q55,78 38,78 Q21,78 21,62 Q21,45 38,35Z" fill="none" stroke="#228B2280" stroke-width="0.6" stroke-dasharray="2,2"/>
+   <text x="38" y="32" text-anchor="middle" font-size="10" fill="#228B22">♀</text>`,
+  // 4 Emperor
+  `<polygon points="38,28 52,48 44,80 32,80 24,48" fill="none" stroke="#CC0000" stroke-width="1.2"/>
+   <rect x="28" y="44" width="20" height="28" fill="none" stroke="#CC000060" stroke-width="0.8"/>
+   <line x1="28" y1="56" x2="48" y2="56" stroke="#CC0000" stroke-width="0.8"/>
+   <circle cx="38" cy="40" r="5" fill="none" stroke="#CC0000" stroke-width="1"/>`,
+  // 5 Hierophant
+  `<path d="M30,28 Q38,22 46,28 L46,35 Q38,32 30,35Z" fill="#DAA52040"/>
+   <rect x="35" y="35" width="6" height="30" fill="none" stroke="#DAA520" stroke-width="1"/>
+   <line x1="28" y1="50" x2="50" y2="50" stroke="#DAA520" stroke-width="0.8"/>
+   <circle cx="38" cy="45" r="2" fill="#DAA520"/>
+   <path d="M25,75 L38,65 L51,75" fill="none" stroke="#DAA52080" stroke-width="1"/>`,
+  // 6 Lovers
+  `<path d="M24,70 Q24,48 38,42 Q52,48 52,70" fill="none" stroke="#FF69B4" stroke-width="1.2"/>
+   <circle cx="29" cy="58" r="6" fill="none" stroke="#FF69B4" stroke-width="1"/>
+   <circle cx="47" cy="58" r="6" fill="none" stroke="#FF69B4" stroke-width="1"/>
+   <path d="M36,32 L38,27 L40,32 L45,32 L41,36 L43,42 L38,38 L33,42 L35,36 L31,32Z" fill="#FFD70060" stroke="#FFD700" stroke-width="0.7"/>`,
+  // 7 Chariot
+  `<rect x="22" y="48" width="32" height="22" fill="none" stroke="#4169E1" stroke-width="1.2"/>
+   <path d="M22,48 L30,32 L46,32 L54,48" fill="none" stroke="#4169E1" stroke-width="1"/>
+   <circle cx="28" cy="74" r="5" fill="none" stroke="#4169E160" stroke-width="1"/>
+   <circle cx="48" cy="74" r="5" fill="none" stroke="#4169E160" stroke-width="1"/>
+   <line x1="38" y1="32" x2="38" y2="22" stroke="#4169E1" stroke-width="1"/>
+   <text x="38" y="62" text-anchor="middle" font-size="9" fill="#4169E1">★</text>`,
+  // 8 Strength
+  `<text x="38" y="38" text-anchor="middle" font-size="12" fill="#FF8C00">∞</text>
+   <path d="M22,58 Q28,48 38,52 Q48,48 54,58 Q48,72 38,72 Q28,72 22,58Z" fill="none" stroke="#FF8C00" stroke-width="1.2"/>
+   <path d="M30,58 Q34,64 38,66 Q42,64 46,58" fill="none" stroke="#FF8C0080" stroke-width="0.8"/>`,
+  // 9 Hermit
+  `<path d="M38,24 L38,82" stroke="#708090" stroke-width="1"/>
+   <path d="M28,36 L38,28 L48,36" fill="none" stroke="#70809060" stroke-width="1"/>
+   <path d="M34,60 L38,52 L42,60 L42,75 L34,75Z" fill="none" stroke="#708090" stroke-width="1"/>
+   <polygon points="38,52 34,60 42,60" fill="#70809040"/>
+   <circle cx="38" cy="54" r="3" fill="#70809080"/>`,
+  // 10 Wheel
+  `<circle cx="38" cy="52" r="24" fill="none" stroke="#9400D3" stroke-width="1.2"/>
+   <circle cx="38" cy="52" r="14" fill="none" stroke="#9400D380" stroke-width="0.8"/>
+   <circle cx="38" cy="52" r="5" fill="none" stroke="#9400D3" stroke-width="1"/>
+   <line x1="14" y1="52" x2="62" y2="52" stroke="#9400D360" stroke-width="0.6"/>
+   <line x1="38" y1="28" x2="38" y2="76" stroke="#9400D360" stroke-width="0.6"/>
+   <text x="38" y="56" text-anchor="middle" font-size="8" fill="#9400D3">☸</text>`,
+  // 11 Justice
+  `<line x1="38" y1="24" x2="38" y2="82" stroke="#B22222" stroke-width="1.2"/>
+   <line x1="22" y1="44" x2="54" y2="44" stroke="#B22222" stroke-width="1.2"/>
+   <path d="M22,44 L28,62 L34,44" fill="none" stroke="#B2222280" stroke-width="1"/>
+   <path d="M42,44 L48,62 L54,44" fill="none" stroke="#B2222280" stroke-width="1"/>
+   <polygon points="38,24 42,32 38,36 34,32" fill="#B2222240"/>`,
+  // 12 Hanged Man
+  `<line x1="24" y1="30" x2="52" y2="30" stroke="#006400" stroke-width="1.5"/>
+   <line x1="38" y1="30" x2="38" y2="48" stroke="#006400" stroke-width="1"/>
+   <circle cx="38" cy="54" r="7" fill="none" stroke="#006400" stroke-width="1.2"/>
+   <path d="M31,61 Q24,72 28,80" fill="none" stroke="#00640080" stroke-width="1"/>
+   <path d="M45,61 Q52,72 48,80" fill="none" stroke="#00640080" stroke-width="1"/>`,
+  // 13 Death
+  `<path d="M22,70 Q38,28 54,70Z" fill="none" stroke="#2F4F4F" stroke-width="1.2"/>
+   <circle cx="38" cy="38" r="8" fill="none" stroke="#2F4F4F" stroke-width="1"/>
+   <path d="M30,65 Q38,58 46,65" fill="#2F4F4F40"/>
+   <line x1="38" y1="70" x2="38" y2="82" stroke="#2F4F4F" stroke-width="1"/>
+   <circle cx="38" cy="84" r="3" fill="#2F4F4F60"/>`,
+  // 14 Temperance
+  `<path d="M26,40 L30,70" stroke="#00CED1" stroke-width="1.5"/>
+   <path d="M50,40 L46,70" stroke="#00CED1" stroke-width="1.5"/>
+   <path d="M26,40 Q38,28 50,40" fill="none" stroke="#00CED1" stroke-width="1"/>
+   <path d="M30,70 Q38,80 46,70" fill="#00CED140"/>
+   <path d="M30,55 Q38,48 46,55" fill="none" stroke="#00CED180" stroke-width="0.8" stroke-dasharray="2,2"/>`,
+  // 15 Devil
+  `<polygon points="38,24 24,50 52,50" fill="none" stroke="#8B0000" stroke-width="1.2"/>
+   <circle cx="38" cy="56" r="12" fill="none" stroke="#8B0000" stroke-width="1"/>
+   <line x1="30" y1="72" x2="38" y2="64" stroke="#8B0000" stroke-width="0.8"/>
+   <line x1="46" y1="72" x2="38" y2="64" stroke="#8B0000" stroke-width="0.8"/>
+   <circle cx="38" cy="56" r="2" fill="#8B0000"/>`,
+  // 16 Tower
+  `<rect x="30" y="32" width="16" height="42" fill="none" stroke="#DC143C" stroke-width="1.2"/>
+   <polygon points="30,32 38,22 46,32" fill="none" stroke="#DC143C" stroke-width="1"/>
+   <path d="M20,36 Q30,30 38,35" fill="none" stroke="#DC143C" stroke-width="1" stroke-dasharray="2,2"/>
+   <path d="M56,36 Q46,30 38,35" fill="none" stroke="#DC143C" stroke-width="1" stroke-dasharray="2,2"/>
+   <circle cx="32" cy="50" r="2" fill="#DC143C60"/>
+   <circle cx="44" cy="44" r="2" fill="#DC143C60"/>`,
+  // 17 Star
+  `<circle cx="38" cy="38" r="8" fill="none" stroke="#4682B4" stroke-width="1.2"/>
+   <circle cx="38" cy="38" r="3" fill="#4682B460"/>
+   ${[0,60,120,180,240,300].map(a=>`<circle cx="${Math.round(38+22*Math.cos(a*Math.PI/180))}" cy="${Math.round(38+22*Math.sin(a*Math.PI/180))}" r="2" fill="#4682B460"/>`).join('')}
+   <path d="M28,70 Q38,60 48,70" fill="none" stroke="#4682B4" stroke-width="1"/>
+   <path d="M22,74 L54,74" stroke="#4682B440" stroke-width="0.8"/>`,
+  // 18 Moon
+  `<path d="M28,30 Q50,32 50,52 Q50,72 28,74 Q44,62 44,52 Q44,42 28,30Z" fill="#77889940" stroke="#778899" stroke-width="1.2"/>
+   <circle cx="34" cy="52" r="10" fill="none" stroke="#77889960" stroke-width="0.8"/>
+   <path d="M22,74 L54,74" stroke="#778899" stroke-width="0.8"/>
+   <circle cx="26" cy="76" r="3" fill="none" stroke="#77889980" stroke-width="0.8"/>
+   <circle cx="50" cy="76" r="3" fill="none" stroke="#77889980" stroke-width="0.8"/>`,
+  // 19 Sun
+  `<circle cx="38" cy="50" r="14" fill="#FFA50040" stroke="#FFA500" stroke-width="1.5"/>
+   ${[0,45,90,135,180,225,270,315].map(a=>`<line x1="${Math.round(38+16*Math.cos(a*Math.PI/180))}" y1="${Math.round(50+16*Math.sin(a*Math.PI/180))}" x2="${Math.round(38+24*Math.cos(a*Math.PI/180))}" y2="${Math.round(50+24*Math.sin(a*Math.PI/180))}" stroke="#FFA500" stroke-width="1.2"/>`).join('')}
+   <circle cx="38" cy="50" r="6" fill="#FFA50080"/>`,
+  // 20 Judgement
+  `<path d="M24,72 Q38,48 52,72" fill="none" stroke="#B8860B" stroke-width="1.2"/>
+   <path d="M38,44 L38,28" stroke="#B8860B" stroke-width="1.2"/>
+   <path d="M32,32 Q38,24 44,32" fill="none" stroke="#B8860B" stroke-width="1"/>
+   <path d="M26,42 Q32,36 38,40 Q44,36 50,42" fill="none" stroke="#B8860B80" stroke-width="0.8"/>
+   <circle cx="38" cy="62" r="5" fill="none" stroke="#B8860B" stroke-width="1"/>`,
+  // 21 World
+  `<ellipse cx="38" cy="52" rx="18" ry="26" fill="none" stroke="#8B008B" stroke-width="1.2"/>
+   <ellipse cx="38" cy="52" rx="8" ry="12" fill="#8B008B40"/>
+   <circle cx="38" cy="52" r="3" fill="#8B008B80"/>
+   <path d="M20,52 Q38,38 56,52" fill="none" stroke="#8B008B60" stroke-width="0.7" stroke-dasharray="2,3"/>
+   <path d="M20,52 Q38,66 56,52" fill="none" stroke="#8B008B60" stroke-width="0.7" stroke-dasharray="2,3"/>`,
+];
+
+/* ━━ Minor Arcana SVG ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const SUIT_SYMBOLS = {
+  wands:    {sym:'🔥', glyph:'⌽', path:'M38,28 L38,76 M26,44 L38,28 L50,44 M30,56 L38,44 L46,56'},
+  cups:     {sym:'💧', glyph:'♒', path:'M26,44 Q26,62 38,62 Q50,62 50,44 Q50,36 38,32 Q26,36 26,44Z'},
+  swords:   {sym:'🌬️',glyph:'†',  path:'M38,24 L38,80 M28,34 L48,34 M30,42 L46,42'},
+  pentacles:{sym:'🌿', glyph:'⬡', path:'M38,30 L44,44 L58,44 L46,54 L50,68 L38,60 L26,68 L30,54 L18,44 L32,44Z'},
+};
+function svgMinorFront(card){
+  const suitInfo=SUIT_SYMBOLS[card.suit]||SUIT_SYMBOLS.wands;
+  const idSafe=(card.suit+card.num).replace(/[^a-zA-Z0-9]/g,'');
+  const numGlyphs=[];
+  if(card.numVal<=10){
+    // Draw pips in a grid layout
+    const cols=card.numVal<=3?1:card.numVal<=6?2:3;
+    const rows=Math.ceil(card.numVal/cols);
+    const cx=38, startY=28, stepY=cols>1?18:14, startX=cols===1?38:cols===2?28:22, stepX=cols===2?20:14;
+    let count=0;
+    for(let r=0;r<rows&&count<card.numVal;r++){
+      const rowCols=Math.min(cols,card.numVal-count);
+      const offsetX=cols>rowCols?stepX/2:0;
+      for(let c=0;c<rowCols&&count<card.numVal;c++){
+        const px=startX+offsetX+c*stepX, py=startY+r*stepY;
+        numGlyphs.push(`<circle cx="${px}" cy="${py}" r="4" fill="${card.color}40" stroke="${card.color}" stroke-width="0.8"/>`);
+        count++;
+      }
+    }
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 124" width="${CARD_W}" height="${CARD_H}">
+  <defs>
+    <radialGradient id="fg${idSafe}" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="${card.color}18"/><stop offset="100%" stop-color="#120a22"/>
+    </radialGradient>
+  </defs>
+  <rect width="76" height="124" rx="6" fill="url(#fg${idSafe})"/>
+  <rect x="3" y="3" width="70" height="118" rx="5" fill="none" stroke="${card.color}50" stroke-width="0.8"/>
+  <text x="6" y="14" font-size="7" fill="${card.color}90" font-family="serif">${card.num}</text>
+  <text x="70" y="116" font-size="7" fill="${card.color}70" font-family="serif" text-anchor="end" transform="rotate(180,38,62)">${card.num}</text>
+  ${numGlyphs.length ? numGlyphs.join('') : `<text x="38" y="65" text-anchor="middle" font-size="22" fill="${card.color}50" font-family="serif">${card.num}</text>`}
+  <text x="38" y="108" text-anchor="middle" font-size="8" fill="${card.color}" font-family="serif" letter-spacing="1">${card.zh}</text>
+  <text x="38" y="118" text-anchor="middle" font-size="5" fill="${card.color}70" font-family="sans-serif">${card.en.toUpperCase()}</text>
+</svg>`;
+}
+
+function svgFront(card){
+  if(card.isMajor===false) return svgMinorFront(card);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 124" width="${CARD_W}" height="${CARD_H}">
+  <defs>
+    <radialGradient id="fg${card.num.replace(/[^a-zA-Z0-9]/g,'')}" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="${card.color}18"/>
+      <stop offset="100%" stop-color="#120a22"/>
+    </radialGradient>
+  </defs>
+  <rect width="76" height="124" rx="6" fill="url(#fg${card.num.replace(/[^a-zA-Z0-9]/g,'')})"/>
+  <rect x="3" y="3" width="70" height="118" rx="5" fill="none" stroke="${card.color}50" stroke-width="0.8"/>
+  <text x="6" y="14" font-size="7" fill="${card.color}90" font-family="serif">${card.num}</text>
+  <g transform="translate(0,8)">
+    ${CARD_THEMES[card.arcanaIdx !== undefined ? card.arcanaIdx : MAJOR_ARCANA.indexOf(card)] || ''}
+  </g>
+  <text x="38" y="108" text-anchor="middle" font-size="8" fill="${card.color}" font-family="serif" letter-spacing="1">${card.zh}</text>
+  <text x="38" y="118" text-anchor="middle" font-size="5.5" fill="${card.color}70" font-family="sans-serif" letter-spacing="0.5">${card.en.toUpperCase()}</text>
+</svg>`;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STATE MACHINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+const STATE = {
+  QUESTION_FOCUS:'QUESTION_FOCUS',
+  SELECT_SPREAD:'SELECT_SPREAD', ENTER_SCENE:'ENTER_SCENE',
+  SHUFFLING:'SHUFFLING', CARDS_READY:'CARDS_READY',
+  SELECTING:'SELECTING', COLLECTING:'COLLECTING',
+  FOCUSING:'FOCUSING', REVEALING:'REVEALING', SUMMARY:'SUMMARY'
+};
+
+let appState = {
+  current: STATE.QUESTION_FOCUS,
+  spread: null,
+  deck: [],
+  drawnCards: [],    // [{card, reversed, positionIdx}]
+  revealedCount: 0,
+  cardEls: [],
+  rng: null,
+  question: '',
+  category: 'other',
+};
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STARFIELD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function initStars(){
+  const cv=document.getElementById('starCanvas');
+  const ctx=cv.getContext('2d');
+  cv.width=window.innerWidth; cv.height=window.innerHeight;
+  const stars=[];
+  for(let i=0;i<180;i++) stars.push({
+    x:Math.random()*cv.width, y:Math.random()*cv.height,
+    r:Math.random()*1.2+0.2, a:Math.random(), da:Math.random()*0.004+0.001
+  });
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    stars.forEach(s=>{
+      s.a+=s.da; if(s.a>1||s.a<0) s.da*=-1;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,180,255,${s.a*0.6})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TABLE UTILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function tableRect(){
+  return document.getElementById('tableWrap').getBoundingClientRect();
+}
+function pctToLocalPx(pos){
+  const tw=document.getElementById('tableWrap');
+  const w=tw.offsetWidth, h=tw.offsetHeight;
+  return { x: w * pos.xPct/100, y: h * pos.yPct/100 };
+}
+function cardCenterOffset(rotated){
+  return {
+    cx: rotated ? CARD_H/2 : CARD_W/2,
+    cy: rotated ? CARD_W/2 : CARD_H/2
+  };
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BUILD GHOST POSITIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function buildGhosts(){
+  const gc=document.getElementById('ghostContainer');
+  gc.innerHTML='';
+  appState.spread.positions.forEach((pos,i)=>{
+    const el=document.createElement('div');
+    el.className='ghost';
+    el.id=`ghost${i}`;
+    const rotated = pos.rotate===90;
+    // Always use CARD_W×CARD_H; for rotated positions apply rotate(90deg) on top of center-translate
+    // so the ghost center stays exactly at (xPct%, yPct%) and visually appears landscape
+    const rotStyle = rotated ? 'transform:translate(-50%,-50%) rotate(90deg)' : '';
+    el.style.cssText=`left:${pos.xPct}%;top:${pos.yPct}%;width:${CARD_W}px;height:${CARD_H}px;${rotStyle}`;
+    el.textContent = pos.label;
+    gc.appendChild(el);
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CREATE CARD ELEMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function createCardEl(card, idx){
+  const wrap=document.createElement('div');
+  wrap.className='card-wrap';
+  wrap.dataset.idx=idx;
+  wrap.style.cssText=`width:${CARD_W}px;height:${CARD_H}px;position:absolute;transform-origin:center center`;
+  const inner=document.createElement('div');
+  inner.className='card-inner';
+  inner.style.cssText=`width:${CARD_W}px;height:${CARD_H}px`;
+  const back=document.createElement('div');
+  back.className='card-face card-back';
+  back.innerHTML=svgBack();
+  const front=document.createElement('div');
+  front.className='card-face card-front';
+  front.innerHTML=svgFront(card);
+  inner.appendChild(back); inner.appendChild(front);
+  wrap.appendChild(inner);
+  return wrap;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PAGE 1: BUILD SPREAD SELECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function buildSpreadSelect(){
+  const grid=document.getElementById('spreadGrid');
+  grid.innerHTML='';
+  SPREADS.forEach(sp=>{
+    const card=document.createElement('div');
+    card.className='spread-card';
+    card.innerHTML=`
+      <span class="spread-count">${sp.count}张</span>
+      <span class="spread-icon">${sp.icon}</span>
+      <div class="spread-name">${sp.name}</div>
+      <div class="spread-en">${sp.en.toUpperCase()}</div>
+      <div class="spread-desc">${sp.desc}</div>`;
+    card.addEventListener('click',()=>selectSpread(sp));
+    grid.appendChild(card);
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TRANSITIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showPage(id){
+  ['questionPage','spreadSelectPage','ritualPage','summaryOverlay'].forEach(p=>{
+    document.getElementById(p).classList.toggle('hidden', p!==id);
+  });
+}
+function setHint(txt){ document.getElementById('hintBar').textContent=txt; }
+function setStateHint(txt){ document.getElementById('stateHint').textContent=txt; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   QUESTION FOCUS PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showQuestionPage(){
+  appState.current = STATE.QUESTION_FOCUS;
+  showPage('questionPage');
+  updateQuideBox(appState.category);
+}
+
+function updateQuideBox(cat){
+  const g = CAT_GUIDE[cat] || CAT_GUIDE.other;
+  const box = document.getElementById('qGuideBox');
+  box.textContent = g.tip;
+  gsap.fromTo(box,{opacity:0,y:4},{opacity:1,y:0,duration:0.3});
+}
+
+function goToSpreadSelect(){
+  appState.current = STATE.SELECT_SPREAD;
+  showPage('spreadSelectPage');
+  gsap.from('#spreadSelectPage .page1-title',{opacity:0,y:-20,duration:0.8,ease:'power2.out'});
+  gsap.from('#spreadSelectPage .page1-sub',{opacity:0,y:-10,duration:0.8,delay:0.1});
+  gsap.from('.spread-card',{opacity:0,y:30,duration:0.6,stagger:0.08,delay:0.2,ease:'power2.out'});
+}
+
+/* ── 问题自动识别关键词库 ───────────────────────── */
+const CAT_KEYWORDS = {
+  love:    ['感情','爱情','恋爱','关系','男友','女友','分手','复合','婚姻',
+            '结婚','爱人','伴侣','约会','暗恋','喜欢','前任','另一半','表白','挽回',
+            '追求','喜欢他','喜欢她','在一起','单身','脱单',
+            '他不','他回','他还','他是','他对','她不','她回','她还','她是','她对',
+            '回我','不理我','联系我','消息','不回'],
+  career:  ['工作','职业','事业','升职','跳槽','辞职','老板','同事','公司','面试',
+            '创业','项目','职场','简历','offer','晋升','合伙人','领导','团队',
+            '转行','裁员','就业','实习','兼职','副业','网站','产品'],
+  finance: ['钱','财务','投资','理财','收入','贷款','买房','股票','财富','金钱',
+            '物质','储蓄','债务','薪资','资产','负债','基金','创收','被动收入',
+            '房子','车','省钱','花钱','破产','亏损'],
+  growth:  ['成长','方向','目标','人生','迷茫','意义','价值观','自我','内心','灵魂',
+            '心理','焦虑','抑郁','情绪','选择','决定','改变','突破','瓶颈',
+            '自信','自卑','孤独','身份','使命','天赋'],
+};
+
+function detectCategory(text){
+  if(!text || text.length < 3) return null;
+  const scores = {love:0, career:0, finance:0, growth:0};
+  Object.entries(CAT_KEYWORDS).forEach(([cat, kws])=>{
+    kws.forEach(kw=>{ if(text.includes(kw)) scores[cat]++; });
+  });
+  const max = Math.max(...Object.values(scores));
+  if(max === 0) return null;
+  // 需要明显领先才自动切换（避免误识别）
+  const winners = Object.entries(scores).filter(([,v])=>v===max);
+  return winners.length===1 ? winners[0][0] : null;
+}
+
+function setCategory(cat, isAuto=false){
+  appState.category = cat;
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.dataset.cat===cat));
+  updateQuideBox(cat);
+  const hint = document.getElementById('aiAutoHint');
+  if(isAuto && cat){
+    const info = CAT_GUIDE[cat];
+    hint.textContent = `✦ 已自动识别为「${info.name}」类别，如有偏差可手动更改`;
+    hint.style.display = 'block';
+    gsap.fromTo(hint,{opacity:0},{opacity:1,duration:0.4});
+  } else {
+    hint.style.display = 'none';
+  }
+}
+
+/* Wire question page once (called from load handler) */
+function initQuestionPage(){
+  // 初始状态
+  updateQuideBox('other');
+
+  // 类别芯片点击——手动选择，清除自动提示
+  document.querySelectorAll('.cat-chip').forEach(chip=>{
+    chip.onclick=()=>{
+      setCategory(chip.dataset.cat, false);
+    };
+  });
+
+  // 问题输入框 → 自动识别（防抖300ms）
+  let detectTimer = null;
+  document.getElementById('questionInput').oninput=()=>{
+    clearTimeout(detectTimer);
+    detectTimer = setTimeout(()=>{
+      const q = document.getElementById('questionInput').value.trim();
+      const detected = detectCategory(q);
+      if(detected && detected !== appState.category){
+        setCategory(detected, true);
+      } else if(!detected && appState.category !== 'other'){
+        // 问题清空时退回 other
+        // 不主动重置，保留用户上次选择
+      }
+    }, 300);
+  };
+
+  document.getElementById('btnBeginReading').onclick=()=>{
+    appState.question = document.getElementById('questionInput').value.trim();
+    goToSpreadSelect();
+  };
+  document.getElementById('qSkip').onclick=()=>{
+    appState.question = '';
+    appState.category = 'other';
+    goToSpreadSelect();
+  };
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SELECT SPREAD → ENTER SCENE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function selectSpread(sp){
+  const seed = Date.now() ^ (Math.random()*0xFFFFFF|0);
+  appState.rng = mulberry32(seed);
+  appState.spread = sp;
+  appState.drawnCards = [];
+  appState.revealedCount = 0;
+
+  // Shuffle full 78-card deck
+  const shuffled=[...Array(ALL_CARDS.length).keys()];
+  for(let i=shuffled.length-1;i>0;i--){
+    const j=Math.floor(appState.rng()*(i+1));
+    [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+  }
+  appState.deck = shuffled.slice(0, sp.count).map((ci,pi)=>{
+    const c=ALL_CARDS[ci];
+    return {
+      card: c,
+      reversed: appState.rng()<0.3,
+      positionIdx: pi,
+      arcanaIdx: c.isMajor ? c.arcanaIdx : null,
+      isMajor: c.isMajor,
+    };
+  });
+
+  document.getElementById('ritualSpreadName').textContent=`${sp.icon} ${sp.name}`;
+  showPage('ritualPage');
+  buildGhosts();
+  buildProgressDots();
+  enterScene();
+}
+
+function buildProgressDots(){
+  const bar=document.getElementById('progressBar');
+  bar.innerHTML='';
+  appState.spread.positions.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='prog-dot'; d.id=`dot${i}`; bar.appendChild(d);
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ENTER SCENE → SHUFFLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function enterScene(){
+  appState.current = STATE.ENTER_SCENE;
+  setStateHint('仪式开始…');
+  setHint('');
+  const cc=document.getElementById('cardsContainer');
+  cc.innerHTML='';
+  appState.cardEls=[];
+
+  // Create a full visual deck (cards stacked — backs only visible during shuffle)
+  const deckCount=22;
+  for(let i=0;i<deckCount;i++){
+    const ci=i%ALL_CARDS.length;
+    const el=createCardEl(ALL_CARDS[ci],i);
+    const tw=document.getElementById('tableWrap');
+    const sx=tw.offsetWidth/2 - CARD_W/2;
+    const sy=tw.offsetHeight - CARD_H - 20;
+    gsap.set(el,{x:sx, y:sy, rotation:0, opacity:0, zIndex:i+1});
+    cc.appendChild(el);
+    appState.cardEls.push(el);
+  }
+  // Fly the deck in
+  gsap.to(appState.cardEls,{opacity:1,y:(i)=>{
+    const tw=document.getElementById('tableWrap');
+    return tw.offsetHeight - CARD_H - 20 + i*0.4;
+  }, stagger:0.02, duration:0.5, ease:'power2.out',
+    onComplete: ()=>startShuffling()
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SHUFFLING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function startShuffling(){
+  appState.current = STATE.SHUFFLING;
+  setStateHint('洗牌中…');
+  setHint('✧ 请在心中默想你的问题 ✧');
+
+  const tw=document.getElementById('tableWrap');
+  const cx=tw.offsetWidth/2 - CARD_W/2;
+  const cy=tw.offsetHeight - CARD_H - 20;
+  const tl=gsap.timeline({onComplete:()=>fanCards()});
+
+  // 3 shuffle waves
+  for(let wave=0;wave<3;wave++){
+    tl.to(appState.cardEls,{
+      x:(i)=>cx + (appState.rng()-0.5)*tw.offsetWidth*0.55,
+      y:(i)=>cy + (appState.rng()-0.5)*tw.offsetHeight*0.35,
+      rotation:(i)=>(appState.rng()-0.5)*40,
+      duration:0.55, stagger:0.012, ease:'power1.inOut', delay:wave?0.15:0
+    });
+    tl.to(appState.cardEls,{
+      x:cx, y:cy, rotation:0,
+      duration:0.45, stagger:0.01, ease:'power2.inOut'
+    });
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FAN DISPLAY → CARDS_READY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function fanCards(){
+  appState.current = STATE.CARDS_READY;
+  setStateHint('选择命运之牌');
+  const needed = appState.spread.count;
+  setHint(`✦ 请直觉选择 ${needed} 张牌 · 点击即可 ✦`);
+
+  const tw=document.getElementById('tableWrap');
+  const n=appState.cardEls.length;
+  const spread=60, cx=tw.offsetWidth/2;
+  const baseY=tw.offsetHeight*0.72;
+
+  appState.cardEls.forEach((el,i)=>{
+    const angle=(i-(n-1)/2)*(spread/(n-1));
+    const rad=angle*Math.PI/180;
+    const r=tw.offsetHeight*0.36;
+    const tx=cx - CARD_W/2 + Math.sin(rad)*r*0.7;
+    const ty=baseY + (1-Math.cos(rad))*r*0.25 - CARD_H/2;
+    gsap.to(el,{
+      x:tx, y:ty, rotation:angle*0.75,
+      duration:0.6, delay:i*0.018, ease:'power2.out',
+      zIndex:i+1
+    });
+    el.style.cursor='pointer';
+    el.addEventListener('mouseenter',()=>{
+      if(appState.current!==STATE.CARDS_READY) return;
+      gsap.to(el,{y:ty-16,duration:0.2,ease:'power1.out'});
+    });
+    el.addEventListener('mouseleave',()=>{
+      if(appState.current!==STATE.CARDS_READY) return;
+      gsap.to(el,{y:ty,duration:0.2,ease:'power1.in'});
+    });
+    el.addEventListener('click',()=>onCardClick(el,i));
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CARD CLICK → FLY TO GHOST POSITION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function onCardClick(el,fanIdx){
+  if(appState.current!==STATE.CARDS_READY) return;
+  const selected=appState.drawnCards.length;
+  if(selected>=appState.spread.count) return;
+
+  appState.current=STATE.SELECTING;
+  const drawn=appState.deck[selected];
+  // Replace visual card with the actual drawn card data
+  el.querySelector('.card-front').innerHTML=svgFront(drawn.card);
+
+  const posIdx=selected;
+  const pos=appState.spread.positions[posIdx];
+  const tw=document.getElementById('tableWrap');
+  const rotated=pos.rotate===90;
+  // Always subtract half the ELEMENT's own dimensions (not the visual ones after rotation),
+  // because transform-origin is center-center: rotation happens around the element center,
+  // so x/y just need to place the element center at the ghost center.
+  const px=tw.offsetWidth*pos.xPct/100 - CARD_W/2;
+  const py=tw.offsetHeight*pos.yPct/100 - CARD_H/2;
+  // For reversed cards: rotate 180° around center → card stays in place, just flipped.
+  // For rotated (Celtic cross cross-card): rotate 90° around center → visually landscape.
+  const targetRot = rotated ? (drawn.reversed ? 270 : 90) : (drawn.reversed ? 180 : 0);
+
+  gsap.to(el,{
+    x:px, y:py,
+    rotation: targetRot,
+    transformOrigin:'50% 50%',
+    zIndex:50+posIdx,
+    duration:0.7, ease:'power3.inOut',
+    onComplete:()=>{
+      // Mark ghost as filled
+      const g=document.getElementById(`ghost${posIdx}`);
+      if(g) g.classList.add('filled');
+      // Update dot
+      const dot=document.getElementById(`dot${posIdx}`);
+      if(dot) dot.classList.add('selected');
+      // Store
+      appState.drawnCards.push({card:drawn.card,reversed:drawn.reversed,positionIdx:posIdx,el});
+      el.style.cursor='default';
+      // Remove card from fan list
+      appState.cardEls.splice(appState.cardEls.indexOf(el),1);
+
+      const done=appState.drawnCards.length>=appState.spread.count;
+      if(done){
+        appState.current=STATE.COLLECTING;
+        setHint('✦ 牌阵完成，正在聚焦… ✦');
+        setTimeout(()=>collectRemaining(),400);
+      } else {
+        appState.current=STATE.CARDS_READY;
+        const rem=appState.spread.count-appState.drawnCards.length;
+        setHint(`✦ 还需选择 ${rem} 张牌 ✦`);
+      }
+    }
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   COLLECT REMAINING CARDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function collectRemaining(){
+  const tw=document.getElementById('tableWrap');
+  const cx=tw.offsetWidth/2-CARD_W/2;
+  const cy=tw.offsetHeight-CARD_H-20;
+
+  if(appState.cardEls.length===0){ setTimeout(focusSpread,300); return; }
+  gsap.to(appState.cardEls,{
+    x:cx, y:cy+tw.offsetHeight, rotation:0, opacity:0,
+    duration:0.5, stagger:0.015, ease:'power2.in',
+    onComplete:()=>{
+      appState.cardEls.forEach(el=>el.remove());
+      appState.cardEls=[];
+      focusSpread();
+    }
+  });
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FOCUS SPREAD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function focusSpread(){
+  appState.current=STATE.FOCUSING;
+  setStateHint('命运牌阵');
+  setHint('✦ 静心凝视，准备揭示命运… ✦');
+
+  // Subtle pulse on placed cards
+  appState.drawnCards.forEach(({el},i)=>{
+    gsap.fromTo(el,{filter:'brightness(1.5)'},{filter:'brightness(1)',duration:1,delay:i*0.12});
+  });
+  setTimeout(()=>startRevealing(),1200);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   REVEAL PHASE — auto flip one by one
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function startRevealing(){
+  appState.current=STATE.REVEALING;
+  appState.revealedCount=0;
+  setHint('✦ 点击侧栏「翻开下一张」逐张揭示命运 ✦');
+  setStateHint('解读中…');
+  revealNextCard();
+}
+
+function revealNextCard(){
+  const i=appState.revealedCount;
+  if(i>=appState.drawnCards.length){ setTimeout(showSummary,1400); return; }
+  const {card,reversed,positionIdx,el}=appState.drawnCards[i];
+  const pos=appState.spread.positions[positionIdx];
+
+  // Flip card
+  gsap.to(el.querySelector('.card-inner'),{
+    rotateY:reversed?-180:180, duration:0.75, ease:'power2.inOut',
+    onComplete:()=>{
+      el.classList.add('flipped');
+      showSidePanel(card,reversed,pos,i);
+      appState.revealedCount++;
+    }
+  });
+}
+
+function showSidePanel(card,reversed,pos,idx){
+  const sp=document.getElementById('sidePanel');
+  // Resolve element: major arcana use CARD_META; minor arcana have element directly on card
+  const arcIdx = card.isMajor===false ? -1 : (card.arcanaIdx !== undefined ? card.arcanaIdx : MAJOR_ARCANA.indexOf(card));
+  const meta = (arcIdx>=0 ? CARD_META[arcIdx] : null) || {};
+  const elemKey = meta.elem || card.element || '';
+  const elemInfo = ELEMENTS[elemKey] || {};
+
+  // ── Basic info
+  document.getElementById('spNumber').textContent=card.num;
+  document.getElementById('spNameZh').textContent=card.zh;
+  document.getElementById('spNameEn').textContent=card.en;
+
+  // ── Element badge
+  const badge=document.getElementById('spElemBadge');
+  badge.textContent=`${elemInfo.icon||''} ${elemInfo.zh||''}元素 · ${elemInfo.trait||''}`;
+  badge.style.borderColor=(elemInfo.color||'#7b4fa6')+'60';
+  badge.style.color=elemInfo.color||'#c8a060';
+  badge.style.background=(elemInfo.color||'#7b4fa6')+'15';
+
+  // ── Keywords
+  const kwDiv=document.getElementById('spKeywords');
+  kwDiv.innerHTML=card.kw.map(k=>`<span class="sp-kw">${k}</span>`).join('');
+  if(reversed) kwDiv.innerHTML+=`<span class="sp-kw" style="color:#c06060;border-color:#c0606060">逆位</span>`;
+
+  // ── Fool's Journey context (major arcana only)
+  const journey=document.getElementById('spJourney');
+  if(meta.journey){
+    journey.textContent=`愚者旅程 · ${meta.journey}`;
+    journey.style.display='';
+  } else if(card.isMajor===false){
+    const suitNames={wands:'权杖（火·行动）',cups:'圣杯（水·情感）',swords:'宝剑（风·思维）',pentacles:'星币（土·物质）'};
+    journey.textContent=`小阿卡纳 · ${suitNames[card.suit]||card.suit} · ${card.en}`;
+    journey.style.display='';
+  } else {
+    journey.style.display='none';
+  }
+
+  // ── Position label — enrich with category context if available
+  const catCtx = CAT_POS_CONTEXT[appState.category] || {};
+  const posLabel = catCtx[pos.label] || pos.label;
+  // Add question hint on first card
+  const qNote = appState.question && idx===0 ? `\n关于：「${appState.question}」` : '';
+  document.getElementById('spPosition').textContent=`✦ 牌位「${posLabel}」的启示：${qNote}`;
+
+  // ── Description: upright or 4D reversed
+  const rev4dWrap=document.getElementById('spRev4dWrap');
+  if(reversed && meta.rev4d){
+    // Choose dimension based on position label
+    const dimKey=POS_DIM_MAP[pos.label]||'shadow';
+    const dimNames={blocked:'能量受阻',opposite:'对立转化',shadow:'阴影过度',internal:'内化导向'};
+    document.getElementById('spDesc').textContent=card.up;
+    rev4dWrap.style.display='block';
+    const label4d=document.getElementById('spRev4dLabel');
+    label4d.textContent=`逆位 · ${dimNames[dimKey]||dimKey}`;
+    label4d.className=`sp-rev4d-label ${dimKey}`;
+    document.getElementById('spRev4dText').textContent=meta.rev4d[dimKey]||card.rev;
+  } else {
+    document.getElementById('spDesc').textContent=reversed ? card.rev : card.up;
+    rev4dWrap.style.display='none';
+  }
+
+  // ── Advice (personalized with question if present)
+  const adviceText = appState.question
+    ? `针对「${appState.question}」：${card.advice}`
+    : card.advice;
+  document.getElementById('spAdvice').textContent=`✦ ${adviceText}`;
+
+  // ── Hard Truth warning box
+  const htWrap = document.getElementById('spHardTruth');
+  const htText = document.getElementById('spHardTruthText');
+  const ht = card.hardTruth || '';
+  if(ht){
+    htText.textContent = ht;
+    htWrap.style.display = 'block';
+    gsap.fromTo(htWrap,{opacity:0,y:4},{opacity:1,y:0,duration:0.4,delay:0.3});
+  } else {
+    htWrap.style.display = 'none';
+  }
+
+  // ── Next button
+  const nextEl=document.getElementById('spNext');
+  const isLast=idx>=appState.drawnCards.length-1;
+  nextEl.textContent=isLast?'✦ 查看完整解读':'→ 翻开下一张';
+  nextEl.onclick=()=>{
+    if(isLast) showSummary();
+    else revealNextCard();
+  };
+
+  if(!sp.classList.contains('open')){
+    sp.classList.add('open');
+  } else {
+    gsap.fromTo(sp,{opacity:0.4},{opacity:1,duration:0.3});
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function showSummary(){
+  appState.current=STATE.SUMMARY;
+  document.getElementById('sidePanel').classList.remove('open');
+  document.getElementById('summarySpreadName').textContent=
+    `${appState.spread.icon} ${appState.spread.name} · ${appState.spread.en}`;
+  // Show question banner if set
+  const qBanner=document.getElementById('summaryQuestion');
+  if(appState.question){
+    const catInfo=CAT_GUIDE[appState.category]||CAT_GUIDE.other;
+    qBanner.textContent=`${catInfo.icon} ${catInfo.name} · 「${appState.question}」`;
+    qBanner.style.display='block';
+  } else {
+    qBanner.style.display='none';
+  }
+
+  const grid=document.getElementById('summaryGrid');
+  grid.innerHTML='';
+  const catCtx2=CAT_POS_CONTEXT[appState.category]||{};
+  appState.drawnCards.forEach(({card,reversed,positionIdx},i)=>{
+    const pos=appState.spread.positions[positionIdx];
+    const arcIdx=card.isMajor===false ? -1 : (card.arcanaIdx !== undefined ? card.arcanaIdx : MAJOR_ARCANA.indexOf(card));
+    const meta=(arcIdx>=0?CARD_META[arcIdx]:null)||{};
+    const elemKey=meta.elem||card.element||'';
+    const elemInfo=ELEMENTS[elemKey]||{};
+    const dimKey=reversed?(POS_DIM_MAP[pos.label]||'shadow'):null;
+    const dimNames={blocked:'能量受阻',opposite:'对立转化',shadow:'阴影过度',internal:'内化导向'};
+    const revText=reversed&&meta.rev4d?meta.rev4d[dimKey]:card.rev;
+    const posLabel=catCtx2[pos.label]||pos.label;
+
+    const sc=document.createElement('div');
+    sc.className='summary-card';
+    sc.style.opacity='0';
+    // Mini SVG: major uses CARD_THEMES, minor uses simplified block
+    const miniArt = arcIdx>=0 && CARD_THEMES[arcIdx]
+      ? `<g transform="translate(0,8)">${CARD_THEMES[arcIdx]}</g>`
+      : `<text x="38" y="65" text-anchor="middle" font-size="18" fill="${card.color}60" font-family="serif">${card.num}</text>`;
+    sc.innerHTML=`
+      <div class="sc-pos">${posLabel}</div>
+      <div class="sc-num">${card.num}</div>
+      <div class="sc-name">${card.zh}</div>
+      <div style="font-size:0.65rem;color:${elemInfo.color||'#9b8faa'};margin-bottom:0.3rem">${elemInfo.icon||''} ${elemInfo.zh||''}元素</div>
+      <div class="sc-kw">${card.kw.join(' · ')}${reversed?` · <span style="color:#c06060">逆位·${dimNames[dimKey]||''}</span>`:''}</div>
+      <svg class="sc-mini-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 124" width="52" height="85">
+        <rect width="76" height="124" rx="6" fill="#120a22"/>
+        <rect x="3" y="3" width="70" height="118" rx="5" fill="none" stroke="${card.color}50" stroke-width="0.8"/>
+        <g transform="${reversed?'translate(76,124) rotate(180)':''}">
+          ${miniArt}
+          <text x="38" y="108" text-anchor="middle" font-size="7" fill="${card.color}" font-family="serif">${card.zh}</text>
+        </g>
+      </svg>
+      <div class="sc-advice">${reversed?revText:card.up}</div>`;
+    grid.appendChild(sc);
+    gsap.to(sc,{opacity:1,y:0,duration:0.5,delay:i*0.12,ease:'power2.out'});
+    gsap.from(sc,{y:20,duration:0.5,delay:i*0.12});
+  });
+
+  // ── Element distribution analysis
+  buildElementAnalysis();
+  // ── Journey phase analysis
+  buildJourneyAnalysis();
+  // ── Pattern diagnosis (major/minor, suit, numbers, reversed)
+  buildPatternAnalysis();
+  // ── Overall reading
+  document.getElementById('overallReading').innerHTML=generateOverallReading();
+  showPage('summaryOverlay');
+}
+
+/* ── Helper: get element key for any card ───────── */
+function getCardElemKey(c){
+  if(c.card.isMajor===false) return c.card.element||'';
+  const arcIdx=c.card.arcanaIdx!==undefined?c.card.arcanaIdx:MAJOR_ARCANA.indexOf(c.card);
+  return (CARD_META[arcIdx]||{}).elem||'';
+}
+
+/* ── Element distribution bar chart + insight ──── */
+function buildElementAnalysis(){
+  // Remove old if exists
+  document.querySelectorAll('.elem-analysis').forEach(e=>e.remove());
+  const cards=appState.drawnCards;
+  const counts={fire:0,water:0,air:0,earth:0};
+  cards.forEach(c=>{
+    const ek=getCardElemKey(c);
+    if(ek&&counts.hasOwnProperty(ek)) counts[ek]++;
+  });
+  const total=cards.length||1;
+  const maxC=Math.max(...Object.values(counts),1);
+
+  // Find dominant & missing
+  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const dominant=sorted[0];
+  const missing=sorted.filter(e=>e[1]===0).map(e=>ELEMENTS[e[0]].zh);
+
+  let insight='';
+  if(dominant[1]>=2){
+    const dInfo=ELEMENTS[dominant[0]];
+    insight+=`本次牌阵中${dInfo.zh}元素能量最为密集（${dominant[1]}/${total}），${dInfo.desc} `;
+  }
+  if(missing.length>0){
+    insight+=`值得注意的是${missing.join('、')}元素完全缺席——这暗示你当前可能忽视了${missing.map(m=>{
+      const e=Object.values(ELEMENTS).find(v=>v.zh===m);
+      return e?e.trait.split('·')[0].trim():'';
+    }).join('和')}层面的议题。`;
+  }
+  // Element interaction
+  if(cards.length>=2){
+    const elems=cards.map(c=>getCardElemKey(c)).filter(Boolean);
+    if(elems.length>=2){
+      const interact=getElemInteract(elems[0],elems[elems.length-1]);
+      if(interact) insight+=' '+interact;
+    }
+  }
+
+  const wrap=document.createElement('div');
+  wrap.className='elem-analysis';
+  wrap.innerHTML=`<div class="so-title" style="margin-bottom:0.6rem">✦ 元素能量分布</div>
+    ${['fire','water','air','earth'].map(ek=>{
+      const ei=ELEMENTS[ek];
+      const pct=Math.round(counts[ek]/maxC*100);
+      return `<div class="elem-bar-wrap">
+        <div class="elem-bar-label" style="color:${ei.color}">${ei.icon}${ei.zh}</div>
+        <div class="elem-bar"><div class="elem-bar-fill" style="width:${pct}%;background:${ei.color}"></div></div>
+        <div class="elem-bar-count">${counts[ek]}</div>
+      </div>`;
+    }).join('')}
+    ${insight?`<div class="elem-insight">${insight}</div>`:''}`;
+
+  const before=document.querySelector('.summary-overall');
+  before.parentNode.insertBefore(wrap,before);
+}
+
+/* ── Fool's Journey phase analysis ─────────────── */
+function buildJourneyAnalysis(){
+  document.querySelectorAll('.journey-analysis').forEach(e=>e.remove());
+  const cards=appState.drawnCards;
+  const phaseCounts=[0,0,0];
+  const majorCards=cards.filter(c=>c.card.isMajor!==false);
+  // Only major arcana cards belong to Fool's Journey
+  majorCards.forEach(c=>{
+    const arcIdx=c.card.arcanaIdx!==undefined?c.card.arcanaIdx:MAJOR_ARCANA.indexOf(c.card);
+    for(let p=0;p<JOURNEY_PHASES.length;p++){
+      if(arcIdx>=JOURNEY_PHASES[p].range[0]&&arcIdx<=JOURNEY_PHASES[p].range[1]){phaseCounts[p]++;break;}
+    }
+  });
+  // If no major arcana drawn, skip journey analysis
+  if(majorCards.length===0) return;
+  const maxPhase=phaseCounts.indexOf(Math.max(...phaseCounts));
+  const phase=JOURNEY_PHASES[maxPhase];
+
+  const wrap=document.createElement('div');
+  wrap.className='journey-analysis';
+  wrap.innerHTML=`<div class="ja-title">✦ 愚者旅程 · ${phase.name}</div>
+    <div class="ja-text">${phase.desc}</div>`;
+  const before=document.querySelector('.summary-overall');
+  before.parentNode.insertBefore(wrap,before);
+}
+
+/* ── Pattern diagnosis: major/minor, suit dominance, missing suits, repeated numbers ── */
+function buildPatternAnalysis(){
+  document.querySelectorAll('.pattern-analysis').forEach(e=>e.remove());
+  const cards = appState.drawnCards;
+  const total  = cards.length;
+
+  // ① Major vs Minor
+  const majorCount = cards.filter(c=>c.card.isMajor!==false).length;
+  const minorCount = total - majorCount;
+
+  // ② Suit counts (minor arcana only)
+  const suitCounts = {wands:0,cups:0,swords:0,pentacles:0};
+  const SUIT_ZH    = {wands:'权杖',cups:'圣杯',swords:'宝剑',pentacles:'星币'};
+  const SUIT_MEANING = {
+    wands:'行动·事业·热情主导',
+    cups:'情感·关系·直觉主导',
+    swords:'思维·判断·冲突主导',
+    pentacles:'现实·资源·稳定主导'
+  };
+  const MISSING_ADVICE = {
+    wands:'缺少权杖：行动力与主动性不足，补充推动力与愿景',
+    cups:'缺少圣杯：情感连接或直觉不足，需更多同理心与感受',
+    swords:'缺少宝剑：判断与沟通清晰度不足，补充分析与决策能力',
+    pentacles:'缺少星币：落地性不足，需补执行计划与现实评估'
+  };
+  cards.forEach(c=>{
+    if(c.card.isMajor===false && c.card.suit) suitCounts[c.card.suit]++;
+  });
+  const allSuits = Object.keys(suitCounts);
+  const maxSuit  = Math.max(...Object.values(suitCounts));
+  const missingSuits   = allSuits.filter(s=>suitCounts[s]===0);
+  const dominantSuits  = allSuits.filter(s=>suitCounts[s]===maxSuit && maxSuit>0);
+
+  // ③ Repeated numbers (minor arcana numVal 1-10)
+  const NUM_MEANING = {
+    1:'开始·潜力',2:'选择·平衡·协商',3:'庆祝·成长·创意',
+    4:'结构·边界·稳定（也警惕过度保守）',5:'冲突·考验·失衡',
+    6:'调和·修复·互惠',7:'挣扎·试炼·信念考验',
+    8:'执行·速度·进展（警惕节奏过快）',9:'成熟·结算·顶点',10:'周期完成·为新阶段腾空间'
+  };
+  const numCounts = {};
+  cards.forEach(c=>{
+    if(c.card.isMajor===false && c.card.numVal && c.card.numVal<=10)
+      numCounts[c.card.numVal] = (numCounts[c.card.numVal]||0)+1;
+  });
+  const repeatedNums = Object.entries(numCounts).filter(([,v])=>v>=2);
+
+  // ④ Court card rank clustering
+  const COURT_RANKS   = ['侍从','骑士','王后','国王'];
+  const COURT_MEANING = {
+    '侍从':'消息·起步·社交信号密集',
+    '骑士':'推进速度加快·行动密集',
+    '王后':'照料·关系网·女性能量汇聚',
+    '国王':'权威·决策·权力张力凸显'
+  };
+  const courtCounts = {};
+  cards.forEach(c=>{
+    if(c.card.isMajor===false){
+      COURT_RANKS.forEach(rank=>{
+        if(c.card.zh&&c.card.zh.includes(rank))
+          courtCounts[rank]=(courtCounts[rank]||0)+1;
+      });
+    }
+  });
+  const repeatedCourts = Object.entries(courtCounts).filter(([,v])=>v>=2);
+
+  // ⑤ Reversed ratio
+  const reversedCount = cards.filter(c=>c.reversed).length;
+  const reversedPct   = Math.round(reversedCount/total*100);
+
+  // Build HTML
+  let html = `<div class="pa-title">✦ 牌阵模式诊断</div>`;
+
+  // Major/Minor
+  const majorNote = majorCount > minorCount
+    ? '大牌为主 — 此议题触及人生路径与内在成长，能量层级高'
+    : minorCount > majorCount
+    ? '小牌为主 — 聚焦现实事务与具体执行层面'
+    : '大小牌均衡 — 宏观主题与现实操作并重';
+  html += `<div class="pa-row"><span class="pa-label">大/小阿尔卡纳</span><span class="pa-val">大牌${majorCount} · 小牌${minorCount}</span><span class="pa-note">${majorNote}</span></div>`;
+
+  // Suit dominance (only meaningful if minor cards exist)
+  if(minorCount > 0){
+    if(dominantSuits.length===1){
+      const ds = dominantSuits[0];
+      html += `<div class="pa-row"><span class="pa-label">主导花色</span><span class="pa-val">${SUIT_ZH[ds]} ×${maxSuit}</span><span class="pa-note">${SUIT_MEANING[ds]}</span></div>`;
+    } else if(dominantSuits.length>1 && maxSuit>0){
+      html += `<div class="pa-row"><span class="pa-label">花色均衡</span><span class="pa-val">${dominantSuits.map(s=>SUIT_ZH[s]).join('·')} 并列</span><span class="pa-note">多维度同等重要</span></div>`;
+    }
+    // Missing suits
+    missingSuits.forEach(ms=>{
+      html += `<div class="pa-row warn"><span class="pa-label">缺失花色</span><span class="pa-val">${SUIT_ZH[ms]}</span><span class="pa-note">${MISSING_ADVICE[ms]}</span></div>`;
+    });
+  }
+
+  // Repeated numbers
+  repeatedNums.forEach(([nv,cnt])=>{
+    html += `<div class="pa-row"><span class="pa-label">重复数字 ×${cnt}</span><span class="pa-val">${nv} 号牌</span><span class="pa-note">放大主题：${NUM_MEANING[nv]||''}</span></div>`;
+  });
+
+  // Repeated court ranks
+  repeatedCourts.forEach(([rank,cnt])=>{
+    html += `<div class="pa-row"><span class="pa-label">宫廷牌 ×${cnt}</span><span class="pa-val">${rank}</span><span class="pa-note">${COURT_MEANING[rank]||''}</span></div>`;
+  });
+
+  // Reversed ratio
+  const revNote = reversedPct===0 ? '全正位 — 能量通畅，方向明确'
+    : reversedPct>=67 ? '逆位为主 — 大量内在阻碍或转化期，先整合内在再推外在'
+    : reversedPct>=40 ? '逆位较多 — 外在推进前需先处理内在课题'
+    : '少量逆位 — 局部受阻，整体仍可推进';
+  html += `<div class="pa-row"><span class="pa-label">逆位占比</span><span class="pa-val">${reversedCount}/${total}（${reversedPct}%）</span><span class="pa-note">${revNote}</span></div>`;
+
+  // ⑥ Elemental Dignity (adjacent card element interactions)
+  if(total >= 2){
+    const SUIT_ELEMENT = {wands:'fire',cups:'water',swords:'air',pentacles:'earth'};
+    const ELEM_ZH = {fire:'火',water:'水',air:'风',earth:'土'};
+    const getElement = (c)=>{
+      if(c.card.isMajor!==false) return null; // Major Arcana — skip
+      return SUIT_ELEMENT[c.card.suit]||null;
+    };
+    // Interaction lookup: strengthen (same), support (active-active or passive-passive), weaken (fire-water, air-earth), neutral (others)
+    const ACTIVE = new Set(['fire','air']);
+    const getInteraction = (e1,e2)=>{
+      if(!e1||!e2) return null;
+      if(e1===e2) return {type:'strengthen',zh:'强化',desc:`同属${ELEM_ZH[e1]}元素，能量倍增`};
+      const bothActive  = ACTIVE.has(e1)&&ACTIVE.has(e2);
+      const bothPassive = !ACTIVE.has(e1)&&!ACTIVE.has(e2);
+      if(bothActive)  return {type:'support',zh:'友好',desc:`${ELEM_ZH[e1]}与${ELEM_ZH[e2]}同为主动元素，相互支持`};
+      if(bothPassive) return {type:'support',zh:'友好',desc:`${ELEM_ZH[e1]}与${ELEM_ZH[e2]}同为被动元素，相互滋养`};
+      // fire-water or air-earth = weaken
+      const pair = [e1,e2].sort().join('-');
+      if(pair==='fire-water') return {type:'weaken',zh:'对抗',desc:'火与水对冲，能量相互抵消，注意矛盾'};
+      if(pair==='air-earth')  return {type:'weaken',zh:'对抗',desc:'风与土对冲，思维与现实脱节，需找平衡'};
+      return {type:'neutral',zh:'中性',desc:`${ELEM_ZH[e1]}与${ELEM_ZH[e2]}互不直接影响，需注意平衡`};
+    };
+    const interactions = [];
+    for(let i=0;i<cards.length-1;i++){
+      const e1 = getElement(cards[i]);
+      const e2 = getElement(cards[i+1]);
+      const inter = getInteraction(e1,e2);
+      if(inter){
+        const pos1 = appState.currentSpread.positions[i]?.label||`牌${i+1}`;
+        const pos2 = appState.currentSpread.positions[i+1]?.label||`牌${i+2}`;
+        interactions.push({...inter,pos1,pos2});
+      }
+    }
+    const weakens = interactions.filter(x=>x.type==='weaken');
+    const strengthens = interactions.filter(x=>x.type==='strengthen');
+    if(weakens.length>0||strengthens.length>0){
+      html += `<div class="pa-subtitle">元素尊严 · 相邻牌能量互动</div>`;
+      strengthens.forEach(s=>{
+        html += `<div class="pa-row elem-strengthen"><span class="pa-label">${s.pos1} ↔ ${s.pos2}</span><span class="pa-val">${s.zh}</span><span class="pa-note">${s.desc}</span></div>`;
+      });
+      weakens.forEach(w=>{
+        html += `<div class="pa-row elem-weaken"><span class="pa-label">${w.pos1} ↔ ${w.pos2}</span><span class="pa-val">${w.zh}</span><span class="pa-note">${w.desc}</span></div>`;
+      });
+    }
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = 'pattern-analysis';
+  wrap.innerHTML = html;
+  const before = document.querySelector('.summary-overall');
+  before.parentNode.insertBefore(wrap, before);
+}
+
+/* ── Export pattern data as concise text for AI prompt ── */
+function getPatternSummaryText(){
+  const cards = appState.drawnCards;
+  const total  = cards.length;
+  const majorCount = cards.filter(c=>c.card.isMajor!==false).length;
+  const minorCount = total - majorCount;
+  const suitCounts = {wands:0,cups:0,swords:0,pentacles:0};
+  const SUIT_ZH = {wands:'权杖',cups:'圣杯',swords:'宝剑',pentacles:'星币'};
+  cards.forEach(c=>{if(c.card.isMajor===false&&c.card.suit) suitCounts[c.card.suit]++;});
+  const maxSuit = Math.max(...Object.values(suitCounts));
+  const dominantSuits = Object.keys(suitCounts).filter(s=>suitCounts[s]===maxSuit&&maxSuit>0);
+  const missingSuits  = Object.keys(suitCounts).filter(s=>suitCounts[s]===0);
+  const numCounts = {};
+  cards.forEach(c=>{if(c.card.isMajor===false&&c.card.numVal&&c.card.numVal<=10) numCounts[c.card.numVal]=(numCounts[c.card.numVal]||0)+1;});
+  const repeatedNums = Object.entries(numCounts).filter(([,v])=>v>=2).map(([n,v])=>`${n}号牌×${v}`);
+  const reversedCount = cards.filter(c=>c.reversed).length;
+  const lines = [
+    `大牌${majorCount}张·小牌${minorCount}张`,
+    minorCount>0 && dominantSuits.length===1 ? `主导花色：${SUIT_ZH[dominantSuits[0]]}` : '',
+    minorCount>0 && missingSuits.length>0 ? `缺失花色：${missingSuits.map(s=>SUIT_ZH[s]).join('+')}` : '',
+    repeatedNums.length>0 ? `重复数字：${repeatedNums.join('+')}` : '',
+    `逆位${reversedCount}/${total}张`,
+  ].filter(Boolean);
+  return lines.join('；');
+}
+
+/* ── Overall narrative reading ─────────────────── */
+function generateOverallReading(){
+  const cards=appState.drawnCards;
+  const sp=appState.spread;
+  const q=appState.question;
+  const cat=appState.category;
+  const catInfo=CAT_GUIDE[cat]||CAT_GUIDE.other;
+  const positiveCards=cards.filter(c=>!c.reversed).length;
+  const reversedCards=cards.filter(c=>c.reversed).length;
+
+  // Question-aware opening
+  let opening='';
+  if(q){
+    opening=`<b style="color:#c8a060">问题：「${q}」</b><br>` +
+      `针对你的${catInfo.name}议题，这次牌阵呈现如下：<br><br>`;
+  }
+
+  // Tone
+  let tone='';
+  if(reversedCards===0) tone='此次牌阵全部正位，能量流动清晰而明确——宇宙正在为你敞开一条通畅的道路。';
+  else if(reversedCards>positiveCards) tone='逆位牌的比例较高，提示你当前正面临较多内在阻碍或转化期的挑战。这不是"坏消息"，而是宇宙在提醒你向内看。';
+  else tone='正位与逆位的交织展现了一个真实而立体的画面——既有顺流的能量，也有需要整合的暗面。';
+
+  // Key archetype narrative with category-enriched position labels
+  const catCtx=CAT_POS_CONTEXT[cat]||{};
+  const posLabels=cards.map((c,i)=>{
+    const p=sp.positions[i]||{};
+    const label=catCtx[p.label]||p.label||'';
+    return `「${label}」位的<b style="color:#c8a060">${c.card.zh}</b>${c.reversed?'<i style="color:#c06060">(逆)</i>':''}`;
+  }).join('，');
+
+  // Shadow diagnosis
+  let shadowNote='';
+  const shadowElems=cards.filter(c=>c.reversed).map(c=>{
+    const arcIdx=c.card.isMajor===false ? -1 : (c.card.arcanaIdx !== undefined ? c.card.arcanaIdx : MAJOR_ARCANA.indexOf(c.card));
+    const m=(arcIdx>=0?CARD_META[arcIdx]:null)||{};
+    const elemKey=m.elem||c.card.element||'';
+    return ELEMENTS[elemKey]||{};
+  });
+  if(shadowElems.length>0){
+    const shadowTraits=shadowElems.map(e=>e.shadow||'').filter(Boolean);
+    if(shadowTraits.length>0) shadowNote=`逆位牌的阴影侧提醒你警惕以下倾向：${shadowTraits[0]}。认清这些模式是超越它们的第一步。`;
+  }
+
+  // Question-specific closing advice
+  let closing='';
+  if(q){
+    closing=`<br><br><b style="color:#7b4fa6">关于「${q}」的核心指引：</b>` +
+      `塔罗的回答从不是"会"或"不会"，而是"你的内在能量正在指向哪里"。` +
+      `上方的牌阵已经呈现了你此刻的能量地图——答案不在未来，就在你此刻的选择与态度中。` +
+      `相信你已知晓方向，塔罗只是帮你看清了自己早已感知到的真相。`;
+  } else {
+    closing=`<br><br><b style="color:#7b4fa6">系统性建议：</b>塔罗作为一个逻辑严密的原型系统，此次牌阵的信息不是单一预言，而是一幅多层次的能量地图。` +
+      `请将每张牌视为一面镜子——它照见的不是命定的未来，而是你此刻内心深处已经知晓但尚未正视的真相。` +
+      `诚实面对自己，信任你的直觉，一步一步走向属于你的答案。`;
+  }
+
+  return `${opening}${tone}<br><br>` +
+    `这次占卜抽到的 ${cards.length} 张牌依次是：${posLabels}。<br><br>` +
+    `${shadowNote?shadowNote:''}${closing}`;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AI 解读系统
+   方案A：结构化输出约束
+   方案C：难牌检测 + 动态提示注入
+   方案B（付费）：两轮自我批判
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── 方案C：构建包含动态注入警告的用户提示词 ─── */
+function buildAIPrompt(){
+  const cards = appState.drawnCards;
+  const sp    = appState.spread;
+  const q     = appState.question;
+  const cat   = appState.category;
+  const catInfo = CAT_GUIDE[cat]||CAT_GUIDE.other;
+
+  // 卡牌列表
+  const cardList = cards.map(({card,reversed,positionIdx})=>{
+    const pos = sp.positions[positionIdx]||{};
+    const catCtx = CAT_POS_CONTEXT[cat]||{};
+    const label  = catCtx[pos.label]||pos.label;
+    return `${label}：${card.zh}（${reversed?'逆位':'正位'}）`;
+  }).join('\n');
+
+  // 方案C：检测难牌，生成强制注入警告
+  const warnings = [];
+  cards.forEach(({card,reversed,positionIdx})=>{
+    const pos    = sp.positions[positionIdx]||{};
+    const posLbl = pos.label||'';
+    // 单牌警告
+    if(HARD_CARD_WARNINGS[card.zh]){
+      warnings.push(`⚠ ${posLbl}位「${card.zh}」：${HARD_CARD_WARNINGS[card.zh]}`);
+    }
+    // 逆位在结果/未来位 → 专项警告
+    if(reversed && (posLbl==='结果'||posLbl==='未来'||posLbl==='潜在结果')){
+      warnings.push(`⚠ 严重警告：${posLbl}位出现逆位牌「${card.zh}」——结果位的逆位是整个牌阵最重要的警告信号，在解读中必须赋予最大权重，不可轻描淡写或迅速转向正面。`);
+    }
+  });
+  // 危险组合检测
+  const cardNames = cards.map(c=>c.card.zh);
+  DANGEROUS_COMBOS.forEach(combo=>{
+    if(combo.cards.every(c=>cardNames.includes(c))){
+      warnings.push(`⚠ 危险组合：${combo.cards.join('+')}同时出现——${combo.warning}`);
+    }
+  });
+
+  const warningBlock = warnings.length>0
+    ? `\n【强制注意事项——以下内容必须在解读中明确体现，不可忽略或软化】\n${warnings.join('\n')}\n`
+    : '';
+
+  // 模式摘要
+  const patternSummary = getPatternSummaryText();
+
+  return `来访者问题：「${q||'请给出综合指引'}」
+问题类别：${catInfo.name}
+牌阵：${sp.name}（${sp.count}张）
+牌阵模式：${patternSummary}
+
+${cardList}
+${warningBlock}`;
+}
+
+/* ── 核心 API 调用函数 ────────────────────────── */
+async function callClaudeAPI(systemPrompt, userPrompt, apiKey){
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true',
+    },
+    body: JSON.stringify({
+      model:'claude-sonnet-4-6',
+      max_tokens:1800,
+      system: systemPrompt,
+      messages:[{role:'user', content: userPrompt}]
+    })
+  });
+  if(!res.ok){
+    const err = await res.json().catch(()=>({error:{message:res.statusText}}));
+    throw new Error(err.error?.message || `API错误 ${res.status}`);
+  }
+  const data = await res.json();
+  return data.content[0].text;
+}
+
+/* ── 渲染 AI 结果（带段落标题高亮）────────────── */
+function renderAIResult(text, containerId){
+  const el = document.getElementById(containerId);
+  // 把【标题】格式转换为样式化 HTML
+  const html = text
+    .replace(/【([^】]+)】/g,'<div class="ai-result-section"><div class="ai-section-label">【$1】</div>')
+    .replace(/\n\n/g,'</div>\n\n')
+    + '</div>';
+  el.innerHTML = html;
+}
+
+/* ── 提示词预览切换 ───────────────────────────── */
+function togglePrompt(tier){
+  const box = document.getElementById(`aiPrompt${tier==='free'?'Free':tier}`);
+  box.style.display = box.style.display==='none'?'block':'none';
+}
+
+/* ── 方案A+C：免费版单轮解读 ─────────────────── */
+async function runAIFree(){
+  const apiKey = document.getElementById('aiKeyInput').value.trim();
+  if(!apiKey){alert('请先输入 Claude API Key');return;}
+
+  const btn = document.getElementById('btnRunAI');
+  const loadEl = document.getElementById('aiLoadingFree');
+  const resultWrap = document.getElementById('aiResultFree');
+  const promptBox  = document.getElementById('aiPromptFree');
+
+  btn.disabled = true;
+  resultWrap.style.display='block';
+  loadEl.style.display='block';
+  document.getElementById('aiTextFree').innerHTML='';
+
+  const userPrompt = buildAIPrompt();
+  promptBox.textContent = `[系统提示词]\n${AI_SYSTEM_PROMPT}\n\n[用户提示词]\n${userPrompt}`;
+
+  try {
+    const result = await callClaudeAPI(AI_SYSTEM_PROMPT, userPrompt, apiKey);
+    loadEl.style.display='none';
+    renderAIResult(result,'aiTextFree');
+    gsap.from('#aiTextFree',{opacity:0,y:10,duration:0.5});
+  } catch(e){
+    loadEl.style.display='none';
+    document.getElementById('aiTextFree').textContent = `解读失败：${e.message}`;
+  }
+  btn.disabled = false;
+}
+
+/* ── 方案B：付费版两轮批判解读 ───────────────── */
+async function runAIPremium(){
+  const apiKey = document.getElementById('aiKeyInput').value.trim();
+  if(!apiKey){alert('请先在上方输入 Claude API Key');return;}
+
+  const btn     = document.getElementById('btnRunAIPremium');
+  const loadEl  = document.getElementById('aiLoadingPremium');
+  const resultWrap = document.getElementById('aiResultPremium');
+
+  btn.disabled = true;
+  resultWrap.style.display='block';
+  loadEl.style.display='block';
+  loadEl.textContent='✦ 第一轮：生成初稿解读…';
+  document.getElementById('aiTextPremium').innerHTML='';
+
+  const userPrompt = buildAIPrompt();
+
+  try {
+    // 第一轮：生成初稿
+    const draft = await callClaudeAPI(AI_SYSTEM_PROMPT, userPrompt, apiKey);
+
+    // 第二轮：批判自身
+    loadEl.textContent='✦ 第二轮：批判回避与粉饰…';
+    const critiquePrompt = `以下是一段塔罗解读的初稿。
+你的任务是：
+1. 找出这段解读中被回避、软化或美化的内容（每个问题都必须明确引用原文）
+2. 对每个问题给出更诚实、更直接的替代表述
+3. 基于批判，重写一个完整的、更诚实的最终版解读
+
+初稿如下：
+${draft}
+
+原始牌面信息：
+${userPrompt}
+
+请直接输出重写后的最终版解读（不需要列出批判过程），格式与初稿相同（使用【标题】结构）。`;
+
+    const finalResult = await callClaudeAPI(
+      '你是一位专业的塔罗解读批评者，擅长发现过于正面、回避难题的解读内容，并将其改写得更诚实、更有深度。',
+      critiquePrompt,
+      apiKey
+    );
+
+    loadEl.style.display='none';
+    renderAIResult(finalResult,'aiTextPremium');
+    gsap.from('#aiTextPremium',{opacity:0,y:10,duration:0.5});
+  } catch(e){
+    loadEl.style.display='none';
+    document.getElementById('aiTextPremium').textContent=`解读失败：${e.message}`;
+  }
+  btn.disabled = false;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESTART
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function restartApp(){
+  appState={
+    current:STATE.QUESTION_FOCUS,
+    spread:null,deck:[],drawnCards:[],revealedCount:0,cardEls:[],rng:null,
+    question:'',category:'other'
+  };
+  document.getElementById('cardsContainer').innerHTML='';
+  document.getElementById('ghostContainer').innerHTML='';
+  document.getElementById('progressBar').innerHTML='';
+  document.getElementById('sidePanel').classList.remove('open');
+  document.getElementById('summaryGrid').innerHTML='';
+  document.querySelectorAll('.elem-analysis,.journey-analysis,.pattern-analysis').forEach(e=>e.remove());
+  // Reset question page UI
+  document.getElementById('questionInput').value='';
+  document.getElementById('aiAutoHint').style.display='none';
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.dataset.cat==='other'));
+  showQuestionPage();
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PARTICLES (ambient)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function spawnParticle(){
+  const p=document.createElement('div');
+  p.className='particle';
+  const size=Math.random()*3+1;
+  const colors=['#c8a060','#7b4fa6','#9370db','#d4b896'];
+  p.style.cssText=`width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};
+    left:${Math.random()*100}vw;top:${Math.random()*100}vh;opacity:0;z-index:1`;
+  document.body.appendChild(p);
+  gsap.to(p,{opacity:0.6,y:-60-Math.random()*80,x:(Math.random()-0.5)*40,
+    duration:2+Math.random()*2,ease:'power1.out',
+    onComplete:()=>p.remove()});
+  gsap.to(p,{opacity:0,duration:1,delay:1.5+Math.random()});
+}
+setInterval(spawnParticle,600);
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+window.addEventListener('load',()=>{
+  initStars();
+  buildSpreadSelect();
+  initQuestionPage();
+
+  document.getElementById('btnRestart').addEventListener('click',restartApp);
+  document.getElementById('btnNewReading').addEventListener('click',restartApp);
+  document.getElementById('btnRunAI').addEventListener('click',runAIFree);
+  document.getElementById('btnRunAIPremium').addEventListener('click',runAIPremium);
+
+  // Fade out loader → show question focus page first
+  gsap.to(document.getElementById('loader'),{opacity:0,duration:0.8,delay:0.5,
+    onComplete:()=>{
+      document.getElementById('loader').classList.add('hidden');
+      showQuestionPage();
+      gsap.from('#questionPage .q-title',{opacity:0,y:-20,duration:0.8,ease:'power2.out'});
+      gsap.from('#questionPage .q-sub',{opacity:0,y:-10,duration:0.8,delay:0.15});
+      gsap.from('.cat-chip',{opacity:0,y:16,duration:0.5,stagger:0.07,delay:0.25,ease:'power2.out'});
+      gsap.from('#questionPage .q-guide-box',{opacity:0,duration:0.6,delay:0.55});
+      gsap.from('#questionPage .q-input-wrap',{opacity:0,y:10,duration:0.5,delay:0.65});
+      gsap.from('#btnBeginReading',{opacity:0,y:10,duration:0.5,delay:0.8});
+    }
+  });
+});
+
+window.addEventListener('resize',()=>{
+  const cv=document.getElementById('starCanvas');
+  cv.width=window.innerWidth; cv.height=window.innerHeight;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{
+  "name": { "zh": "牌阵选择指南", "en": "Spread Selection Guide" },
+  "description": {
+    "zh": "问题是占卜的灵魂，牌阵是其骨骼。好的占卜需要确保问题的深度与牌阵的广度相匹配。",
+    "en": "The question is the soul of a reading, the spread is its skeleton. A good reading matches the question's depth with the spread's breadth."
+  },
+
+  "questionComplexityMapping": {
+    "simple": {
+      "zh": "日常启发/快速查询 → 单牌或三牌阵",
+      "en": "Daily inspiration / quick queries → Single card or Three-card spread",
+      "recommendedSpreads": ["single", "three-card"]
+    },
+    "moderate": {
+      "zh": "感情、职业、决策类问题 → 三牌阵或爱情牌阵",
+      "en": "Relationships, career, decision questions → Three-card or Love spread",
+      "recommendedSpreads": ["three-card", "love"]
+    },
+    "complex": {
+      "zh": "重大人生决策、复杂局势 → 凯尔特十字或十二宫牌阵",
+      "en": "Major life decisions, complex situations → Celtic Cross or Zodiac spread",
+      "recommendedSpreads": ["celtic-cross", "zodiac-houses"]
+    },
+    "timeBased": {
+      "zh": "时间周期预测 → 周运/月运/年运牌阵",
+      "en": "Time-period forecasting → Week/Month/Year Ahead spreads",
+      "recommendedSpreads": ["week-ahead", "month-ahead", "year-ahead"]
+    },
+    "spiritual": {
+      "zh": "灵性探索、身心平衡 → 脉轮牌阵或生命之树",
+      "en": "Spiritual exploration, mind-body balance → Chakra or Tree of Life spread",
+      "recommendedSpreads": ["chakra", "tree-of-life"]
+    }
+  },
+
+  "questionLogicToLayout": {
+    "causal": {
+      "questionType": { "zh": "因果或时间类（事情如何发展？）", "en": "Causal or temporal (How will things develop?)" },
+      "layout": "linear",
+      "zh": "线性布局：过去→现在→未来 或 现状→行动→结果",
+      "en": "Linear layout: Past→Present→Future or Situation→Action→Outcome"
+    },
+    "multidimensional": {
+      "questionType": { "zh": "平衡/多维度视角（审视事物的多个方面）", "en": "Balanced / multi-dimensional perspective" },
+      "layout": "balanced",
+      "zh": "平衡布局：身→心→灵 或 想法→感受→行动",
+      "en": "Balanced layout: Body→Mind→Spirit or Thoughts→Feelings→Actions"
+    },
+    "decision": {
+      "questionType": { "zh": "决策类（在两个选项间选择）", "en": "Decision-making (choosing between options)" },
+      "layout": "foundational",
+      "zh": "基础式布局：选项A→选项B→关键决策信息",
+      "en": "Foundational layout: Option A→Option B→Key Decision Info"
+    },
+    "obstacle": {
+      "questionType": { "zh": "冲突与障碍分析（什么阻碍了我？）", "en": "Conflict and obstacle analysis (What blocks me?)" },
+      "layout": "crossed",
+      "zh": "交叉布局：现状→障碍（横跨）→建议",
+      "en": "Crossed layout: Situation→Obstacle (crossing)→Advice"
+    }
+  },
+
+  "questionFormulation": {
+    "name": { "zh": "提问方式指南", "en": "Question Formulation Guide" },
+    "principles": [
+      {
+        "zh": "开放式问题比是非题更能解锁牌阵中的层层指引。如「关于这个情况我能学到什么？」优于「他会回来吗？」",
+        "en": "Open-ended questions unlock more layers of guidance than yes/no. 'What can I learn from this situation?' is better than 'Will he come back?'"
+      },
+      {
+        "zh": "赋能式提问：将「我什么时候会遇到真爱」转为「我该如何准备好迎接一段关系」——让牌阵提供可执行的建议。",
+        "en": "Empowering questions: Change 'When will I find true love?' to 'How can I prepare for a relationship?' — eliciting actionable guidance."
+      },
+      {
+        "zh": "问题的深度应与牌阵的广度匹配。浅显的问题不需要十张牌来回答；深刻的问题不应被压缩到一张牌里。",
+        "en": "Question depth should match spread breadth. Shallow questions don't need ten cards; profound questions shouldn't be compressed into one."
+      }
+    ],
+    "exampleTransformations": [
+      {
+        "before": { "zh": "他爱我吗？", "en": "Does he love me?" },
+        "after": { "zh": "关于这段关系中的情感动态，我需要了解什么？", "en": "What do I need to understand about the emotional dynamics in this relationship?" },
+        "spread": "love"
+      },
+      {
+        "before": { "zh": "我该换工作吗？", "en": "Should I change jobs?" },
+        "after": { "zh": "留在当前工作和寻找新机会，各自会给我带来什么？", "en": "What would staying in my current job vs. seeking new opportunities each bring me?" },
+        "spread": "three-card"
+      },
+      {
+        "before": { "zh": "我的运气什么时候会好？", "en": "When will my luck improve?" },
+        "after": { "zh": "我这个月需要关注哪些能量变化来创造更好的机遇？", "en": "What energy shifts should I focus on this month to create better opportunities?" },
+        "spread": "month-ahead"
+      }
+    ]
+  }
+}

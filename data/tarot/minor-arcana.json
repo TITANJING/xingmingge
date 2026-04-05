@@ -1,0 +1,548 @@
+{
+  "suits": {
+    "wands": {
+      "zh": "权杖",
+      "en": "Wands",
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "cards": [
+        {
+          "id": "wands-01",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "王牌", "en": "Ace" },
+          "name": { "zh": "权杖王牌", "en": "Ace of Wands" },
+          "keywords": { "zh": ["新机遇", "创意灵感", "热情"], "en": ["new opportunity", "creative spark", "passion"] },
+          "upright": { "zh": "代表新的开始和创意灵感的到来。一股充满热情和能量的力量正在进入你的生活，为你带来新的机遇和可能性。", "en": "Represents new beginnings and creative inspiration. A surge of passionate energy is entering your life, bringing new opportunities and possibilities." },
+          "reversed": { "zh": "缺乏动力和灵感，创意受阻。你可能需要重新点燃你的热情，寻找新的方向。", "en": "Lack of motivation and inspiration, blocked creativity. You may need to reignite your passion and seek new direction." }
+        },
+        {
+          "id": "wands-02",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "二", "en": "Two" },
+          "name": { "zh": "权杖二", "en": "Two of Wands" },
+          "keywords": { "zh": ["计划", "决策", "潜力"], "en": ["planning", "decision", "potential"] },
+          "upright": { "zh": "你掌握着力量和潜力，正在计划未来。这是做出重要决定的时刻，考虑你的选择和长期目标。", "en": "You hold power and potential, planning for the future. It's time to make important decisions and consider your options and long-term goals." },
+          "reversed": { "zh": "犹豫不决，缺乏方向。你可能被太多选择所困扰，无法采取行动。", "en": "Indecision and lack of direction. You may be overwhelmed by too many choices and unable to take action." }
+        },
+        {
+          "id": "wands-03",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "三", "en": "Three" },
+          "name": { "zh": "权杖三", "en": "Three of Wands" },
+          "keywords": { "zh": ["远见", "扩展", "机遇"], "en": ["vision", "expansion", "opportunity"] },
+          "upright": { "zh": "显示远大的愿景和扩展的机遇。你的努力正在产生结果，前方有新的视野等待着你。", "en": "Shows broad vision and expanding opportunities. Your efforts are bearing fruit, and new horizons await you." },
+          "reversed": { "zh": "缺乏远见，机遇错失。你可能被局限的思维所困，无法看清更大的可能性。", "en": "Lack of vision, missed opportunities. You may be trapped by limited thinking and unable to see greater possibilities." }
+        },
+        {
+          "id": "wands-04",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "四", "en": "Four" },
+          "name": { "zh": "权杖四", "en": "Four of Wands" },
+          "keywords": { "zh": ["庆祝", "和谐", "稳定"], "en": ["celebration", "harmony", "stability"] },
+          "upright": { "zh": "庆祝成功和达成目标。这是充满喜悦和和谐的时期，你值得享受你的成就带来的快乐。", "en": "Celebration of success and achievement. A time of joy and harmony where you deserve to enjoy the fruits of your accomplishments." },
+          "reversed": { "zh": "延迟的庆祝，家庭冲突。计划可能受到挫折，和谐遭到破坏。", "en": "Delayed celebration, family conflict. Plans may face setbacks and harmony is disrupted." }
+        },
+        {
+          "id": "wands-05",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "五", "en": "Five" },
+          "name": { "zh": "权杖五", "en": "Five of Wands" },
+          "keywords": { "zh": ["冲突", "竞争", "分歧"], "en": ["conflict", "competition", "disagreement"] },
+          "upright": { "zh": "代表冲突和竞争。你可能面临意见分歧或与他人的争执，需要寻找妥协之道。", "en": "Represents conflict and competition. You may face disagreements or disputes with others, requiring compromise." },
+          "reversed": { "zh": "冲突解决，和平恢复。你正在克服分歧，走向更好的理解和合作。", "en": "Conflict resolution and restored peace. You are overcoming disagreements and moving toward better understanding and cooperation." }
+        },
+        {
+          "id": "wands-06",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "六", "en": "Six" },
+          "name": { "zh": "权杖六", "en": "Six of Wands" },
+          "keywords": { "zh": ["胜利", "认可", "自信"], "en": ["victory", "recognition", "confidence"] },
+          "upright": { "zh": "代表胜利和被认可。你的成就得到了尊重和赞扬，这是享受成功和建立自信的时刻。", "en": "Represents victory and recognition. Your achievements are respected and praised, a time to enjoy success and build confidence." },
+          "reversed": { "zh": "自负和失败。你可能过度自信或未能获得期望的认可，需要谦虚。", "en": "Arrogance and failure. You may be overconfident or failing to gain expected recognition, requiring humility." }
+        },
+        {
+          "id": "wands-07",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "七", "en": "Seven" },
+          "name": { "zh": "权杖七", "en": "Seven of Wands" },
+          "keywords": { "zh": ["挑战", "防卫", "坚持"], "en": ["challenge", "defense", "persistence"] },
+          "upright": { "zh": "面临挑战但坚持不懈。虽然困难重重，但你有力量和意志去克服障碍，继续前进。", "en": "Facing challenges but persisting. Despite difficulties, you have the strength and will to overcome obstacles and move forward." },
+          "reversed": { "zh": "退缩和放弃。你可能感到被压倒，失去了继续战斗的意愿。", "en": "Retreat and surrender. You may feel overwhelmed and lose the will to continue fighting." }
+        },
+        {
+          "id": "wands-08",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "八", "en": "Eight" },
+          "name": { "zh": "权杖八", "en": "Eight of Wands" },
+          "keywords": { "zh": ["快速进展", "行动", "动力"], "en": ["swift progress", "action", "momentum"] },
+          "upright": { "zh": "事情快速发展和进展。这是采取行动和推动事情发生的时候，能量和动力都很充足。", "en": "Things are moving quickly and progressing rapidly. It's time to take action and push things forward with abundant energy and momentum." },
+          "reversed": { "zh": "延迟和停滞。进展缓慢，可能需要耐心等待或重新评估你的方向。", "en": "Delays and stagnation. Progress is slow, you may need patience or to reassess your direction." }
+        },
+        {
+          "id": "wands-09",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "九", "en": "Nine" },
+          "name": { "zh": "权杖九", "en": "Nine of Wands" },
+          "keywords": { "zh": ["韧性", "防守", "疲惫"], "en": ["resilience", "defense", "exhaustion"] },
+          "upright": { "zh": "你已经走得很远，虽然疲惫但仍然坚强。这是坚持不懈和发挥韧性的时刻，胜利在望。", "en": "You've come far and remain strong despite fatigue. A time for persistence and resilience, with victory in sight." },
+          "reversed": { "zh": "过度疲惫和放弃。你可能失去了继续的动力，需要休息和重新恢复。", "en": "Exhaustion and giving up. You may have lost momentum and need rest and recovery." }
+        },
+        {
+          "id": "wands-10",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "十", "en": "Ten" },
+          "name": { "zh": "权杖十", "en": "Ten of Wands" },
+          "keywords": { "zh": ["负担", "压力", "责任"], "en": ["burden", "pressure", "responsibility"] },
+          "upright": { "zh": "感到承受压力和沉重的负担。你可能承担了太多责任，需要学会放下和寻求帮助。", "en": "Feeling burdened and under pressure. You may have taken on too much responsibility and need to learn to let go and seek help." },
+          "reversed": { "zh": "释放负担，减轻压力。你正在放下责任，重获自由和轻松。", "en": "Releasing burden and easing pressure. You are putting down responsibilities and regaining freedom and relief." }
+        },
+        {
+          "id": "wands-page",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "侍从", "en": "Page" },
+          "name": { "zh": "权杖侍从", "en": "Page of Wands" },
+          "keywords": { "zh": ["潜力", "好奇心", "冒险"], "en": ["potential", "curiosity", "adventure"] },
+          "upright": { "zh": "代表年轻的精神和新的冒险。你充满好奇心和热情，准备探索新的可能性和学习新事物。", "en": "Represents youthful spirit and new adventure. You are full of curiosity and enthusiasm, ready to explore new possibilities and learn." },
+          "reversed": { "zh": "缺乏方向，幼稚。你可能行动鲁莽或缺乏必要的经验。", "en": "Lack of direction, immaturity. You may act recklessly or lack necessary experience." }
+        },
+        {
+          "id": "wands-knight",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "骑士", "en": "Knight" },
+          "name": { "zh": "权杖骑士", "en": "Knight of Wands" },
+          "keywords": { "zh": ["热情", "冒险", "能量"], "en": ["passion", "adventure", "energy"] },
+          "upright": { "zh": "充满热情和冒险精神的骑士。你充满能量和勇气，准备迎接新的挑战和冒险。", "en": "A knight full of passion and adventurous spirit. You are energetic and courageous, ready to embrace new challenges and adventures." },
+          "reversed": { "zh": "鲁莽和冲动。你可能表现得太草率，缺乏深思熟虑。", "en": "Reckless and impulsive. You may be acting too hastily without careful consideration." }
+        },
+        {
+          "id": "wands-queen",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "王后", "en": "Queen" },
+          "name": { "zh": "权杖王后", "en": "Queen of Wands" },
+          "keywords": { "zh": ["热情", "魅力", "独立"], "en": ["passion", "charisma", "independence"] },
+          "upright": { "zh": "充满热情、魅力和独立性的女性。你自信、充满活力，能够激励他人，具有强大的个人影响力。", "en": "A woman full of passion, charisma, and independence. You are confident, vibrant, and capable of inspiring others with strong personal influence." },
+          "reversed": { "zh": "自负和易冲动。你可能过于独立而忽视他人的需求，行为不够成熟。", "en": "Arrogance and impulsiveness. You may be too independent, neglecting others' needs and behaving immaturely." }
+        },
+        {
+          "id": "wands-king",
+          "suit": { "zh": "权杖", "en": "Wands" },
+          "rank": { "zh": "国王", "en": "King" },
+          "name": { "zh": "权杖国王", "en": "King of Wands" },
+          "keywords": { "zh": ["领导力", "热情", "决心"], "en": ["leadership", "passion", "determination"] },
+          "upright": { "zh": "充满热情的领导者。你具有强大的领导力、创造力和决心，能够激励和指导他人走向成功。", "en": "A passionate leader. You possess strong leadership, creativity, and determination, capable of inspiring and guiding others toward success." },
+          "reversed": { "zh": "傲慢和专断。你可能过于强势，忽视他人的意见，导致冲突。", "en": "Arrogance and tyranny. You may be too domineering, dismissing others' opinions and causing conflict." }
+        }
+      ]
+    },
+    "cups": {
+      "zh": "圣杯",
+      "en": "Cups",
+      "element": {
+        "zh": "水",
+        "en": "Water"
+      },
+      "cards": [
+        {
+          "id": "cups-01",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "王牌", "en": "Ace" },
+          "name": { "zh": "圣杯王牌", "en": "Ace of Cups" },
+          "keywords": { "zh": ["爱情", "新关系", "情感"], "en": ["love", "new relationship", "emotion"] },
+          "upright": { "zh": "新的爱和情感的开始。这个强大的象征代表心灵的打开和深刻的情感联系，带来幸福和满足。", "en": "A new beginning of love and emotion. This powerful symbol represents opening of the heart and deep emotional connection, bringing happiness and fulfillment." },
+          "reversed": { "zh": "情感阻滞，爱的否定。你可能在感受和表达爱方面有困难，或经历情感的拒绝。", "en": "Emotional blockage, rejection of love. You may have difficulty feeling and expressing love, or experience emotional rejection." }
+        },
+        {
+          "id": "cups-02",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "二", "en": "Two" },
+          "name": { "zh": "圣杯二", "en": "Two of Cups" },
+          "keywords": { "zh": ["爱情", "伙伴关系", "和谐"], "en": ["love", "partnership", "harmony"] },
+          "upright": { "zh": "象征爱情和深刻的伙伴关系。两个人之间有真诚的联系和相互的理解，共同分享快乐和支持。", "en": "Symbolizes love and deep partnership. There is genuine connection and mutual understanding between two people, sharing happiness and support." },
+          "reversed": { "zh": "关系失衡，分离。沟通可能破裂，伙伴关系面临挑战。", "en": "Relationship imbalance, separation. Communication may break down, partnership faces challenges." }
+        },
+        {
+          "id": "cups-03",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "三", "en": "Three" },
+          "name": { "zh": "圣杯三", "en": "Three of Cups" },
+          "keywords": { "zh": ["庆祝", "友谊", "团结"], "en": ["celebration", "friendship", "unity"] },
+          "upright": { "zh": "欢乐和友谊的时刻。你被爱你的人所包围，共同庆祝生活中的美好时光，充满温暖和归属感。", "en": "A time of joy and friendship. You are surrounded by loved ones, celebrating life's beautiful moments with warmth and belonging." },
+          "reversed": { "zh": "孤独和隔离。你可能感到与他人断开连接，缺乏社交支持。", "en": "Loneliness and isolation. You may feel disconnected from others, lacking social support." }
+        },
+        {
+          "id": "cups-04",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "四", "en": "Four" },
+          "name": { "zh": "圣杯四", "en": "Four of Cups" },
+          "keywords": { "zh": ["冷漠", "沉思", "机遇"], "en": ["apathy", "contemplation", "opportunity"] },
+          "upright": { "zh": "陷入沉思和不满中。你可能对生活感到冷漠，错过眼前的机遇，需要重新审视你的处境。", "en": "Lost in contemplation and dissatisfaction. You may feel apathetic about life and miss opportunities before you, needing to reassess your situation." },
+          "reversed": { "zh": "重新接纳，走出沉思。你开始看到新的可能性和希望，准备迎接变化。", "en": "Renewed acceptance, moving beyond contemplation. You begin to see new possibilities and hope, ready to embrace change." }
+        },
+        {
+          "id": "cups-05",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "五", "en": "Five" },
+          "name": { "zh": "圣杯五", "en": "Five of Cups" },
+          "keywords": { "zh": ["悲伤", "失落", "悔恨"], "en": ["sadness", "loss", "regret"] },
+          "upright": { "zh": "代表悲伤和失落。你可能经历了情感上的损失，感到沮丧和失望，需要时间来愈合。", "en": "Represents sadness and loss. You may have experienced emotional loss, feeling disappointed and dismayed, needing time to heal." },
+          "reversed": { "zh": "恢复和接纳。你正在从悲伤中恢复，学会接纳和寻找新的希望。", "en": "Recovery and acceptance. You are healing from sadness, learning to accept and finding new hope." }
+        },
+        {
+          "id": "cups-06",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "六", "en": "Six" },
+          "name": { "zh": "圣杯六", "en": "Six of Cups" },
+          "keywords": { "zh": ["怀旧", "天真", "记忆"], "en": ["nostalgia", "innocence", "memory"] },
+          "upright": { "zh": "唤起美好的回忆和过去的快乐。你与童年或过去的幸福时光重新连接，感受纯真和爱。", "en": "Evokes pleasant memories and past happiness. You reconnect with childhood or joyful times past, feeling innocence and love." },
+          "reversed": { "zh": "活在过去，无法前进。你可能过分怀旧，难以接受当下的现实。", "en": "Living in the past, unable to move forward. You may be overly nostalgic, struggling to accept present reality." }
+        },
+        {
+          "id": "cups-07",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "七", "en": "Seven" },
+          "name": { "zh": "圣杯七", "en": "Seven of Cups" },
+          "keywords": { "zh": ["幻想", "机遇", "选择"], "en": ["illusion", "opportunity", "choice"] },
+          "upright": { "zh": "许多可能性出现在你面前。但要警惕幻想和虚假的承诺，需要仔细区分真实和虚幻。", "en": "Many possibilities appear before you. But beware of illusions and false promises, needing to carefully distinguish reality from fantasy." },
+          "reversed": { "zh": "明确选择，看清真相。你正在放弃幻想，做出更明智的决定。", "en": "Clear choice, seeing the truth. You are letting go of illusions and making wiser decisions." }
+        },
+        {
+          "id": "cups-08",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "八", "en": "Eight" },
+          "name": { "zh": "圣杯八", "en": "Eight of Cups" },
+          "keywords": { "zh": ["离开", "追求", "转变"], "en": ["departure", "pursuit", "transformation"] },
+          "upright": { "zh": "离开和追求更深层的意义。你正在放弃不再满足你的东西，寻求精神上的成长和真正的满足。", "en": "Departure and pursuit of deeper meaning. You are letting go of what no longer fulfills you, seeking spiritual growth and true satisfaction." },
+          "reversed": { "zh": "停滞和回避。你可能害怕改变，坚持一段不健康的关系或情况。", "en": "Stagnation and avoidance. You may fear change, holding onto an unhealthy relationship or situation." }
+        },
+        {
+          "id": "cups-09",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "九", "en": "Nine" },
+          "name": { "zh": "圣杯九", "en": "Nine of Cups" },
+          "keywords": { "zh": ["满足", "愿望", "欢乐"], "en": ["satisfaction", "wish", "joy"] },
+          "upright": { "zh": "代表满足和实现愿望。你的努力得到了回报，现在享受成功和幸福带来的喜悦。", "en": "Represents satisfaction and wish fulfillment. Your efforts are rewarded, now enjoying the joy of success and happiness." },
+          "reversed": { "zh": "不满足和贪婪。你可能追求更多，却忽视了已拥有的幸福。", "en": "Dissatisfaction and greed. You may pursue more while overlooking the happiness you already have." }
+        },
+        {
+          "id": "cups-10",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "十", "en": "Ten" },
+          "name": { "zh": "圣杯十", "en": "Ten of Cups" },
+          "keywords": { "zh": ["和谐", "家庭", "幸福"], "en": ["harmony", "family", "happiness"] },
+          "upright": { "zh": "家庭的圆满和幸福。你与家人或亲近的人共享深刻的爱和理解，生活充满温暖和归属。", "en": "Family fulfillment and happiness. You share deep love and understanding with family or loved ones, life filled with warmth and belonging." },
+          "reversed": { "zh": "家庭冲突，不和谐。关系可能面临困难，需要沟通和理解来修复。", "en": "Family conflict, disharmony. Relationships may face difficulties, requiring communication and understanding to repair." }
+        },
+        {
+          "id": "cups-page",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "侍从", "en": "Page" },
+          "name": { "zh": "圣杯侍从", "en": "Page of Cups" },
+          "keywords": { "zh": ["创意", "好奇", "敏感"], "en": ["creativity", "curiosity", "sensitivity"] },
+          "upright": { "zh": "年轻的艺术灵魂和敏感的心。你充满创意和想象力，对感受和美敏感，准备探索内心世界。", "en": "A young artistic soul with sensitive heart. You are full of creativity and imagination, sensitive to feelings and beauty, ready to explore inner world." },
+          "reversed": { "zh": "情绪不稳定，过度敏感。你可能为小事沮丧，需要培养更强的情感韧性。", "en": "Emotional instability, hypersensitivity. You may be discouraged easily, needing to develop stronger emotional resilience." }
+        },
+        {
+          "id": "cups-knight",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "骑士", "en": "Knight" },
+          "name": { "zh": "圣杯骑士", "en": "Knight of Cups" },
+          "keywords": { "zh": ["浪漫", "梦想", "追求"], "en": ["romance", "dream", "pursuit"] },
+          "upright": { "zh": "浪漫的追求者和梦想家。你充满理想主义，追求美好的感受和精神上的联系，带来爱和灵感。", "en": "A romantic pursuer and dreamer. You are idealistic, pursuing beautiful feelings and spiritual connection, bringing love and inspiration." },
+          "reversed": { "zh": "虚伪和欺骗。你可能被虚假的承诺所迷惑，或者自己不够真诚。", "en": "Deceit and illusion. You may be deceived by false promises or lack sincerity yourself." }
+        },
+        {
+          "id": "cups-queen",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "王后", "en": "Queen" },
+          "name": { "zh": "圣杯王后", "en": "Queen of Cups" },
+          "keywords": { "zh": ["同情", "直觉", "爱"], "en": ["compassion", "intuition", "love"] },
+          "upright": { "zh": "充满同情和直觉的女性。你心地善良，对他人的感受敏感，以爱和理解对待世界。", "en": "A woman full of compassion and intuition. You are kind-hearted, sensitive to others' feelings, treating the world with love and understanding." },
+          "reversed": { "zh": "过度依赖和情绪波动。你可能失去自我，过分投入于他人的情感中。", "en": "Excessive dependency and emotional volatility. You may lose yourself, becoming overly invested in others' emotions." }
+        },
+        {
+          "id": "cups-king",
+          "suit": { "zh": "圣杯", "en": "Cups" },
+          "rank": { "zh": "国王", "en": "King" },
+          "name": { "zh": "圣杯国王", "en": "King of Cups" },
+          "keywords": { "zh": ["智慧", "自制", "同情"], "en": ["wisdom", "self-control", "compassion"] },
+          "upright": { "zh": "情感上的成熟和智慧。你能够平衡理性和感情，以同情心和理解管理自己和他人。", "en": "Emotional maturity and wisdom. You balance rationality and feeling, managing yourself and others with compassion and understanding." },
+          "reversed": { "zh": "情感控制不当和冷漠。你可能压抑情感或显得冷淡无情。", "en": "Poor emotional control and coldness. You may suppress emotions or appear cold and indifferent." }
+        }
+      ]
+    },
+    "swords": {
+      "zh": "宝剑",
+      "en": "Swords",
+      "element": {
+        "zh": "气",
+        "en": "Air"
+      },
+      "cards": [
+        {
+          "id": "swords-01",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "王牌", "en": "Ace" },
+          "name": { "zh": "宝剑王牌", "en": "Ace of Swords" },
+          "keywords": { "zh": ["真相", "想法", "清晰"], "en": ["truth", "thought", "clarity"] },
+          "upright": { "zh": "清晰的思想和新的观点。这个强大的象征带来真相的启示和智慧，为你指引正确的方向。", "en": "Clear thinking and new perspective. This powerful symbol brings revelation of truth and wisdom, guiding you in the right direction." },
+          "reversed": { "zh": "混乱和误解。你可能陷入困惑，难以看清事实真相。", "en": "Confusion and misunderstanding. You may be trapped in confusion, unable to see the truth clearly." }
+        },
+        {
+          "id": "swords-02",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "二", "en": "Two" },
+          "name": { "zh": "宝剑二", "en": "Two of Swords" },
+          "keywords": { "zh": ["困境", "选择", "僵局"], "en": ["dilemma", "choice", "stalemate"] },
+          "upright": { "zh": "陷入两难之地。你面临困难的选择，两个选项都有其利弊，需要做出平衡的决定。", "en": "Caught in a dilemma. You face a difficult choice with both options having merits and drawbacks, requiring a balanced decision." },
+          "reversed": { "zh": "解除困境，做出决定。你终于看清楚，准备做出选择并向前迈进。", "en": "Breaking the stalemate, making a decision. You finally see clearly and are ready to choose and move forward." }
+        },
+        {
+          "id": "swords-03",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "三", "en": "Three" },
+          "name": { "zh": "宝剑三", "en": "Three of Swords" },
+          "keywords": { "zh": ["痛苦", "分离", "悲伤"], "en": ["pain", "separation", "sorrow"] },
+          "upright": { "zh": "代表痛苦和困难时期。你可能经历心碎或失望，但这个困难将会过去，带来成长。", "en": "Represents pain and difficult times. You may experience heartbreak or disappointment, but this difficulty will pass, bringing growth." },
+          "reversed": { "zh": "愈合和和解。痛苦正在减轻，原谅和理解正在到来。", "en": "Healing and reconciliation. Pain is easing, forgiveness and understanding are coming." }
+        },
+        {
+          "id": "swords-04",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "四", "en": "Four" },
+          "name": { "zh": "宝剑四", "en": "Four of Swords" },
+          "keywords": { "zh": ["休息", "冥想", "恢复"], "en": ["rest", "meditation", "recovery"] },
+          "upright": { "zh": "需要休息和恢复。在经过困难时期后，你需要停下来冥想和重新积累力量。", "en": "Need for rest and recovery. After a difficult period, you need to pause, meditate, and rebuild your strength." },
+          "reversed": { "zh": "恢复后的行动。你已经充分休息，现在准备重新开始和面对挑战。", "en": "Action after recovery. You have rested enough and are now ready to restart and face challenges." }
+        },
+        {
+          "id": "swords-05",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "五", "en": "Five" },
+          "name": { "zh": "宝剑五", "en": "Five of Swords" },
+          "keywords": { "zh": ["冲突", "失败", "损失"], "en": ["conflict", "defeat", "loss"] },
+          "upright": { "zh": "代表冲突的胜利，但以损失为代价。虽然你可能赢了，但周围充满痛苦，这是心理上的胜利。", "en": "Represents victory in conflict, but at a cost. Although you may have won, pain surrounds you; this is a pyrrhic victory." },
+          "reversed": { "zh": "和解和放下。你正在放弃争执，寻求和平和理解。", "en": "Reconciliation and letting go. You are giving up the fight, seeking peace and understanding." }
+        },
+        {
+          "id": "swords-06",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "六", "en": "Six" },
+          "name": { "zh": "宝剑六", "en": "Six of Swords" },
+          "keywords": { "zh": ["过渡", "旅程", "改变"], "en": ["transition", "journey", "change"] },
+          "upright": { "zh": "从困难中脱身，踏上新的旅程。你正在离开痛苦的处境，走向更好的未来。", "en": "Escaping difficulty, embarking on a new journey. You are leaving a painful situation and moving toward a better future." },
+          "reversed": { "zh": "停滞不前或回到旧处。你可能不愿意改变，或陷入过去。", "en": "Stagnation or returning to old patterns. You may be unwilling to change or stuck in the past." }
+        },
+        {
+          "id": "swords-07",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "七", "en": "Seven" },
+          "name": { "zh": "宝剑七", "en": "Seven of Swords" },
+          "keywords": { "zh": ["欺骗", "策略", "逃避"], "en": ["deception", "strategy", "betrayal"] },
+          "upright": { "zh": "代表欺骗和不诚实的行为。要警惕他人的背叛或自己的不诚实，需要重建信任。", "en": "Represents deception and dishonest behavior. Beware of betrayal by others or your own dishonesty, requiring rebuilding of trust." },
+          "reversed": { "zh": "揭露真相，诚实。你正在面对欺骗，恢复诚实和透明。", "en": "Truth revealed, honesty restored. You are facing deception and restoring honesty and transparency." }
+        },
+        {
+          "id": "swords-08",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "八", "en": "Eight" },
+          "name": { "zh": "宝剑八", "en": "Eight of Swords" },
+          "keywords": { "zh": ["束缚", "无力", "囚禁"], "en": ["confinement", "powerlessness", "imprisonment"] },
+          "upright": { "zh": "感到被束缚和无力。你可能陷入自我设定的限制中，需要认识到你拥有的力量和自由。", "en": "Feeling confined and powerless. You may be trapped by self-imposed limitations, needing to recognize your power and freedom." },
+          "reversed": { "zh": "摆脱束缚，重获力量。你正在打破限制，找到自由和自主权。", "en": "Breaking free, regaining power. You are breaking through limitations and finding freedom and autonomy." }
+        },
+        {
+          "id": "swords-09",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "九", "en": "Nine" },
+          "name": { "zh": "宝剑九", "en": "Nine of Swords" },
+          "keywords": { "zh": ["焦虑", "噩梦", "绝望"], "en": ["anxiety", "nightmare", "despair"] },
+          "upright": { "zh": "代表焦虑和心理痛苦。你可能陷入绝望的思想中，但这些通常比现实更糟。需要寻求帮助和支持。", "en": "Represents anxiety and mental anguish. You may be trapped in despairing thoughts, but these are usually worse than reality. Seek help and support." },
+          "reversed": { "zh": "减轻焦虑，走出绝望。你正在放下负面思想，找到希望和内心的平静。", "en": "Easing anxiety, moving past despair. You are letting go of negative thoughts, finding hope and inner peace." }
+        },
+        {
+          "id": "swords-10",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "十", "en": "Ten" },
+          "name": { "zh": "宝剑十", "en": "Ten of Swords" },
+          "keywords": { "zh": ["终结", "背背", "绝望"], "en": ["ending", "betrayal", "hopelessness"] },
+          "upright": { "zh": "代表一个周期的结束和深刻的失败。虽然这个时刻很黑暗，但结束意味着新的开始即将来临。", "en": "Represents the end of a cycle and profound failure. Although dark, this ending means a new beginning is approaching." },
+          "reversed": { "zh": "恢复和新的开始。最坏已经过去，你现在准备重新站起来。", "en": "Recovery and new beginning. The worst is over, you are now ready to rise again." }
+        },
+        {
+          "id": "swords-page",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "侍从", "en": "Page" },
+          "name": { "zh": "宝剑侍从", "en": "Page of Swords" },
+          "keywords": { "zh": ["好奇", "学习", "沟通"], "en": ["curiosity", "learning", "communication"] },
+          "upright": { "zh": "充满好奇心和渴望学习的年轻人。你充满问题和想要理解世界的欲望，充满无限可能。", "en": "A young person full of curiosity and eager to learn. You are full of questions and desire to understand the world, full of possibility." },
+          "reversed": { "zh": "无知和善辩但不诚实。你可能缺乏深度理解，或使用言语来欺骗。", "en": "Ignorance and argumentative but dishonest. You may lack deep understanding or use words to deceive." }
+        },
+        {
+          "id": "swords-knight",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "骑士", "en": "Knight" },
+          "name": { "zh": "宝剑骑士", "en": "Knight of Swords" },
+          "keywords": { "zh": ["真理", "勇气", "逻辑"], "en": ["truth", "courage", "logic"] },
+          "upright": { "zh": "追求真理和正义的骑士。你充满勇气和清晰的思维，敢于说出真相和挑战不公正。", "en": "A knight pursuing truth and justice. You are courageous with clear thinking, daring to speak truth and challenge injustice." },
+          "reversed": { "zh": "傲慢和无情。你可能过于严苛，用言语伤害他人，缺乏同情心。", "en": "Arrogance and cruelty. You may be overly harsh, hurting others with words, lacking compassion." }
+        },
+        {
+          "id": "swords-queen",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "王后", "en": "Queen" },
+          "name": { "zh": "宝剑王后", "en": "Queen of Swords" },
+          "keywords": { "zh": ["智慧", "独立", "冷漠"], "en": ["wisdom", "independence", "detachment"] },
+          "upright": { "zh": "聪慧独立的女性。你具有敏锐的头脑和清晰的判断力，能够看穿虚伪，追求真实。", "en": "An intelligent, independent woman. You have a sharp mind and clear judgment, seeing through pretense and seeking truth." },
+          "reversed": { "zh": "冷漠和苛刻。你可能过于理性而缺乏感情，对他人过于批评。", "en": "Coldness and harshness. You may be overly rational, lacking emotion and too critical of others." }
+        },
+        {
+          "id": "swords-king",
+          "suit": { "zh": "宝剑", "en": "Swords" },
+          "rank": { "zh": "国王", "en": "King" },
+          "name": { "zh": "宝剑国王", "en": "King of Swords" },
+          "keywords": { "zh": ["权威", "智慧", "正义"], "en": ["authority", "wisdom", "justice"] },
+          "upright": { "zh": "充满智慧和权威的国王。你具有强大的分析能力和领导力，能够公正地做出决定和说出真理。", "en": "A king full of wisdom and authority. You have strong analytical abilities and leadership, making fair decisions and speaking truth." },
+          "reversed": { "zh": "专制和冷酷。你可能滥用权力，过于苛刻，缺乏同情心和理解。", "en": "Tyranny and coldness. You may abuse power, be overly harsh, lacking compassion and understanding." }
+        }
+      ]
+    },
+    "pentacles": {
+      "zh": "星币",
+      "en": "Pentacles",
+      "element": {
+        "zh": "土",
+        "en": "Earth"
+      },
+      "cards": [
+        {
+          "id": "pentacles-01",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "王牌", "en": "Ace" },
+          "name": { "zh": "星币王牌", "en": "Ace of Pentacles" },
+          "keywords": { "zh": ["财富", "机遇", "繁荣"], "en": ["wealth", "opportunity", "prosperity"] },
+          "upright": { "zh": "物质的机遇和财富的开始。一个富有的可能性正在展开，代表经济利益和物质成功。", "en": "Material opportunity and beginning of wealth. A possibility of prosperity is unfolding, representing economic gain and material success." },
+          "reversed": { "zh": "错失机遇，经济困难。你可能忽视了机会或面临财务挑战。", "en": "Missed opportunity, financial difficulty. You may have overlooked opportunities or face financial challenges." }
+        },
+        {
+          "id": "pentacles-02",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "二", "en": "Two" },
+          "name": { "zh": "星币二", "en": "Two of Pentacles" },
+          "keywords": { "zh": ["平衡", "灵活", "管理"], "en": ["balance", "flexibility", "management"] },
+          "upright": { "zh": "平衡和灵活适应。你正在处理多项任务，学会在各种责任之间保持平衡和灵活。", "en": "Balance and flexible adaptation. You are managing multiple tasks, learning to balance and adapt among various responsibilities." },
+          "reversed": { "zh": "失衡和混乱。你可能感到不堪重负，难以管理多个事务。", "en": "Imbalance and chaos. You may feel overwhelmed, struggling to manage multiple matters." }
+        },
+        {
+          "id": "pentacles-03",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "三", "en": "Three" },
+          "name": { "zh": "星币三", "en": "Three of Pentacles" },
+          "keywords": { "zh": ["合作", "技能", "成就"], "en": ["cooperation", "skill", "achievement"] },
+          "upright": { "zh": "代表合作和技能的展示。你与他人共同工作，互相帮助，实现共同的目标和成就。", "en": "Represents cooperation and demonstration of skill. You work together with others, helping each other achieve common goals." },
+          "reversed": { "zh": "缺乏合作，项目延迟。沟通可能中断，导致工作困难。", "en": "Lack of cooperation, project delays. Communication may break down, causing work difficulties." }
+        },
+        {
+          "id": "pentacles-04",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "四", "en": "Four" },
+          "name": { "zh": "星币四", "en": "Four of Pentacles" },
+          "keywords": { "zh": ["守财", "安全", "控制"], "en": ["hoarding", "security", "control"] },
+          "upright": { "zh": "紧紧抓住资源和安全。你可能过度谨慎或害怕失去，需要学会相信和分享。", "en": "Holding tight to resources and security. You may be overly cautious or fear loss, needing to learn to trust and share." },
+          "reversed": { "zh": "放开控制，信任。你正在学会放手，允许新的可能性进入你的生活。", "en": "Releasing control, trusting. You are learning to let go and allow new possibilities into your life." }
+        },
+        {
+          "id": "pentacles-05",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "五", "en": "Five" },
+          "name": { "zh": "星币五", "en": "Five of Pentacles" },
+          "keywords": { "zh": ["贫困", "困顿", "孤独"], "en": ["poverty", "hardship", "loneliness"] },
+          "upright": { "zh": "代表物质困难和经济困顿。你可能正面临财务挑战或感到被遗弃，但帮助就在附近。", "en": "Represents material difficulty and financial hardship. You may face financial challenges or feel abandoned, but help is nearby." },
+          "reversed": { "zh": "恢复和帮助到来。你正在克服困难，获得所需的支持和资源。", "en": "Recovery and help arriving. You are overcoming difficulties and receiving needed support and resources." }
+        },
+        {
+          "id": "pentacles-06",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "六", "en": "Six" },
+          "name": { "zh": "星币六", "en": "Six of Pentacles" },
+          "keywords": { "zh": ["慷慨", "分享", "公平"], "en": ["generosity", "sharing", "fairness"] },
+          "upright": { "zh": "代表慷慨和分享。你正在给予或接收帮助，体现公平和互助的精神。", "en": "Represents generosity and sharing. You are giving or receiving help, embodying fairness and mutual aid." },
+          "reversed": { "zh": "不公平和失衡。你可能给予过多或接受不足，导致不公正的安排。", "en": "Unfairness and imbalance. You may give too much or receive too little, leading to unjust arrangements." }
+        },
+        {
+          "id": "pentacles-07",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "七", "en": "Seven" },
+          "name": { "zh": "星币七", "en": "Seven of Pentacles" },
+          "keywords": { "zh": ["评估", "投资", "耐心"], "en": ["assessment", "investment", "patience"] },
+          "upright": { "zh": "评估投资和未来成长。你正在反思你的努力和投资，等待长期收益的到来。", "en": "Assessing investment and future growth. You are reflecting on your efforts and investments, waiting for long-term returns." },
+          "reversed": { "zh": "不满意的结果或浪费努力。你的投资可能没有带来预期的回报。", "en": "Disappointing results or wasted effort. Your investments may not have brought expected returns." }
+        },
+        {
+          "id": "pentacles-08",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "八", "en": "Eight" },
+          "name": { "zh": "星币八", "en": "Eight of Pentacles" },
+          "keywords": { "zh": ["学习", "掌握", "工作"], "en": ["learning", "mastery", "work"] },
+          "upright": { "zh": "代表学习和掌握技能。你正在勤奋工作以发展你的能力，通过实践获得专业知识。", "en": "Represents learning and skill mastery. You are working diligently to develop abilities, gaining expertise through practice." },
+          "reversed": { "zh": "缺乏进展和投入。你可能停止学习或对工作失去兴趣。", "en": "Lack of progress and commitment. You may have stopped learning or lost interest in work." }
+        },
+        {
+          "id": "pentacles-09",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "九", "en": "Nine" },
+          "name": { "zh": "星币九", "en": "Nine of Pentacles" },
+          "keywords": { "zh": ["富足", "独立", "收获"], "en": ["abundance", "independence", "harvest"] },
+          "upright": { "zh": "代表经济独立和丰富的收获。你的努力已经获得了回报，现在享受财务安全和自由。", "en": "Represents financial independence and abundant harvest. Your efforts have borne fruit, now enjoying financial security and freedom." },
+          "reversed": { "zh": "不安全和依赖。你可能缺乏经济独立性或对财务失去控制。", "en": "Insecurity and dependency. You may lack financial independence or have lost control of finances." }
+        },
+        {
+          "id": "pentacles-10",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "十", "en": "Ten" },
+          "name": { "zh": "星币十", "en": "Ten of Pentacles" },
+          "keywords": { "zh": ["遗产", "家庭财富", "完成"], "en": ["legacy", "family wealth", "completion"] },
+          "upright": { "zh": "代表遗产和家族财富。你建立了坚实的基础，你的努力将惠及后代，体现了完成和繁荣。", "en": "Represents legacy and family wealth. You have built a solid foundation, your efforts benefiting generations, embodying completion and prosperity." },
+          "reversed": { "zh": "家庭纠纷和遗产问题。财富分配可能带来冲突或损失。", "en": "Family disputes and inheritance issues. Wealth distribution may cause conflict or loss." }
+        },
+        {
+          "id": "pentacles-page",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "侍从", "en": "Page" },
+          "name": { "zh": "星币侍从", "en": "Page of Pentacles" },
+          "keywords": { "zh": ["学生", "潜能", "机遇"], "en": ["student", "potential", "opportunity"] },
+          "upright": { "zh": "充满好奇心和学习热情的年轻人。你充满潜能，对知识和技能充满渴望，准备建立物质基础。", "en": "A young person full of curiosity and learning passion. You are full of potential, eager for knowledge and skills, ready to build material foundation." },
+          "reversed": { "zh": "懒惰和浪费潜能。你可能不投入学习，错失发展机会。", "en": "Laziness and wasted potential. You may not commit to learning, missing development opportunities." }
+        },
+        {
+          "id": "pentacles-knight",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "骑士", "en": "Knight" },
+          "name": { "zh": "星币骑士", "en": "Knight of Pentacles" },
+          "keywords": { "zh": ["勤奋", "可靠", "务实"], "en": ["diligence", "reliability", "practicality"] },
+          "upright": { "zh": "勤劳可靠的骑士。你充满责任感和实际行动，稳定而可信，为目标坚持不懈。", "en": "A diligent and reliable knight. You are responsible and action-oriented, stable and trustworthy, persisting toward goals." },
+          "reversed": { "zh": "懒惰和不可靠。你可能缺乏动力或无法跟进承诺。", "en": "Laziness and unreliability. You may lack motivation or fail to follow through on commitments." }
+        },
+        {
+          "id": "pentacles-queen",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "王后", "en": "Queen" },
+          "name": { "zh": "星币王后", "en": "Queen of Pentacles" },
+          "keywords": { "zh": ["务实", "照顾", "丰富"], "en": ["practicality", "nurturing", "abundance"] },
+          "upright": { "zh": "务实而贤惠的女性。你很好地平衡家庭和事业，以实际行动关心他人，创造丰富而舒适的生活。", "en": "A practical and nurturing woman. You balance home and career well, caring for others through practical action, creating abundant comfortable life." },
+          "reversed": { "zh": "物质关注过度或忽视。你可能过分关注财物而忽视情感需求。", "en": "Excessive material focus or neglect. You may be overly focused on material things, neglecting emotional needs." }
+        },
+        {
+          "id": "pentacles-king",
+          "suit": { "zh": "星币", "en": "Pentacles" },
+          "rank": { "zh": "国王", "en": "King" },
+          "name": { "zh": "星币国王", "en": "King of Pentacles" },
+          "keywords": { "zh": ["财富", "成功", "领导"], "en": ["wealth", "success", "leadership"] },
+          "upright": { "zh": "成功富有的国王。你已经通过努力积累了财富，现在以智慧和慷慨管理资源，成为他人的榜样。", "en": "A successful wealthy king. You have accumulated wealth through hard work, now managing resources with wisdom and generosity, setting an example for others." },
+          "reversed": { "zh": "贪婪和物质执着。你可能过度追求财富，忽视其他生活方面的价值。", "en": "Greed and material attachment. You may pursue wealth excessively, overlooking value in other aspects of life." }
+        }
+      ]
+    }
+  }
+}

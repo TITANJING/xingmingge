@@ -1,0 +1,511 @@
+{
+  "meta": {
+    "description": "行星落入星座解读数据，用于本命盘解读",
+    "version": "1.0",
+    "planets": 10,
+    "signs": 12,
+    "total_interpretations": 120
+  },
+  "interpretations": {
+    "sun": {
+      "aries": {
+        "zh": "太阳白羊赋予你强烈的领导气质和先锋精神。你充满热血，渴望成为第一，天生具有勇气去开创新局面。这个位置的人往往直率、热情、富有竞争意识，能够激励他人采取行动。",
+        "en": "Sun in Aries gives you a powerful leadership presence and pioneering spirit. You are passionate, driven to be first, and naturally courageous in initiating new ventures. People with this placement are typically straightforward, enthusiastic, and competitive, inspiring others to take action."
+      },
+      "taurus": {
+        "zh": "太阳金牛使你具有稳定的自我认同和对安全感的追求。你踏实可靠，注重物质基础，拥有持久的意志力和对美好事物的欣赏能力。这个位置的人通常保守、忠诚，建立长久的关系和财富。",
+        "en": "Sun in Taurus gives you a stable sense of self and a need for security. You are grounded and reliable, focused on material foundations, with lasting willpower and an appreciation for beauty. People with this placement tend to be conservative, loyal, and skilled at building lasting relationships and wealth."
+      },
+      "gemini": {
+        "zh": "太阳双子赋予你灵活的思维和好奇心。你聪慧机灵，善于沟通表达，喜欢探索各种想法和经历。这个位置的人通常多才多艺、适应力强，在交流中找到自我价值的体现。",
+        "en": "Sun in Gemini grants you mental agility and curiosity. You are clever and articulate, with a natural gift for communication and love of exploring diverse ideas. People with this placement are typically versatile, adaptable, and find self-worth through intellectual exchange."
+      },
+      "cancer": {
+        "zh": "太阳巨蟹让你的自我认同与家庭和情感紧密相联。你具有保护欲和同理心，对亲人有深深的依恋。这个位置的人通常敏感、顾家、富有直觉力，在照顾他人中获得生活的意义。",
+        "en": "Sun in Cancer ties your self-identity closely to family and emotions. You are protective and empathetic, deeply attached to loved ones. People with this placement tend to be sensitive, family-oriented, and intuitive, finding meaning in caring for others."
+      },
+      "leo": {
+        "zh": "太阳狮子赋予你强大的自信心和创意表达欲。你热爱被认可，具有戏剧性的气质和领导魅力。这个位置的人通常慷慨、热情、具有艺术天赋，渴望在生活舞台上闪闪发光。",
+        "en": "Sun in Leo gives you powerful confidence and a need for creative expression. You love recognition and possess dramatic flair and natural charisma. People with this placement tend to be generous, passionate, and artistically talented, yearning to shine on life's stage."
+      },
+      "virgo": {
+        "zh": "太阳处女使你具有敏锐的分析能力和完美主义倾向。你注重细节，富有批判精神，渴望通过服务和自我完善来实现价值。这个位置的人通常实用、聪慧、具有奉献精神。",
+        "en": "Sun in Virgo gives you keen analytical abilities and perfectionist tendencies. You pay attention to details, are critically minded, and seek to realize your worth through service and self-improvement. People with this placement tend to be practical, intelligent, and dedicated."
+      },
+      "libra": {
+        "zh": "太阳天秤让你追求平衡、和谐和美。你具有高雅的品味和强烈的人际意识，善于在他人之间创造平衡。这个位置的人通常社交、讲究公平、热爱艺术和美学。",
+        "en": "Sun in Libra drives your pursuit of balance, harmony, and beauty. You have refined taste and strong social awareness, skilled at creating equilibrium between people. People with this placement tend to be sociable, fair-minded, and lovers of art and aesthetics."
+      },
+      "scorpio": {
+        "zh": "太阳天蝎赋予你深邃的洞察力和强大的意志力。你神秘、有魅力，对真理有执着的追求。这个位置的人通常忠诚而复杂，具有转化力和深入他人心灵的能力。",
+        "en": "Sun in Scorpio gives you penetrating insight and powerful willpower. You are mysterious and magnetic, with an obsessive quest for truth. People with this placement tend to be loyal yet complex, with transformative power and the ability to penetrate human psychology."
+      },
+      "sagittarius": {
+        "zh": "太阳射手使你具有乐观精神和探险欲望。你热爱自由和学习，具有哲学思维，总是向往远方。这个位置的人通常直率、好客、理想主义，在旅行和知识追求中找到生活的乐趣。",
+        "en": "Sun in Sagittarius gives you optimistic spirit and adventurous drive. You love freedom and learning, possess philosophical thinking, and always seek the horizon. People with this placement tend to be candid, hospitable, and idealistic, finding joy in travel and knowledge."
+      },
+      "capricorn": {
+        "zh": "太阳摩羯赋予你责任感和雄心壮志。你沉着冷静，注重长期规划，具有强大的自律性。这个位置的人通常严肃、野心勃勃、坚毅不拔，通过持之以恒的努力实现目标。",
+        "en": "Sun in Capricorn gives you a sense of responsibility and ambitious drive. You are calm and composed, focused on long-term planning, with powerful self-discipline. People with this placement tend to be serious, ambitious, and steadfast, achieving goals through persistent effort."
+      },
+      "aquarius": {
+        "zh": "太阳水瓶让你具有独立思想和人道精神。你富有创新意识，重视自由和理想，具有前瞻性思维。这个位置的人通常独特、理性、有社会意识，渴望改变世界。",
+        "en": "Sun in Aquarius gives you independent thinking and humanitarian spirit. You are innovative, value freedom and ideals, with forward-thinking vision. People with this placement tend to be unique, rational, and socially conscious, yearning to change the world."
+      },
+      "pisces": {
+        "zh": "太阳双鱼赋予你敏感的直觉和艺术灵魂。你富有同情心和想象力，对精神世界充满好奇。这个位置的人通常温和、有创意、容易被他人的情感影响，在帮助他人中获得精神满足。",
+        "en": "Sun in Pisces gives you sensitive intuition and an artistic soul. You are compassionate and imaginative, fascinated by the spiritual realm. People with this placement tend to be gentle, creative, easily influenced by others' emotions, finding spiritual fulfillment in helping others."
+      }
+    },
+    "moon": {
+      "aries": {
+        "zh": "月亮白羊赋予你直率的情感表达和强烈的独立需求。你的内心世界充满热情和冲动，需要快速的情感反应。这个位置的人通常情绪波动快，勇敢面对挑战，但也可能显得易怒。",
+        "en": "Moon in Aries gives you direct emotional expression and strong independence needs. Your inner world is filled with passion and impulse, requiring immediate emotional responses. People with this placement tend to have fluctuating moods, face challenges bravely, but may also appear irritable."
+      },
+      "taurus": {
+        "zh": "月亮金牛使你渴望情感安定和物质安全感。你稳定可靠，对美好事物充满享受，内心需要一致性和可预测性。这个位置的人通常温和、忠诚，需要充分的时间来处理情绪。",
+        "en": "Moon in Taurus makes you crave emotional stability and material security. You are stable and reliable, indulging in beautiful things, with an inner need for consistency and predictability. People with this placement tend to be gentle, loyal, and need ample time to process emotions."
+      },
+      "gemini": {
+        "zh": "月亮双子让你的情感需求通过沟通和思考得到满足。你思维敏捷，需要多样化的刺激和精神互动。这个位置的人通常好奇、健谈，但情感表现可能显得理性或善变。",
+        "en": "Moon in Gemini satisfies your emotional needs through communication and thinking. You are mentally agile, requiring diverse stimulation and intellectual interaction. People with this placement tend to be curious, talkative, but emotional expression may seem rational or changeable."
+      },
+      "cancer": {
+        "zh": "月亮巨蟹强化你对家庭和情感的需求。你高度敏感，直觉力强，对亲人有深深的依恋和保护欲。这个位置的人通常内向、顾家、富有同情心，需要强烈的情感连接。",
+        "en": "Moon in Cancer strengthens your need for family and emotional connection. You are highly sensitive with strong intuition, deeply attached to loved ones with protective instincts. People with this placement tend to be introverted, family-oriented, compassionate, and need deep emotional bonds."
+      },
+      "leo": {
+        "zh": "月亮狮子赋予你对认可和表达的强烈渴望。你情感热烈、慷慨、需要他人的欣赏和关注。这个位置的人通常戏剧化地表达情感，具有创意，但也可能显得自我中心。",
+        "en": "Moon in Leo gives you a strong desire for recognition and self-expression. You are emotionally warm, generous, and need others' appreciation and attention. People with this placement tend to express emotions dramatically, are creative, but may also seem self-centered."
+      },
+      "virgo": {
+        "zh": "月亮处女让你的情感通过分析和实践得到平复。你有条理、谨慎，需要有意义的工作来维持情感平衡。这个位置的人通常挑剔、实用，可能难以直接表达深层情感。",
+        "en": "Moon in Virgo soothes your emotions through analysis and practical action. You are organized and cautious, needing meaningful work to maintain emotional balance. People with this placement tend to be critical, practical, and may struggle to express deeper emotions directly."
+      },
+      "libra": {
+        "zh": "月亮天秤使你渴望和谐的关系和审美环境。你需要平衡和他人的认可，内心敏感于不公平。这个位置的人通常社交、讨好他人，但可能缺乏内在的情感坚定性。",
+        "en": "Moon in Libra makes you crave harmonious relationships and aesthetic environments. You need balance and others' approval, sensitive to injustice internally. People with this placement tend to be social, people-pleasing, but may lack internal emotional stability."
+      },
+      "scorpio": {
+        "zh": "月亮天蝎赋予你深邃的情感体验和强烈的心理洞察。你神秘、忠诚，情感需求极为深刻。这个位置的人通常保留、复杂，需要完全的信任才能敞开心扉。",
+        "en": "Moon in Scorpio gives you profound emotional experiences and powerful psychological insight. You are mysterious, loyal, with intense emotional needs. People with this placement tend to be reserved, complex, requiring complete trust to open their hearts."
+      },
+      "sagittarius": {
+        "zh": "月亮射手让你追求自由和精神探索。你乐观开朗，需要心灵的冒险和学习机会。这个位置的人通常独立、好奇、易感受，但可能缺乏情感纵深。",
+        "en": "Moon in Sagittarius makes you seek freedom and spiritual exploration. You are optimistic and cheerful, needing mental adventures and learning opportunities. People with this placement tend to be independent, curious, and light-hearted, but may lack emotional depth."
+      },
+      "capricorn": {
+        "zh": "月亮摩羯让你通过责任和成就来实现情感安全。你内敛、自律，需要通过工作来处理情感。这个位置的人通常严肃、有距离感，但极其可靠和坚定。",
+        "en": "Moon in Capricorn makes you seek emotional security through responsibility and achievement. You are reserved and self-disciplined, processing emotions through work. People with this placement tend to be serious, distant, but extremely reliable and steadfast."
+      },
+      "aquarius": {
+        "zh": "月亮水瓶让你的情感需求通过自由和理性得到满足。你独立自主，需要心理空间和智力刺激。这个位置的人通常冷静、有个性，但可能显得情感疏离。",
+        "en": "Moon in Aquarius fulfills your emotional needs through freedom and rationality. You are independent, needing psychological space and intellectual stimulation. People with this placement tend to be detached, individual, but may seem emotionally distant."
+      },
+      "pisces": {
+        "zh": "月亮双鱼赋予你高度的感受性和同理心。你敏感脆弱，需要精神连接和富有想象力的环境。这个位置的人通常富有创意、同情心强，但可能易受他人情感影响。",
+        "en": "Moon in Pisces gives you heightened sensitivity and empathy. You are tender, needing spiritual connection and imaginative environments. People with this placement tend to be creative, highly compassionate, but may be easily influenced by others' emotions."
+      }
+    },
+    "mercury": {
+      "aries": {
+        "zh": "水星白羊赋予你敏捷的思维和直接的表达方式。你思考速度快，急于表达想法，说话直率有力。这个位置的人通常聪慧、快速、有竞争意识，但可能显得没耐心或冲动。",
+        "en": "Mercury in Aries gives you quick thinking and direct communication. You process ideas rapidly, eager to express thoughts, speaking with force and directness. People with this placement tend to be sharp, fast, competitive, but may seem impatient or impulsive."
+      },
+      "taurus": {
+        "zh": "水星金牛让你的思维缓慢但稳定。你说话谨慎，富有实践精神，很少改变主意。这个位置的人通常可靠、有条理，但可能显得固执或反应迟缓。",
+        "en": "Mercury in Taurus makes your thinking slow but steady. You speak cautiously, practically minded, rarely changing your stance. People with this placement tend to be reliable, organized, but may seem stubborn or slow to respond."
+      },
+      "gemini": {
+        "zh": "水星双子是其中最强有力的位置，赋予你多才多艺的思维和卓越的沟通能力。你好奇、灵活、易学，喜欢交流各种想法。这个位置的人通常聪慧、有趣、知识广泛，但可能显得言多必失。",
+        "en": "Mercury in Gemini is one of its strongest placements, granting versatile thinking and excellent communication. You are curious, flexible, quick to learn, enjoying diverse conversations. People with this placement tend to be witty, entertaining, widely knowledgeable, but may talk too much."
+      },
+      "cancer": {
+        "zh": "水星巨蟹让你的思维与情感紧密相连。你直觉敏锐，依靠感受来思考，记忆力强。这个位置的人通常敏感、善于倾听，但在逻辑表达上可能有困难。",
+        "en": "Mercury in Cancer links your thinking closely to emotion. You have sharp intuition, thinking based on feeling, with strong memory. People with this placement tend to be sensitive, good listeners, but may struggle with logical expression."
+      },
+      "leo": {
+        "zh": "水星狮子赋予你自信的表达和戏剧化的沟通方式。你喜欢成为焦点，说话富有说服力和热情。这个位置的人通常聪慧、自信，但可能过于固执己见或忽视他人想法。",
+        "en": "Mercury in Leo gives you confident expression and dramatic communication. You enjoy being the center of attention, speaking with persuasion and passion. People with this placement tend to be intelligent, self-assured, but may be overly opinionated or dismissive of others."
+      },
+      "virgo": {
+        "zh": "水星处女强化了你的分析能力和注重细节的特点。你思维缜密、有批判精神，追求精确和完美。这个位置的人通常聪慧、有条理，但可能过于挑剔或显得不够自信。",
+        "en": "Mercury in Virgo strengthens your analytical abilities and attention to detail. You think carefully, critically minded, pursuing precision and perfection. People with this placement tend to be intelligent, organized, but may be overly critical or lack confidence."
+      },
+      "libra": {
+        "zh": "水星天秤让你的思维注重平衡和关系。你说话精致、善于看问题的多个角度，追求和谐的交流。这个位置的人通常圆滑、有魅力，但可能显得优柔寡断或过度考虑。",
+        "en": "Mercury in Libra makes your thinking focus on balance and relationships. You speak eloquently, seeing multiple perspectives, pursuing harmonious communication. People with this placement tend to be diplomatic, charming, but may seem indecisive or overthinking."
+      },
+      "scorpio": {
+        "zh": "水星天蝎赋予你深邃的思维和犀利的洞察力。你心思深沉，言少但有力，善于发现他人的隐藏动机。这个位置的人通常聪慧、神秘，但可能显得不信任或过度怀疑。",
+        "en": "Mercury in Scorpio gives you deep thinking and penetrating insight. You are psychologically intense, speaking sparingly but powerfully, skilled at uncovering hidden motives. People with this placement tend to be intelligent, mysterious, but may seem distrusting or overly suspicious."
+      },
+      "sagittarius": {
+        "zh": "水星射手让你的思维宽阔而理想化。你热爱讨论哲学和宏大概念，说话热情而坦率。这个位置的人通常聪慧、有远见，但可能显得不够细致或过度乐观。",
+        "en": "Mercury in Sagittarius makes your thinking broad and idealistic. You love discussing philosophy and grand concepts, speaking with enthusiasm and candor. People with this placement tend to be intelligent, visionary, but may seem careless or overly optimistic."
+      },
+      "capricorn": {
+        "zh": "水星摩羯赋予你务实的思维和谨慎的表达。你说话有分寸，思考周密，注重实际结果。这个位置的人通常有智慧、可靠，但可能显得过于保守或缺乏幽默感。",
+        "en": "Mercury in Capricorn gives you practical thinking and measured expression. You speak carefully, think thoroughly, focused on tangible results. People with this placement tend to be wise, reliable, but may seem overly conservative or lack humor."
+      },
+      "aquarius": {
+        "zh": "水星水瓶赋予你独特的思维和前瞻性的观点。你热爱新想法，说话独特、理性，擅长抽象思维。这个位置的人通常聪慧、创新，但可能显得过度理性或有些古怪。",
+        "en": "Mercury in Aquarius gives you unique thinking and forward-looking perspectives. You love novel ideas, speaking uniquely and rationally, skilled in abstract thinking. People with this placement tend to be intelligent, innovative, but may seem overly analytical or eccentric."
+      },
+      "pisces": {
+        "zh": "水星双鱼让你的思维充满想象力和直觉。你感受力强，思考非线性，说话充满诗意。这个位置的人通常富有创意、敏感，但可能显得思维不清或难以表达。",
+        "en": "Mercury in Pisces makes your thinking imaginative and intuitive. You are sensitive, non-linear in thinking, speaking poetically. People with this placement tend to be creative, perceptive, but may seem vague or struggle to articulate clearly."
+      }
+    },
+    "venus": {
+      "aries": {
+        "zh": "金星白羊让你在爱情中热烈而直接。你追求刺激的感情体验，需要新鲜和挑战。这个位置的人通常热情、勇敢，但在感情中可能显得冲动或缺乏耐心。",
+        "en": "Venus in Aries makes you passionate and direct in love. You seek thrilling romantic experiences, needing novelty and challenge. People with this placement tend to be passionate, brave, but may seem impulsive or impatient in relationships."
+      },
+      "taurus": {
+        "zh": "金星金牛赋予你对持久感情和物质舒适的渴望。你忠诚、感官享受者，需要稳定的伴侣和安全感。这个位置的人通常温和、可靠，但可能显得占有欲强或物质主义。",
+        "en": "Venus in Taurus gives you a desire for lasting love and material comfort. You are loyal, sensual, needing a stable partner and security. People with this placement tend to be gentle, reliable, but may seem possessive or materialistic."
+      },
+      "gemini": {
+        "zh": "金星双子让你渴望轻松和有趣的爱情关系。你需要精神交流，喜欢多样化的伴侣互动。这个位置的人通常迷人、灵活，但可能显得不够深情或易散心。",
+        "en": "Venus in Gemini makes you crave light and fun romantic connections. You need intellectual communication, enjoying diverse partner interactions. People with this placement tend to be charming, adaptable, but may seem shallow or easily distracted."
+      },
+      "cancer": {
+        "zh": "金星巨蟹赋予你对深层情感和家庭的渴望。你细心体贴，需要安全感和承诺。这个位置的人通常深情、保护欲强，但可能显得过度敏感或粘人。",
+        "en": "Venus in Cancer gives you a craving for deep emotion and family. You are caring and considerate, needing security and commitment. People with this placement tend to be deeply romantic, protective, but may seem overly sensitive or clingy."
+      },
+      "leo": {
+        "zh": "金星狮子让你在爱情中需要戏剧性和被崇拜。你慷慨、热烈，需要伴侣的认可和欣赏。这个位置的人通常浪漫、自信，但可能显得自我中心或需要过多关注。",
+        "en": "Venus in Leo makes you need drama and adoration in love. You are generous and passionate, requiring partner admiration and appreciation. People with this placement tend to be romantic, confident, but may seem self-centered or demand excessive attention."
+      },
+      "virgo": {
+        "zh": "金星处女赋予你对完美伴侣和有意义关系的追求。你挑剔但忠诚，需要实际的表达和改进。这个位置的人通常谨慎、可靠，但可能显得过度批评或不够浪漫。",
+        "en": "Venus in Virgo gives you a pursuit of the perfect partner and meaningful relationships. You are critical but loyal, needing practical expression and improvement. People with this placement tend to be cautious, dependable, but may seem overly critical or unromantic."
+      },
+      "libra": {
+        "zh": "金星天秤强化你对美和和谐关系的渴望。你优雅、社交，需要伙伴关系中的平衡。这个位置的人通常迷人、讲究，但可能显得优柔寡断或过度依赖他人。",
+        "en": "Venus in Libra strengthens your desire for beauty and harmonious relationships. You are elegant and social, needing balance in partnerships. People with this placement tend to be charming, refined, but may seem indecisive or overly dependent on others."
+      },
+      "scorpio": {
+        "zh": "金星天蝎赋予你对深刻和转化性爱情的渴望。你忠诚、神秘、需要完全的亲密。这个位置的人通常魅力强、深情，但可能显得占有欲强或嫉妒。",
+        "en": "Venus in Scorpio gives you a desire for deep and transformative love. You are loyal, mysterious, needing complete intimacy. People with this placement tend to be magnetic, deeply romantic, but may seem possessive or jealous."
+      },
+      "sagittarius": {
+        "zh": "金星射手让你追求自由和冒险性的爱情。你坦率、乐观，需要伴侣的独立性和共同探险。这个位置的人通常热情、有趣，但可能显得不够深情或承诺不足。",
+        "en": "Venus in Sagittarius makes you seek freedom and adventurous love. You are candid and optimistic, needing partner independence and shared exploration. People with this placement tend to be passionate, entertaining, but may seem shallow or uncommitted."
+      },
+      "capricorn": {
+        "zh": "金星摩羯赋予你对稳定和有地位伴侣的渴望。你谨慎、忠诚，通过行动而非言辞表达爱。这个位置的人通常可靠、有责任感，但可能显得冷漠或过于实际。",
+        "en": "Venus in Capricorn gives you a desire for stable and status-conscious partners. You are cautious and loyal, expressing love through action rather than words. People with this placement tend to be reliable, responsible, but may seem cold or overly practical."
+      },
+      "aquarius": {
+        "zh": "金星水瓶让你追求自由和非传统的爱情。你独立、理性，需要伴侣的精神连接和空间。这个位置的人通常吸引力独特、有个性，但可能显得情感疏离或不够承诺。",
+        "en": "Venus in Aquarius makes you seek freedom and unconventional love. You are independent and rational, needing partner's intellectual connection and space. People with this placement tend to be uniquely attractive, individual, but may seem emotionally distant or uncommitted."
+      },
+      "pisces": {
+        "zh": "金星双鱼赋予你对精神和无条件爱情的渴望。你同情心强、浪漫，需要与伴侣的灵魂连接。这个位置的人通常温柔、有艺术气质，但可能显得过度理想化或易受伤。",
+        "en": "Venus in Pisces gives you a desire for spiritual and unconditional love. You are compassionate and romantic, seeking soul connection with partners. People with this placement tend to be gentle, artistic, but may seem overly idealistic or easily hurt."
+      }
+    },
+    "mars": {
+      "aries": {
+        "zh": "火星白羊赋予你强大的行动力和竞争欲。你直接、勇敢，迅速采取行动。这个位置的人通常有驱动力、敢于冒险，但可能显得急躁或容易动怒。",
+        "en": "Mars in Aries gives you powerful drive and competitive spirit. You are direct and courageous, taking swift action. People with this placement tend to be driven, daring, but may seem hasty or easily angered."
+      },
+      "taurus": {
+        "zh": "火星金牛让你的行动力缓慢但坚定。你有耐心、专注，需要明确的目标和物质回报。这个位置的人通常有毅力、可靠，但可能显得固执或过于缓慢。",
+        "en": "Mars in Taurus makes your drive slow but steady. You are patient and focused, needing clear goals and material rewards. People with this placement tend to be persistent, reliable, but may seem stubborn or slow."
+      },
+      "gemini": {
+        "zh": "火星双子赋予你多才多艺的能量和快速的反应。你灵活、口才好，需要多样化的任务和刺激。这个位置的人通常多面手、快速，但可能显得不够专注或肤浅。",
+        "en": "Mars in Gemini gives you versatile energy and quick reactions. You are flexible and articulate, needing diverse tasks and stimulation. People with this placement tend to be multi-talented, fast, but may seem unfocused or superficial."
+      },
+      "cancer": {
+        "zh": "火星巨蟹让你的行动力与情感相连。你被情感驱动，保护欲强，需要情感上的安全感。这个位置的人通常有直觉力、忠诚，但可能显得过度敏感或防御心强。",
+        "en": "Mars in Cancer connects your drive to emotion. You are emotionally motivated, protective, needing emotional security. People with this placement tend to be intuitive, loyal, but may seem overly sensitive or defensive."
+      },
+      "leo": {
+        "zh": "火星狮子赋予你充满热情和戏剧化的行动方式。你勇敢、自信，需要成为焦点和获得认可。这个位置的人通常有领导力、热烈，但可能显得傲慢或需要过度关注。",
+        "en": "Mars in Leo gives you passionate and dramatic action. You are courageous and confident, needing to be the center and gain recognition. People with this placement tend to be leadership-oriented, passionate, but may seem arrogant or demand excessive attention."
+      },
+      "virgo": {
+        "zh": "火星处女赋予你精确和有组织的行动力。你实用、有策略，需要有意义的任务和完美执行。这个位置的人通常高效、有条理，但可能显得过度批评或缺乏激情。",
+        "en": "Mars in Virgo gives you precise and organized drive. You are practical and strategic, needing meaningful tasks and perfect execution. People with this placement tend to be efficient, organized, but may seem overly critical or lacking passion."
+      },
+      "libra": {
+        "zh": "火星天秤让你的行动力注重平衡和外交。你有魅力、讲策略，需要和谐的环境和伙伴。这个位置的人通常有吸引力、圆滑，但可能显得优柔寡断或缺乏直接性。",
+        "en": "Mars in Libra makes your drive focus on balance and diplomacy. You are charming and strategic, needing harmonious environments and partnerships. People with this placement tend to be attractive, diplomatic, but may seem indecisive or lack directness."
+      },
+      "scorpio": {
+        "zh": "火星天蝎赋予你强大而深邃的行动力。你固执、有决心，需要深刻的目标和完全的掌控。这个位置的人通常有魅力、坚强，但可能显得控制欲强或有报复心。",
+        "en": "Mars in Scorpio gives you powerful and deep drive. You are persistent and determined, needing profound goals and total control. People with this placement tend to be magnetic, strong-willed, but may seem controlling or vindictive."
+      },
+      "sagittarius": {
+        "zh": "火星射手赋予你自由和冒险的行动力。你乐观、勇敢，需要新的挑战和远大目标。这个位置的人通常热情、有远见，但可能显得不够谨慎或过度自信。",
+        "en": "Mars in Sagittarius gives you freedom-loving and adventurous drive. You are optimistic and brave, needing new challenges and grand goals. People with this placement tend to be enthusiastic, visionary, but may seem careless or overconfident."
+      },
+      "capricorn": {
+        "zh": "火星摩羯赋予你有纪律和野心的行动力。你冷静、战略性强，需要长期计划和实际回报。这个位置的人通常有毅力、可靠，但可能显得过度控制或情感冷漠。",
+        "en": "Mars in Capricorn gives you disciplined and ambitious drive. You are calm and strategic, needing long-term plans and tangible rewards. People with this placement tend to be persistent, reliable, but may seem over-controlling or emotionally cold."
+      },
+      "aquarius": {
+        "zh": "火星水瓶赋予你独立和理想化的行动力。你聪慧、有远见，需要改革和进步。这个位置的人通常创新、理性，但可能显得过度理想化或缺乏持久力。",
+        "en": "Mars in Aquarius gives you independent and idealistic drive. You are intelligent and visionary, needing reform and progress. People with this placement tend to be innovative, rational, but may seem overly idealistic or lacking persistence."
+      },
+      "pisces": {
+        "zh": "火星双鱼赋予你间接和同情性的行动力。你敏感、有想象力，需要有灵魂意义的目标。这个位置的人通常富有创意、同情心强，但可能显得不够直接或意志力弱。",
+        "en": "Mars in Pisces gives you indirect and compassionate drive. You are sensitive and imaginative, needing spiritually meaningful goals. People with this placement tend to be creative, compassionate, but may seem indirect or weak-willed."
+      }
+    },
+    "jupiter": {
+      "aries": {
+        "zh": "木星白羊赋予你乐观的冒险精神和扩展的勇气。你相信自己，积极进取，总是准备开创新局面。这个位置的人通常有福气、领导力强，但可能显得过度自信或轻率。",
+        "en": "Jupiter in Aries gives you optimistic adventurousness and expanding courage. You believe in yourself, actively advancing, always ready to initiate new ventures. People with this placement tend to be fortunate, strong leaders, but may seem overconfident or reckless."
+      },
+      "taurus": {
+        "zh": "木星金牛赋予你对物质繁荣和稳定增长的幸运。你有耐心、好客，容易吸引财富和美好事物。这个位置的人通常富足、可靠，但可能显得贪婪或过度自满。",
+        "en": "Jupiter in Taurus gives you luck with material prosperity and stable growth. You are patient and hospitable, naturally attracting wealth and beauty. People with this placement tend to be affluent, reliable, but may seem greedy or complacent."
+      },
+      "gemini": {
+        "zh": "木星双子赋予你对学习和沟通的幸运扩展。你聪慧、好奇、语言天赋强。这个位置的人通常知识广泛、有趣、有说服力，但可能显得言多必失或不够深入。",
+        "en": "Jupiter in Gemini gives you lucky expansion in learning and communication. You are intelligent, curious, with natural language gifts. People with this placement tend to be knowledgeable, entertaining, persuasive, but may seem talkative or superficial."
+      },
+      "cancer": {
+        "zh": "木星巨蟹赋予你对家庭和感情关系的幸运。你有爱心、好客，容易建立深厚的家族纽带。这个位置的人通常受欢迎、照顾他人，但可能显得过度保护或过分依恋。",
+        "en": "Jupiter in Cancer gives you luck with family and emotional bonds. You are loving and hospitable, naturally creating deep family ties. People with this placement tend to be popular, caring, but may seem overprotective or overly attached."
+      },
+      "leo": {
+        "zh": "木星狮子赋予你对创意表达和自信扩张的幸运。你有魅力、慷慨，容易获得关注和成功。这个位置的人通常有福气、创意强，但可能显得自我膨胀或需要过度关注。",
+        "en": "Jupiter in Leo gives you luck with creative expression and expanding confidence. You are magnetic and generous, naturally attracting attention and success. People with this placement tend to be fortunate, highly creative, but may seem self-inflated or seek excessive attention."
+      },
+      "virgo": {
+        "zh": "木星处女赋予你对工作和自我完善的幸运扩展。你有条理、有助力心，容易成功帮助他人。这个位置的人通常有福气、实用，但可能显得过度批评或工作狂。",
+        "en": "Jupiter in Virgo gives you lucky expansion in work and self-improvement. You are organized and helpful, naturally succeeding in assisting others. People with this placement tend to be fortunate, practical, but may seem overly critical or workaholic."
+      },
+      "libra": {
+        "zh": "木星天秤赋予你对关系和和谐的幸运。你有魅力、公正，容易建立有益的伙伴关系。这个位置的人通常有福气、迷人，但可能显得过度依赖他人或优柔寡断。",
+        "en": "Jupiter in Libra gives you luck with relationships and harmony. You are charming and fair, naturally forming beneficial partnerships. People with this placement tend to be fortunate, charming, but may seem overly dependent or indecisive."
+      },
+      "scorpio": {
+        "zh": "木星天蝎赋予你对深入研究和转化的幸运。你有洞察力、神秘，容易获得他人的信任。这个位置的人通常有福气、有魅力，但可能显得过度执着或神秘莫测。",
+        "en": "Jupiter in Scorpio gives you luck with deep investigation and transformation. You are insightful and mysterious, naturally gaining others' trust. People with this placement tend to be fortunate, magnetic, but may seem obsessive or enigmatic."
+      },
+      "sagittarius": {
+        "zh": "木星射手在其守护星座中最强大，赋予你对学习和探险的非凡幸运。你乐观、哲学性强，容易实现远大梦想。这个位置的人通常非常有福气、远见卓远，但可能显得过度乐观或轻率。",
+        "en": "Jupiter in Sagittarius is strongest in its ruling sign, giving you extraordinary luck with learning and adventure. You are optimistic and philosophical, naturally achieving grand dreams. People with this placement tend to be extremely fortunate, visionary, but may seem overly optimistic or reckless."
+      },
+      "capricorn": {
+        "zh": "木星摩羯赋予你对事业和地位的幸运扩展。你有雄心、策略性强，容易获得权力和尊重。这个位置的人通常有福气、成功，但可能显得过度野心或压抑情感。",
+        "en": "Jupiter in Capricorn gives you lucky expansion in career and status. You are ambitious and strategic, naturally gaining power and respect. People with this placement tend to be fortunate, successful, but may seem overly ambitious or emotionally reserved."
+      },
+      "aquarius": {
+        "zh": "木星水瓶赋予你对创新和人道事业的幸运。你有远见、理想化，容易吸引志同道合的人。这个位置的人通常有福气、有个性，但可能显得过度理想化或不切实际。",
+        "en": "Jupiter in Aquarius gives you luck with innovation and humanitarian causes. You are visionary and idealistic, naturally attracting like-minded people. People with this placement tend to be fortunate, unique, but may seem overly idealistic or impractical."
+      },
+      "pisces": {
+        "zh": "木星双鱼赋予你对精神和创意的幸运扩展。你有同情心、富想象力，容易获得灵感和保护。这个位置的人通常有福气、有艺术天赋，但可能显得过度梦幻或缺乏界限。",
+        "en": "Jupiter in Pisces gives you lucky expansion in spirituality and creativity. You are compassionate and imaginative, naturally receiving inspiration and protection. People with this placement tend to be fortunate, artistically gifted, but may seem overly dreamy or lack boundaries."
+      }
+    },
+    "saturn": {
+      "aries": {
+        "zh": "土星白羊让你的行动力受到制约和成熟。你需要学会耐心和谨慎，通过自律来实现目标。这个位置的人通常有责任感、坚强，但可能显得缺乏信心或过度谨慎。",
+        "en": "Saturn in Aries tempers your drive with maturity and restraint. You must learn patience and caution, achieving goals through discipline. People with this placement tend to be responsible, strong, but may seem lacking confidence or overly cautious."
+      },
+      "taurus": {
+        "zh": "土星金牛赋予你对物质安全的执着追求和长期建设。你必须通过辛劳来获得稳定，学会节制。这个位置的人通常有毅力、务实，但可能显得过度保守或物质主义。",
+        "en": "Saturn in Taurus gives you persistent pursuit of material security and long-term building. You must earn stability through hard work, learning restraint. People with this placement tend to be persistent, practical, but may seem overly conservative or materialistic."
+      },
+      "gemini": {
+        "zh": "土星双子赋予你对沟通和学习的纪律要求。你需要深化知识，避免浅尝辄止。这个位置的人通常有学问、可靠，但可能显得过度严肃或缺乏灵活性。",
+        "en": "Saturn in Gemini gives you disciplined demands on communication and learning. You must deepen knowledge, avoiding superficiality. People with this placement tend to be learned, reliable, but may seem overly serious or inflexible."
+      },
+      "cancer": {
+        "zh": "土星巨蟹让你在情感上学会独立和界限。你可能与家庭有复杂关系，需要学会情感成熟。这个位置的人通常有责任感、深思，但可能显得冷漠或有情感隔阂。",
+        "en": "Saturn in Cancer makes you learn emotional independence and boundaries. You may have complex family dynamics, needing emotional maturity. People with this placement tend to be responsible, thoughtful, but may seem aloof or emotionally distant."
+      },
+      "leo": {
+        "zh": "土星狮子让你的自我表达受到考验和成熟。你需要学会谦虚和真实，而非追求虚荣。这个位置的人通常有威严、坚强，但可能显得缺乏自信或压抑创意。",
+        "en": "Saturn in Leo tests and matures your self-expression. You must learn humility and authenticity, not vanity. People with this placement tend to be authoritative, strong, but may seem lacking confidence or suppressing creativity."
+      },
+      "virgo": {
+        "zh": "土星处女强化你的分析能力和工作纪律。你对细节有强烈追求，但需要学会放手和自我原谅。这个位置的人通常有能力、有条理，但可能显得过度完美主义或自我否定。",
+        "en": "Saturn in Virgo strengthens your analytical ability and work discipline. You have strong pursuit of details but must learn letting go and self-forgiveness. People with this placement tend to be capable, organized, but may seem perfectionistic or self-denying."
+      },
+      "libra": {
+        "zh": "土星天秤让你在关系中学会责任和承诺。你对伙伴关系有严肃态度，需要学会平衡独立与连接。这个位置的人通常有责任感、理智，但可能显得过度谨慎或冷漠。",
+        "en": "Saturn in Libra makes you learn responsibility and commitment in relationships. You take partnerships seriously, learning to balance independence and connection. People with this placement tend to be responsible, rational, but may seem overly cautious or cold."
+      },
+      "scorpio": {
+        "zh": "土星天蝎让你的心理转化过程深刻而严峻。你需要学会放下控制和信任他人。这个位置的人通常有洞察力、坚强，但可能显得过度控制或充满恐惧。",
+        "en": "Saturn in Scorpio makes your psychological transformation profound and severe. You must learn to release control and trust others. People with this placement tend to be insightful, strong, but may seem overly controlling or fearful."
+      },
+      "sagittarius": {
+        "zh": "土星射手让你的理想和信念受到考验。你需要学会现实和谨慎，而非盲目乐观。这个位置的人通常有智慧、负责任，但可能显得过度悲观或对信仰困惑。",
+        "en": "Saturn in Sagittarius tests your ideals and beliefs. You must learn realism and caution, not blind optimism. People with this placement tend to be wise, responsible, but may seem overly pessimistic or confused about faith."
+      },
+      "capricorn": {
+        "zh": "土星在其守护星座中，强化你的雄心和毅力。你天生适合权力和责任，通过成就获得满足。这个位置的人通常成功、有纪律，但可能显得过度野心或忽视感受。",
+        "en": "Saturn in its ruling Capricorn strengthens your ambition and persistence. You are naturally suited for power and responsibility, finding satisfaction through achievement. People with this placement tend to be successful, disciplined, but may seem overly ambitious or ignore feelings."
+      },
+      "aquarius": {
+        "zh": "土星水瓶让你的创新理想受到现实考验。你需要学会现实应用，而非纯粹理论。这个位置的人通常有远见、理性，但可能显得过度疏离或对理想失望。",
+        "en": "Saturn in Aquarius tests your innovative ideals with reality. You must learn practical application, not pure theory. People with this placement tend to be visionary, rational, but may seem overly detached or disillusioned with ideals."
+      },
+      "pisces": {
+        "zh": "土星双鱼让你的灵性和想象力受到成熟的考验。你需要学会在梦想和现实之间找到平衡。这个位置的人通常有深度、有同情心，但可能显得过度逃避或缺乏信心。",
+        "en": "Saturn in Pisces tests your spirituality and imagination with maturity. You must learn to balance dreams and reality. People with this placement tend to be deep, compassionate, but may seem overly escapist or lacking confidence."
+      }
+    },
+    "uranus": {
+      "aries": {
+        "zh": "天王星白羊赋予你革命性的冲动和快速变化的能量。你渴望自由和创新，可能是激进的先锋。这个位置的人通常有远见、勇敢，但可能显得过度冲动或不稳定。",
+        "en": "Uranus in Aries gives you revolutionary impulses and rapidly changing energy. You crave freedom and innovation, potentially a radical pioneer. People with this placement tend to be visionary, brave, but may seem overly impulsive or unstable."
+      },
+      "taurus": {
+        "zh": "天王星金牛赋予你对物质和价值观的颠覆性改革思想。你可能挑战传统财富观，创造新的经济模式。这个位置的人通常有创意、务实，但可能显得过度固执或反叛。",
+        "en": "Uranus in Taurus gives you subversive ideas about material wealth and values. You may challenge traditional finances, creating new economic models. People with this placement tend to be creative, practical, but may seem stubborn or rebellious."
+      },
+      "gemini": {
+        "zh": "天王星双子赋予你对沟通和思想的革命性改变能力。你是新思想的传播者，可能创造新的交流方式。这个位置的人通常创新、聪慧，但可能显得过度不稳定或标新立异。",
+        "en": "Uranus in Gemini gives you revolutionary impact on communication and thought. You are a purveyor of new ideas, potentially creating novel ways to communicate. People with this placement tend to be innovative, intelligent, but may seem erratic or eccentric."
+      },
+      "cancer": {
+        "zh": "天王星巨蟹赋予你对家庭和情感结构的改革思想。你挑战传统家庭观念，探索新的亲密模式。这个位置的人通常有远见、敏感，但可能显得情感不稳定或叛逆。",
+        "en": "Uranus in Cancer gives you reformative ideas about family and emotional structures. You challenge traditional family concepts, exploring new intimacy models. People with this placement tend to be visionary, sensitive, but may seem emotionally unstable or rebellious."
+      },
+      "leo": {
+        "zh": "天王星狮子赋予你对自我表达和创意的革命性转变能力。你挑战艺术和创意的界限，创造全新风格。这个位置的人通常创新、有魅力，但可能显得过度戏剧化或特立独行。",
+        "en": "Uranus in Leo gives you revolutionary impact on self-expression and creativity. You challenge artistic boundaries, creating entirely new styles. People with this placement tend to be innovative, magnetic, but may seem overly dramatic or unconventional."
+      },
+      "virgo": {
+        "zh": "天王星处女赋予你对工作和健康方式的革新思想。你创造更高效的系统，可能改变职业方式。这个位置的人通常有创意、实用，但可能显得过度批评或不稳定。",
+        "en": "Uranus in Virgo gives you innovative ideas about work and health. You create more efficient systems, potentially transforming careers. People with this placement tend to be creative, practical, but may seem overly critical or unstable."
+      },
+      "libra": {
+        "zh": "天王星天秤赋予你对关系和社会结构的改革能力。你挑战传统婚姻观念，探索平等伙伴关系。这个位置的人通常进步、迷人，但可能显得情感不稳定或不可预测。",
+        "en": "Uranus in Libra gives you transformative power over relationships and social structures. You challenge traditional marriage, exploring equal partnerships. People with this placement tend to be progressive, charming, but may seem emotionally unstable or unpredictable."
+      },
+      "scorpio": {
+        "zh": "天王星天蝎赋予你对深层心理和权力结构的革命性洞察。你揭露隐藏的真相，进行深刻的转化。这个位置的人通常有洞察力、强大，但可能显得过度破坏性或神秘莫测。",
+        "en": "Uranus in Scorpio gives you revolutionary insight into psychology and power structures. You uncover hidden truths, enabling profound transformation. People with this placement tend to be insightful, powerful, but may seem overly destructive or enigmatic."
+      },
+      "sagittarius": {
+        "zh": "天王星射手赋予你对信念和高等教育的革新思想。你挑战传统哲学，探索新的精神道路。这个位置的人通常有远见、理想化，但可能显得过度激进或信念不稳定。",
+        "en": "Uranus in Sagittarius gives you innovative ideas about beliefs and higher education. You challenge traditional philosophy, exploring new spiritual paths. People with this placement tend to be visionary, idealistic, but may seem overly radical or unstable in beliefs."
+      },
+      "capricorn": {
+        "zh": "天王星摩羯赋予你对权力结构和体制的改革能力。你以现代方式重组传统系统，创造新的秩序。这个位置的人通常创新、有策略，但可能显得过度冰冷或反传统。",
+        "en": "Uranus in Capricorn gives you power to reform power structures and institutions. You reorganize traditional systems in modern ways, creating new order. People with this placement tend to be innovative, strategic, but may seem overly detached or anti-traditional."
+      },
+      "aquarius": {
+        "zh": "天王星在其守护星座中，强化你的革命性理想和人道精神。你是未来的先驱，创造社会变革。这个位置的人通常极具远见、进步，但可能显得过度理想化或不可预测。",
+        "en": "Uranus in its ruling Aquarius strengthens your revolutionary ideals and humanitarian spirit. You are a pioneer of the future, creating social change. People with this placement tend to be highly visionary, progressive, but may seem overly idealistic or unpredictable."
+      },
+      "pisces": {
+        "zh": "天王星双鱼赋予你对精神和想象力界限的突破能力。你探索新的灵性形式，创造梦幻的新世界。这个位置的人通常有远见、有灵性，但可能显得过度飘飘然或脱离现实。",
+        "en": "Uranus in Pisces gives you the ability to break spiritual and imaginative boundaries. You explore new forms of spirituality, creating dreamlike new worlds. People with this placement tend to be visionary, spiritual, but may seem overly dreamy or detached from reality."
+      }
+    },
+    "neptune": {
+      "aries": {
+        "zh": "海王星白羊赋予你梦幻的冒险精神和理想化的勇气。你可能追求精神上的英雄梦想，容易被理想迷惑。这个位置的人通常有远见、富有想象力，但可能显得过度幻想或缺乏现实感。",
+        "en": "Neptune in Aries gives you dreamlike adventure spirit and idealized courage. You may pursue spiritual hero dreams, easily enchanted by ideals. People with this placement tend to be visionary, imaginative, but may seem overly fantastical or lacking reality."
+      },
+      "taurus": {
+        "zh": "海王星金牛赋予你对物质和美的神秘化诠释。你可能追求完美的物质享受，对价值观有理想化看法。这个位置的人通常有审美、灵性，但可能显得物质幻想或对现实困惑。",
+        "en": "Neptune in Taurus gives you mystical interpretation of material wealth and beauty. You may seek perfect material pleasure with idealized values. People with this placement tend to have refined aesthetics, spiritual, but may seem materialistic or confused about reality."
+      },
+      "gemini": {
+        "zh": "海王星双子赋予你对言语和思想的梦幻力量。你可能是诗人或幻想家，沟通充满想象力。这个位置的人通常富有创意、灵感丰富，但可能显得言语模糊或思路不清。",
+        "en": "Neptune in Gemini gives you dreamlike power over words and thought. You may be a poet or fantasist, communicating imaginatively. People with this placement tend to be creative, inspiration-rich, but may seem vague or unclear in thinking."
+      },
+      "cancer": {
+        "zh": "海王星巨蟹赋予你对家庭和情感的梦幻理想化。你可能对家庭有不切实际的梦想，深沉的情感直觉。这个位置的人通常敏感、有同理心，但可能显得过度感伤或感情混乱。",
+        "en": "Neptune in Cancer gives you dreamlike idealization of family and emotion. You may have unrealistic family dreams with deep emotional intuition. People with this placement tend to be sensitive, empathetic, but may seem overly sentimental or emotionally confused."
+      },
+      "leo": {
+        "zh": "海王星狮子赋予你对自我表达和创意的梦幻力量。你可能创造魅力十足的艺术幻想，表达富有神秘性。这个位置的人通常有艺术天赋、有魅力，但可能显得过度浪漫或缺乏现实感。",
+        "en": "Neptune in Leo gives you dreamlike power over self-expression and creativity. You may create charming artistic fantasies with mysterious expression. People with this placement tend to be artistically gifted, magnetic, but may seem overly romantic or lacking realism."
+      },
+      "virgo": {
+        "zh": "海王星处女赋予你对完美和纯净的神秘追求。你可能对细节有不切实际的期望，有深层的服务精神。这个位置的人通常有直觉、有奉献精神，但可能显得过度挑剔或现实感差。",
+        "en": "Neptune in Virgo gives you mystical pursuit of perfection and purity. You may have unrealistic expectations for details with deep service spirit. People with this placement tend to be intuitive, dedicated, but may seem overly critical or lack realism."
+      },
+      "libra": {
+        "zh": "海王星天秤赋予你对爱情和美的梦幻理想。你可能追求完美的伙伴关系，对和谐有理想化看法。这个位置的人通常有美感、浪漫，但可能显得过度梦幻或关系期望不切实际。",
+        "en": "Neptune in Libra gives you dreamlike ideals of love and beauty. You may seek perfect partnerships with idealized harmony. People with this placement tend to have refined taste, romantic, but may seem overly dreamy or unrealistic about relationships."
+      },
+      "scorpio": {
+        "zh": "海王星天蝎赋予你对心理和灵性的深邃神秘感。你可能探索隐藏的真相，有强大的直觉力。这个位置的人通常敏感、有洞察力，但可能显得过度神秘或陷入心理困境。",
+        "en": "Neptune in Scorpio gives you deep mystical sense of psychology and spirituality. You may explore hidden truths with powerful intuition. People with this placement tend to be sensitive, insightful, but may seem overly mysterious or trapped in psychological struggles."
+      },
+      "sagittarius": {
+        "zh": "海王星射手赋予你对信念和精神的梦幻理想化。你可能追求高等的精神真理，有深层的理想主义。这个位置的人通常有远见、灵性，但可能显得过度理想化或信仰混乱。",
+        "en": "Neptune in Sagittarius gives you dreamlike idealization of beliefs and spirituality. You may seek higher spiritual truths with deep idealism. People with this placement tend to be visionary, spiritual, but may seem overly idealistic or confused about faith."
+      },
+      "capricorn": {
+        "zh": "海王星摩羯赋予你对权力和现实的神秘理想化。你可能追求精神上的成功和社会理想，有深层的责任感。这个位置的人通常有策略、有理想，但可能显得过度幻想或现实期望不清。",
+        "en": "Neptune in Capricorn gives you mystical idealization of power and reality. You may seek spiritual success and social ideals with deep responsibility. People with this placement tend to be strategic, idealistic, but may seem overly fantastical or unclear about reality."
+      },
+      "aquarius": {
+        "zh": "海王星水瓶赋予你对理想和未来的梦幻力量。你可能追求完美的社会理想，有深层的人道精神。这个位置的人通常有远见、有理想，但可能显得过度乌托邦或不切实际。",
+        "en": "Neptune in Aquarius gives you dreamlike power over ideals and the future. You may seek perfect social ideals with deep humanitarian spirit. People with this placement tend to be visionary, idealistic, but may seem overly utopian or unrealistic."
+      },
+      "pisces": {
+        "zh": "海王星在其守护星座中，强化你的灵性感受和想象力。你可能拥有超越现实的直觉和创意天赋。这个位置的人通常富有精神性、有艺术天赋，但可能显得过度逃避或现实感缺失。",
+        "en": "Neptune in its ruling Pisces strengthens your spiritual sensitivity and imagination. You may possess intuition and creative gifts beyond reality. People with this placement tend to be highly spiritual, artistically gifted, but may seem overly escapist or lacking grounding."
+      }
+    },
+    "pluto": {
+      "aries": {
+        "zh": "冥王星白羊赋予你强大的转化力量和重生的勇气。你可能经历深刻的自我蜕变，有强大的意志力进行改革。这个位置的人通常有力量感、勇敢，但可能显得过度破坏性或咄咄逼人。",
+        "en": "Pluto in Aries gives you powerful transformative force and courage for rebirth. You may experience profound self-metamorphosis with strong willpower for reform. People with this placement tend to be powerful, brave, but may seem overly destructive or aggressive."
+      },
+      "taurus": {
+        "zh": "冥王星金牛赋予你对物质和价值的深刻转化能力。你可能经历财富的巨大变化，重新定义安全感。这个位置的人通常有坚强意志、可靠，但可能显得过度固执或对变化抗拒。",
+        "en": "Pluto in Taurus gives you profound power to transform wealth and values. You may experience massive financial changes, redefining security. People with this placement tend to be strong-willed, reliable, but may seem overly stubborn or resistant to change."
+      },
+      "gemini": {
+        "zh": "冥王星双子赋予你对沟通和思想的深刻转化力量。你可能揭露隐藏的真相，改变人们的思维方式。这个位置的人通常有洞察力、有说服力，但可能显得过度控制或操纵言语。",
+        "en": "Pluto in Gemini gives you profound transformative power over communication and thought. You may uncover hidden truths, changing how people think. People with this placement tend to be insightful, persuasive, but may seem overly controlling or manipulative with words."
+      },
+      "cancer": {
+        "zh": "冥王星巨蟹赋予你对家庭和情感的深刻转化力。你可能经历家庭结构的巨大改变，重新定义安全感。这个位置的人通常敏感、有深度，但可能显得过度控制或情感执着。",
+        "en": "Pluto in Cancer gives you profound transformative power over family and emotion. You may experience major family restructuring, redefining security. People with this placement tend to be sensitive, deep, but may seem overly controlling or emotionally obsessive."
+      },
+      "leo": {
+        "zh": "冥王星狮子赋予你对自我表达和创意的深刻转化力。你可能经历戏剧性的自我蜕变，重新定义个人权力。这个位置的人通常有魅力、强大，但可能显得过度控制或自我中心。",
+        "en": "Pluto in Leo gives you profound transformative power over self-expression and creativity. You may experience dramatic self-metamorphosis, redefining personal power. People with this placement tend to be magnetic, powerful, but may seem overly controlling or self-centered."
+      },
+      "virgo": {
+        "zh": "冥王星处女赋予你对工作和完美的深刻转化力。你可能经历职业的巨大变化，重新定义服务精神。这个位置的人通常有能力、有洞察力，但可能显得过度批评或对完美执迷。",
+        "en": "Pluto in Virgo gives you profound transformative power over work and perfection. You may experience major career changes, redefining service spirit. People with this placement tend to be capable, insightful, but may seem overly critical or obsessed with perfection."
+      },
+      "libra": {
+        "zh": "冥王星天秤赋予你对关系和权力平衡的深刻转化力。你可能经历伙伴关系的根本改变，重新定义平衡。这个位置的人通常有魅力、深刻，但可能显得过度控制或关系执着。",
+        "en": "Pluto in Libra gives you profound transformative power over relationships and power balance. You may experience fundamental partnership changes, redefining balance. People with this placement tend to be charming, deep, but may seem overly controlling or relationship-obsessed."
+      },
+      "scorpio": {
+        "zh": "冥王星在其守护星座中，强化你的转化力量和心理洞察力。你拥有深刻的重生力量，可以进行彻底的心灵蜕变。这个位置的人通常强大、神秘，但可能显得过度破坏性或难以预测。",
+        "en": "Pluto in its ruling Scorpio strengthens your transformative power and psychological insight. You possess profound rebirth power, enabling radical spiritual metamorphosis. People with this placement tend to be powerful, mysterious, but may seem overly destructive or unpredictable."
+      },
+      "sagittarius": {
+        "zh": "冥王星射手赋予你对信念和真理的深刻转化力。你可能经历精神信仰的根本改变，重新定义理想。这个位置的人通常有远见、有力量，但可能显得过度执着或信仰执迷。",
+        "en": "Pluto in Sagittarius gives you profound transformative power over beliefs and truth. You may experience fundamental spiritual changes, redefining ideals. People with this placement tend to be visionary, powerful, but may seem overly obsessive or belief-fixated."
+      },
+      "capricorn": {
+        "zh": "冥王星摩羯赋予你对权力和体制的深刻转化力。你可能经历权力结构的巨大改变，重新定义地位。这个位置的人通常有权力感、有策略，但可能显得过度控制或权力执着。",
+        "en": "Pluto in Capricorn gives you profound transformative power over authority and institutions. You may experience major power structure changes, redefining status. People with this placement tend to be powerful, strategic, but may seem overly controlling or power-obsessed."
+      },
+      "aquarius": {
+        "zh": "冥王星水瓶赋予你对社会和未来的深刻转化力。你可能推动根本的社会变革，重新定义理想。这个位置的人通常有远见、有力量，但可能显得过度激进或改革执着。",
+        "en": "Pluto in Aquarius gives you profound transformative power over society and the future. You may drive fundamental social change, redefining ideals. People with this placement tend to be visionary, powerful, but may seem overly radical or reform-obsessed."
+      },
+      "pisces": {
+        "zh": "冥王星双鱼赋予你对灵性和无意识的深刻转化力。你可能经历深层的灵性蜕变，重新定义精神真理。这个位置的人通常灵性深刻、有力量，但可能显得过度神秘或逃避现实。",
+        "en": "Pluto in Pisces gives you profound transformative power over spirituality and the unconscious. You may experience deep spiritual metamorphosis, redefining spiritual truth. People with this placement tend to be deeply spiritual, powerful, but may seem overly mysterious or escapist."
+      }
+    }
+  }
+}

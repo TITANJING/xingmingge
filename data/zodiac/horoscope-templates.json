@@ -1,0 +1,295 @@
+{
+  "meta": {
+    "description": "运势模板库 — 程序根据星座+日期做种子伪随机组合各维度文案",
+    "usage": "每个维度有15条模板，分5个等级(excellent/good/neutral/challenging/difficult)各3条，根据伪随机结果选等级再选具体文案",
+    "levels": ["excellent", "good", "neutral", "challenging", "difficult"]
+  },
+  "love": {
+    "excellent": [
+      {
+        "zh": "今天的感情运势极佳！单身者可能会遇到让你心动的人，已有伴侣的你们之间的默契将达到新高度。大胆表达爱意吧。",
+        "en": "Your love energy is radiant today! Singles may encounter someone truly captivating, while those in relationships will find a deeper connection with their partner. Express your feelings boldly."
+      },
+      {
+        "zh": "浪漫的星象正在眷顾你，爱情之花即将盛开。无论是暗恋还是热恋，今天都是推进感情的绝佳时机。",
+        "en": "The stars are shining on your romantic life. Whether you have a secret crush or are deeply in love, today is the perfect time to take your relationship to the next level."
+      },
+      {
+        "zh": "爱神丘比特今天格外关注你。你的魅力值达到顶峰，身边的人会被你深深吸引。珍惜这段甜蜜时光。",
+        "en": "Cupid has his eye on you today. Your charm is at its peak, and those around you will be irresistibly drawn to you. Cherish this sweet moment."
+      }
+    ],
+    "good": [
+      {
+        "zh": "感情方面有不错的进展，与心仪的人之间的互动会增多。保持真诚和耐心，好的感情需要慢慢培养。",
+        "en": "Your love life is progressing nicely. Interactions with someone you admire will increase. Stay sincere and patient — good relationships take time to build."
+      },
+      {
+        "zh": "今天适合和伴侣或朋友进行深入的心灵交流。分享你的想法和感受，你会发现彼此的关系更加亲密了。",
+        "en": "Today is great for deep, meaningful conversations with your partner or close friends. Share your thoughts and feelings, and watch your bond grow stronger."
+      },
+      {
+        "zh": "温暖的能量环绕着你的感情生活。一个小小的浪漫举动就能让对方感受到你的心意，不要吝啬表达。",
+        "en": "Warm energy surrounds your love life. A small romantic gesture can speak volumes to that special someone. Don't hold back on showing you care."
+      }
+    ],
+    "neutral": [
+      {
+        "zh": "感情运势平稳，没有大的波动。这是一个适合反思自己情感需求的日子，想想什么才是你真正想要的。",
+        "en": "Your love life is steady today with no major ups or downs. It's a good day to reflect on your emotional needs and consider what you truly want."
+      },
+      {
+        "zh": "今天的感情生活比较平淡，但平淡中也有温馨。享受日常中的小确幸，爱情不一定需要轰轰烈烈。",
+        "en": "Romance may feel quiet today, but there's warmth in simplicity. Enjoy the little joys in everyday life — love doesn't always need grand gestures."
+      },
+      {
+        "zh": "感情方面维持现状，适合独处思考。给自己和对方一些空间，有时候距离产生美。",
+        "en": "Love remains status quo today. Some alone time for reflection could be beneficial. A little space sometimes makes the heart grow fonder."
+      }
+    ],
+    "challenging": [
+      {
+        "zh": "感情中可能会出现一些小摩擦，注意沟通方式。避免在情绪激动时做决定，冷静下来再处理分歧。",
+        "en": "Minor friction may arise in your love life. Pay attention to how you communicate. Avoid making decisions when emotions run high — cool down before addressing differences."
+      },
+      {
+        "zh": "今天在感情上需要多一些包容和理解。对方可能有自己的压力和烦恼，试着站在他们的角度思考问题。",
+        "en": "Your love life calls for extra patience and understanding today. Your partner may be dealing with their own stress — try to see things from their perspective."
+      },
+      {
+        "zh": "感情上可能会有些迷茫，不确定下一步该怎么走。不要急于做决定，给自己时间理清思绪。",
+        "en": "You may feel a bit lost in matters of the heart. Don't rush into decisions — give yourself time to sort through your feelings."
+      }
+    ],
+    "difficult": [
+      {
+        "zh": "今天的感情运势较为低迷，可能会遇到一些误会或冷战。保持冷静，不要让一时的情绪破坏长久的感情。",
+        "en": "Love energy is low today. Misunderstandings or silent treatment may occur. Stay calm and don't let temporary emotions damage a lasting relationship."
+      },
+      {
+        "zh": "感情方面可能面临考验，旧有的问题可能会浮出水面。但请记住，每一次挑战都是关系成长的机会。",
+        "en": "Your relationship may face a test as old issues resurface. Remember, every challenge is an opportunity for the relationship to grow stronger."
+      },
+      {
+        "zh": "今天不太适合讨论敏感的感情话题。如果有矛盾，建议暂时搁置，等双方都冷静了再好好谈。",
+        "en": "Today isn't ideal for discussing sensitive relationship matters. If conflicts arise, it's best to table the discussion until both parties have cooled down."
+      }
+    ]
+  },
+  "career": {
+    "excellent": [
+      {
+        "zh": "事业运势大好！你的能力和努力将得到认可，可能会收到好消息或新的机会。抓住机会，展现你的实力。",
+        "en": "Career energy is soaring! Your skills and efforts will be recognized. Good news or new opportunities may come your way. Seize the moment and showcase your talents."
+      },
+      {
+        "zh": "今天是事业上的突破日。你的创意和想法会得到支持，项目进展顺利。信任自己的判断，大胆行动。",
+        "en": "Today marks a breakthrough in your career. Your creative ideas will gain support and projects will progress smoothly. Trust your judgment and take bold action."
+      },
+      {
+        "zh": "工作上的好运接踵而至，团队协作特别默契。这是推动重要项目和做出关键决策的黄金时机。",
+        "en": "Good fortune keeps flowing at work, with excellent team synergy. This is the golden moment to push forward important projects and make key decisions."
+      }
+    ],
+    "good": [
+      {
+        "zh": "工作进展顺利，你的效率比平时更高。适合处理需要专注力的任务，成果会让你满意。",
+        "en": "Work is progressing well and your productivity is higher than usual. It's a great day to tackle tasks requiring focus — the results will satisfy you."
+      },
+      {
+        "zh": "职场人际关系良好，与同事和上级的沟通顺畅。利用这个优势推进合作项目或寻求新的发展机会。",
+        "en": "Workplace relationships are positive with smooth communication. Leverage this advantage to advance collaborative projects or seek new growth opportunities."
+      },
+      {
+        "zh": "今天的工作节奏舒适，能够按部就班地完成任务。利用空余时间学习新技能，为未来积累资本。",
+        "en": "Work flows at a comfortable pace today. Use any spare time to learn new skills and invest in your future professional growth."
+      }
+    ],
+    "neutral": [
+      {
+        "zh": "事业运势平平，日常工作按部就班。虽然没有惊喜，但稳定也是一种力量。专注于手头的事情就好。",
+        "en": "Career energy is neutral — work proceeds as usual. While there are no surprises, stability is its own strength. Focus on what's in front of you."
+      },
+      {
+        "zh": "今天的工作中规中矩，没有特别突出的表现机会。利用这段平静时期整理思路，规划下一步。",
+        "en": "Work is routine today without standout moments. Use this quiet period to organize your thoughts and plan your next moves."
+      },
+      {
+        "zh": "职场上波澜不惊，适合处理日常事务和文件整理。保持稳定的工作节奏，厚积才能薄发。",
+        "en": "The workplace is calm today — perfect for handling routine tasks and organizing files. Maintain a steady pace; consistent effort leads to breakthroughs."
+      }
+    ],
+    "challenging": [
+      {
+        "zh": "工作中可能遇到一些障碍或延迟，不要急躁。重新评估你的方法，换个角度思考可能会找到突破口。",
+        "en": "You may encounter obstacles or delays at work. Don't get frustrated. Reassess your approach — a change in perspective might reveal the breakthrough you need."
+      },
+      {
+        "zh": "今天的工作效率可能不太高，容易分心。试着将大任务拆分成小步骤，一步一步来会更有成就感。",
+        "en": "Productivity may dip today as distractions creep in. Try breaking big tasks into smaller steps — tackling them one at a time will feel more rewarding."
+      },
+      {
+        "zh": "职场上可能会面临一些压力或竞争。保持你的专业态度，用实力说话，不要被外界影响情绪。",
+        "en": "Pressure or competition may intensify at work. Maintain your professionalism, let your skills speak for themselves, and don't let external factors affect your mood."
+      }
+    ],
+    "difficult": [
+      {
+        "zh": "事业运势较低，工作中可能出现失误或误解。仔细检查每一个细节，遇到困难时不妨寻求他人的帮助。",
+        "en": "Career energy is low. Mistakes or misunderstandings may occur at work. Double-check every detail and don't hesitate to seek help when facing difficulties."
+      },
+      {
+        "zh": "今天工作上可能会遇到挫折，但这是暂时的。把困难当作成长的垫脚石，调整心态重新出发。",
+        "en": "You may face setbacks at work today, but they are temporary. Treat difficulties as stepping stones for growth, adjust your mindset, and start fresh."
+      },
+      {
+        "zh": "职场环境可能不太理想，避免卷入办公室政治。专注于提升自己的能力，低调做事，时间会证明一切。",
+        "en": "The work environment may be challenging. Avoid office politics. Focus on improving your own abilities, keep a low profile, and time will prove your worth."
+      }
+    ]
+  },
+  "finance": {
+    "excellent": [
+      {
+        "zh": "财运亨通！可能会有意外的收入或投资回报。这是做财务规划和理财投资的好时机，但也要理性决策。",
+        "en": "Financial fortune is shining! Unexpected income or returns may come your way. A great time for financial planning and investments, but stay rational in your decisions."
+      },
+      {
+        "zh": "金钱能量充沛，财神眷顾。无论是工资奖金还是副业收入，都有增长的趋势。记得合理分配，储蓄与享受并重。",
+        "en": "Money energy is abundant and fortune favors you. Whether salary, bonuses, or side income, growth is on the horizon. Balance saving with treating yourself."
+      },
+      {
+        "zh": "今天的财运非常旺盛，可能会发现不错的赚钱机会。相信你的直觉，但也要做好充分的调研后再行动。",
+        "en": "Financial luck is exceptionally strong today. You may discover excellent money-making opportunities. Trust your instincts, but do thorough research before acting."
+      }
+    ],
+    "good": [
+      {
+        "zh": "财务状况稳步改善，收入和支出保持良好平衡。适合制定储蓄计划或考虑小额投资。",
+        "en": "Finances are steadily improving with a healthy balance between income and expenses. A good time to set up a savings plan or consider small investments."
+      },
+      {
+        "zh": "今天的财运不错，可能会有小额的额外收入。在日常开支上保持理性，积少成多也是一种智慧。",
+        "en": "Financial luck is favorable today. A small bonus or extra income may come your way. Stay wise with daily spending — small savings add up to great wealth."
+      },
+      {
+        "zh": "金钱运势良好，之前的投入开始见到回报。继续保持理性的消费习惯，你的财务状况会越来越好。",
+        "en": "Money prospects are positive as previous efforts begin to pay off. Maintain rational spending habits and your financial situation will continue to improve."
+      }
+    ],
+    "neutral": [
+      {
+        "zh": "财务状况平稳，没有大的进出。适合审视一下自己的消费习惯，看看有没有可以优化的地方。",
+        "en": "Finances are stable with no major changes. A good time to review your spending habits and identify areas for optimization."
+      },
+      {
+        "zh": "今天的财运中规中矩，不宜做重大的财务决定。保持现有的理财策略，耐心等待更好的时机。",
+        "en": "Financial fortune is average today. Avoid major financial decisions. Stick with your current strategy and wait patiently for better timing."
+      },
+      {
+        "zh": "金钱方面波澜不惊，收入支出基本持平。这是一个稳固基础的时期，为未来的增长做好准备。",
+        "en": "Money matters are calm with income and expenses roughly balanced. This is a period for building a solid foundation for future growth."
+      }
+    ],
+    "challenging": [
+      {
+        "zh": "今天的财务压力可能有所增加，注意控制不必要的开支。避免冲动消费，先满足需求再考虑欲望。",
+        "en": "Financial pressure may increase today. Watch out for unnecessary expenses. Avoid impulse buying — prioritize needs over wants."
+      },
+      {
+        "zh": "财运略显不顺，可能会有意外的支出。建议推迟大额消费和投资决策，先保证基本的资金安全。",
+        "en": "Financial luck is slightly off. Unexpected expenses may arise. Postpone major purchases and investment decisions — prioritize financial security first."
+      },
+      {
+        "zh": "金钱方面需要谨慎，不要轻信高回报的投资机会。脚踏实地，稳中求进才是当前最好的策略。",
+        "en": "Exercise caution with money. Don't trust promises of high returns. A steady, grounded approach is the best strategy right now."
+      }
+    ],
+    "difficult": [
+      {
+        "zh": "财运低迷，可能面临资金紧张的局面。这是重新审视财务计划的时机，减少不必要支出，开源节流。",
+        "en": "Financial fortune is at a low point. You may face tight cash flow. Time to reassess your financial plan — cut unnecessary spending and explore new income sources."
+      },
+      {
+        "zh": "今天不适合进行任何投资或借贷活动。管好钱袋子，等待运势回升。困难是暂时的，保持信心。",
+        "en": "Today is not suitable for investments or loans. Guard your wallet and wait for fortune to return. Difficulties are temporary — keep the faith."
+      },
+      {
+        "zh": "金钱方面可能遇到一些麻烦，比如账单或还款压力。不要逃避，制定一个切实可行的还款计划，一步步解决。",
+        "en": "Money troubles may arise, such as bills or repayment pressure. Don't avoid them — create a practical repayment plan and tackle them step by step."
+      }
+    ]
+  },
+  "health": {
+    "excellent": [
+      {
+        "zh": "身体能量充沛，精力旺盛！这是开始新的健身计划或户外活动的绝佳时机。好好利用这股活力吧。",
+        "en": "Your body is brimming with energy and vitality! A perfect time to start a new fitness routine or outdoor activities. Make the most of this vibrant energy."
+      },
+      {
+        "zh": "健康状态极佳，身心都处于最佳状态。今天的你思维敏捷、体力充沛，适合挑战高强度的任务。",
+        "en": "Health is in peak condition — both mind and body are at their best. You're mentally sharp and physically energized, perfect for tackling demanding tasks."
+      },
+      {
+        "zh": "活力满满的一天！免疫力处于高位，身体机能运转良好。保持积极的生活态度，继续你的健康习惯。",
+        "en": "A day full of vitality! Your immunity is strong and your body is functioning well. Keep up your positive lifestyle and healthy habits."
+      }
+    ],
+    "good": [
+      {
+        "zh": "健康运势不错，身体状态良好。建议今天多喝水，适当运动，保持规律的作息会让你感觉更好。",
+        "en": "Health is looking good today. Drink plenty of water, get some exercise, and maintain a regular schedule to feel even better."
+      },
+      {
+        "zh": "精神状态不错，可以趁这个机会调整饮食结构。多吃新鲜蔬果，减少加工食品的摄入。",
+        "en": "Mental state is positive. Take this opportunity to adjust your diet — eat more fresh fruits and vegetables while reducing processed foods."
+      },
+      {
+        "zh": "身体感觉不错，适合做一些温和的运动如散步或瑜伽。注意工作间隙的休息，避免久坐不动。",
+        "en": "Your body feels good today. Light exercise like walking or yoga is ideal. Remember to take breaks between work sessions and avoid prolonged sitting."
+      }
+    ],
+    "neutral": [
+      {
+        "zh": "健康方面没有特别需要担心的，保持日常的健康习惯即可。注意不要过度劳累，劳逸结合很重要。",
+        "en": "No special health concerns today. Maintain your daily healthy habits. Be mindful not to overwork yourself — balance between work and rest is important."
+      },
+      {
+        "zh": "身体状况一般，没有明显不适。这是一个适合做健康检视的日子，注意自己的身体信号。",
+        "en": "Physical condition is average with no obvious discomfort. A good day for a health check-in — pay attention to your body's signals."
+      },
+      {
+        "zh": "健康运势平稳，建议保持规律作息。均衡饮食、适量运动、充足睡眠是维持健康的基础。",
+        "en": "Health is stable. Maintain a regular schedule. Balanced diet, moderate exercise, and adequate sleep are the foundations of good health."
+      }
+    ],
+    "challenging": [
+      {
+        "zh": "今天可能会感到有些疲惫或精力不足。注意休息，不要勉强自己。一杯温热的饮品可能会让你感觉好一些。",
+        "en": "You may feel tired or low on energy today. Rest when needed and don't push yourself. A warm drink might help you feel better."
+      },
+      {
+        "zh": "身体可能发出一些小信号，比如轻微的头痛或肩颈酸痛。这是提醒你放慢节奏、关注健康的时候了。",
+        "en": "Your body may send small signals like mild headaches or neck tension. This is a reminder to slow down and pay attention to your health."
+      },
+      {
+        "zh": "健康方面需要多加注意，特别是消化系统。饮食上以清淡为主，避免辛辣刺激的食物。",
+        "en": "Pay extra attention to health, especially your digestive system. Keep your diet light and avoid spicy or irritating foods."
+      }
+    ],
+    "difficult": [
+      {
+        "zh": "今天的身体状态不太理想，可能会感到明显的疲劳或不适。优先照顾好自己的身体，工作可以稍后再处理。",
+        "en": "Physical condition isn't great today. You may feel notable fatigue or discomfort. Prioritize self-care — work can wait."
+      },
+      {
+        "zh": "健康运势较低，免疫力可能有所下降。注意保暖，早睡早起，必要时补充维生素。预防胜于治疗。",
+        "en": "Health energy is low and immunity may be weakened. Stay warm, sleep early, and supplement vitamins if needed. Prevention is better than cure."
+      },
+      {
+        "zh": "身心可能都有些疲惫，压力可能在影响你的身体。今天给自己放个假，做一些让自己放松的事情吧。",
+        "en": "Both body and mind may feel drained. Stress could be taking a physical toll. Give yourself a break today and do something that brings you peace."
+      }
+    ]
+  }
+}

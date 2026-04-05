@@ -1,0 +1,446 @@
+{
+  "spreads": [
+    {
+      "id": "single",
+      "name": { "zh": "单牌每日占卜", "en": "One-Card Daily Reading" },
+      "category": "basic",
+      "description": {
+        "zh": "最简单直接的占卜方式，抽取一张牌来回答你的问题。适合每日状态检查、获取小提示或学习单牌含义。",
+        "en": "The simplest and most direct reading. Draw one card to answer your question. Perfect for daily check-ins, quick tips, or learning individual card meanings."
+      },
+      "cardCount": 1,
+      "positions": [
+        {
+          "index": 0,
+          "name": { "zh": "指引", "en": "Guidance" },
+          "description": {
+            "zh": "这张牌代表当前局势的核心信息和宇宙给你的指引。",
+            "en": "This card represents the core message about your current situation and the universe's guidance for you."
+          }
+        }
+      ],
+      "suitableFor": {
+        "zh": ["每日运势", "是/否问题", "快速建议", "学习单牌含义"],
+        "en": ["Daily fortune", "Yes/No questions", "Quick advice", "Learning card meanings"]
+      },
+      "readingTips": {
+        "zh": "洗牌并切牌后，用左手（命运之手）抽取一张牌。解读时注重图像直觉和关键词，将牌义与当天的具体生活场景联系起来。",
+        "en": "After shuffling and cutting, draw one card with your left hand (the hand of fate). Focus on image intuition and keywords, connecting the meaning to your day's specific context."
+      },
+      "suggestedQuestions": {
+        "zh": ["我今天需要知道什么？", "关于当下的核心启示是什么？"],
+        "en": ["What do I need to know today?", "What is the core insight about my current moment?"]
+      }
+    },
+    {
+      "id": "three-card",
+      "name": { "zh": "三牌阵", "en": "Three-Card Spread" },
+      "category": "basic",
+      "description": {
+        "zh": "最灵活的基础牌阵，通过不同的空间布局来引导信息处理。可根据问题类型选择线性、平衡、基础式或交叉布局。",
+        "en": "The most flexible foundational spread. Choose from linear, balanced, foundational, or crossed layouts depending on your question type."
+      },
+      "cardCount": 3,
+      "layouts": [
+        {
+          "id": "linear",
+          "name": { "zh": "线性布局", "en": "Linear Layout" },
+          "purpose": { "zh": "展示事件的序列、因果关系或发展路径", "en": "Show event sequences, causation, or development paths" },
+          "combinations": [
+            { "zh": ["过去", "现在", "未来"], "en": ["Past", "Present", "Future"] },
+            { "zh": ["现状", "建议行动", "结果"], "en": ["Situation", "Suggested Action", "Outcome"] }
+          ]
+        },
+        {
+          "id": "balanced",
+          "name": { "zh": "平衡布局", "en": "Balanced Layout" },
+          "purpose": { "zh": "审视同等重要的三个维度，类似金字塔的三个面", "en": "Examine three equally important dimensions, like three faces of a pyramid" },
+          "combinations": [
+            { "zh": ["身", "心", "灵"], "en": ["Body", "Mind", "Spirit"] },
+            { "zh": ["想法", "感受", "行动"], "en": ["Thoughts", "Feelings", "Actions"] }
+          ]
+        },
+        {
+          "id": "foundational",
+          "name": { "zh": "基础式布局", "en": "Foundational Layout" },
+          "purpose": { "zh": "遵循「给定X和Y，结果为Z」的逻辑提供决策建议", "en": "Follow 'Given X and Y, result is Z' logic for decision advice" },
+          "combinations": [
+            { "zh": ["选项一", "选项二", "决策关键信息"], "en": ["Option A", "Option B", "Key Decision Info"] },
+            { "zh": ["优势", "劣势", "最终建议"], "en": ["Strengths", "Weaknesses", "Final Advice"] }
+          ]
+        },
+        {
+          "id": "crossed",
+          "name": { "zh": "交叉布局", "en": "Crossed Layout" },
+          "purpose": { "zh": "理解冲突与障碍", "en": "Understand conflicts and obstacles" },
+          "combinations": [
+            { "zh": ["现状", "障碍（横跨）", "建议"], "en": ["Situation", "Obstacle (crossed)", "Advice"] }
+          ]
+        }
+      ],
+      "positions": [
+        {
+          "index": 0,
+          "name": { "zh": "过去", "en": "Past" },
+          "description": {
+            "zh": "代表影响当前局势的过往事件、经历或能量。这些因素塑造了你现在的处境。",
+            "en": "Represents past events, experiences, or energies influencing the current situation."
+          }
+        },
+        {
+          "index": 1,
+          "name": { "zh": "现在", "en": "Present" },
+          "description": {
+            "zh": "揭示你当前面临的核心问题或状况。这是你此刻所处的位置和面临的挑战或机遇。",
+            "en": "Reveals the core issue or situation you currently face."
+          }
+        },
+        {
+          "index": 2,
+          "name": { "zh": "未来", "en": "Future" },
+          "description": {
+            "zh": "预示事态可能的发展方向和结果。请记住，未来并非注定，你的选择可以改变轨迹。",
+            "en": "Indicates the likely direction and outcome. Remember, the future is not fixed."
+          }
+        }
+      ],
+      "suitableFor": {
+        "zh": ["感情问题", "职业决策", "个人成长", "了解事情发展脉络", "二选一决策"],
+        "en": ["Relationships", "Career decisions", "Personal growth", "Understanding progression", "Binary choices"]
+      }
+    },
+    {
+      "id": "celtic-cross",
+      "name": { "zh": "凯尔特十字牌阵", "en": "Celtic Cross Spread" },
+      "category": "advanced",
+      "description": {
+        "zh": "塔罗中最著名且最全面的十张牌阵，从多个角度深入剖析复杂问题，揭示表面之下的深层因素。适合重大人生决策和需要全局视角的情况。",
+        "en": "The most famous and comprehensive tarot spread with ten cards. Deeply analyzes complex questions from multiple angles. Best for major life decisions requiring a panoramic view."
+      },
+      "cardCount": 10,
+      "positions": [
+        {
+          "index": 0,
+          "name": { "zh": "现状", "en": "Present Situation" },
+          "description": {
+            "zh": "代表你当前的核心状态，是整个牌阵的中心。描述事情的「内核」或求问者的主观状态。",
+            "en": "Represents your current core state — the center of the entire reading."
+          }
+        },
+        {
+          "index": 1,
+          "name": { "zh": "障碍/辅助", "en": "Challenge / Complement" },
+          "description": {
+            "zh": "横跨在第一张牌上，代表当前最主要的障碍或需要面对的挑战。无论抽到「好牌」还是「坏牌」，在此位置都代表一种压制或干扰。此位置通常按正位解读，不论物理朝向。若为大阿尔卡那，说明阻碍来自重大命运力量；若为小阿尔卡那，则多指日常琐事或暂时性干扰。",
+            "en": "Crosses the first card — the most immediate obstacle or challenge. Whether traditionally 'good' or 'bad', any card here represents a suppressing or interfering force. Usually read upright regardless of physical orientation. Major Arcana here indicates fate-level obstacles; Minors point to everyday issues."
+          }
+        },
+        {
+          "index": 2,
+          "name": { "zh": "潜意识基础", "en": "Subconscious Foundation" },
+          "description": {
+            "zh": "位于下方，揭示影响你决策的潜意识因素、内心深处的渴望和问题的深层原因。",
+            "en": "Positioned below, revealing subconscious factors influencing decisions and the root cause of the issue."
+          }
+        },
+        {
+          "index": 3,
+          "name": { "zh": "近期过去", "en": "Recent Past" },
+          "description": {
+            "zh": "位于左侧，代表已经发生并正在远离但仍直接影响当前局面的事件或经历。",
+            "en": "Positioned left — recent events or experiences that still directly influence the current situation."
+          }
+        },
+        {
+          "index": 4,
+          "name": { "zh": "最佳可能/目标", "en": "Best Possible Outcome" },
+          "description": {
+            "zh": "位于上方，展示在最理想情况下可能达到的结果，或你意识层面的目标和当前可达到的高度。",
+            "en": "Positioned above — the best possible outcome or your conscious goals and aspirations."
+          }
+        },
+        {
+          "index": 5,
+          "name": { "zh": "近期未来", "en": "Near Future" },
+          "description": {
+            "zh": "位于右侧，预示接下来即将发生的事件或你将面临的环境变化。",
+            "en": "Positioned right — events about to unfold or environmental changes you'll face soon."
+          }
+        },
+        {
+          "index": 6,
+          "name": { "zh": "自我态度", "en": "Your Attitude" },
+          "description": {
+            "zh": "右侧柱的底部，反映你对这个问题的内在感受、态度和自我认知。",
+            "en": "Bottom of right column — your inner feelings, attitude, and self-perception about this matter."
+          }
+        },
+        {
+          "index": 7,
+          "name": { "zh": "外部环境", "en": "External Influences" },
+          "description": {
+            "zh": "代表他人的看法、意见和态度，以及你无法控制的外部力量对你处境的影响。",
+            "en": "Others' views and attitudes, plus external forces beyond your control affecting your situation."
+          }
+        },
+        {
+          "index": 8,
+          "name": { "zh": "希望与恐惧", "en": "Hopes & Fears" },
+          "description": {
+            "zh": "揭示你内心深处的期望和恐惧，这些心理预期往往会影响行为走向，是影响结果的关键因素。",
+            "en": "Reveals innermost hopes and fears — psychological expectations that influence behavior and outcomes."
+          }
+        },
+        {
+          "index": 9,
+          "name": { "zh": "最终结果", "en": "Final Outcome" },
+          "description": {
+            "zh": "综合所有牌的能量，展示在当前路径下最可能的长期结局。这不是命运的宣判，而是一种可能性。若此位为宫廷牌，通常意味着结局掌握在求问者自己手中。",
+            "en": "Synthesizing all cards' energy — the most likely long-term outcome on the current path. Not fate's decree, but a possibility. If a Court card appears here, the outcome is in the querent's own hands."
+          }
+        }
+      ],
+      "suitableFor": {
+        "zh": ["重大人生决策", "复杂的感情问题", "深度自我探索", "全面了解某个局势"],
+        "en": ["Major life decisions", "Complex relationships", "Deep self-exploration", "Comprehensive situation analysis"]
+      },
+      "readingTips": {
+        "zh": "解读前先观察宏观模式：哪种花色占多数？大阿尔卡那有多少张？有无重复数字？这些整体信号比单牌含义更重要。",
+        "en": "Before interpreting individual cards, observe macro patterns: dominant suits, Major Arcana count, repeated numbers. These signals matter more than individual meanings."
+      }
+    },
+    {
+      "id": "love",
+      "name": { "zh": "爱情牌阵", "en": "Love Spread" },
+      "category": "themed",
+      "description": {
+        "zh": "专门针对感情问题设计的五牌阵，分别展现双方的状态和感情的发展方向。",
+        "en": "A five-card spread designed for love questions, revealing both parties' states and the relationship's direction."
+      },
+      "cardCount": 5,
+      "positions": [
+        {
+          "index": 0,
+          "name": { "zh": "你的状态", "en": "Your State" },
+          "description": {
+            "zh": "代表你在这段感情中的当前状态、情绪和态度。",
+            "en": "Your current state, emotions, and attitude in this relationship."
+          }
+        },
+        {
+          "index": 1,
+          "name": { "zh": "对方的状态", "en": "Their State" },
+          "description": {
+            "zh": "反映对方在这段感情中的当前状态、情绪和态度。",
+            "en": "The other person's current state, emotions, and attitude."
+          }
+        },
+        {
+          "index": 2,
+          "name": { "zh": "感情现状", "en": "Relationship Now" },
+          "description": {
+            "zh": "揭示你们之间关系的当前状况和核心动态。",
+            "en": "The current state and core dynamics of your relationship."
+          }
+        },
+        {
+          "index": 3,
+          "name": { "zh": "面临的挑战", "en": "Challenges" },
+          "description": {
+            "zh": "指出这段感情中需要面对和克服的主要障碍或问题。",
+            "en": "Main obstacles or issues to face and overcome."
+          }
+        },
+        {
+          "index": 4,
+          "name": { "zh": "未来走向", "en": "Future Direction" },
+          "description": {
+            "zh": "预示这段感情可能的发展方向和最终走向。",
+            "en": "The likely development direction and ultimate trajectory."
+          }
+        }
+      ],
+      "suitableFor": {
+        "zh": ["恋爱关系", "暗恋", "复合可能性", "婚姻问题"],
+        "en": ["Romantic relationships", "Secret crushes", "Reunion possibilities", "Marriage questions"]
+      }
+    },
+    {
+      "id": "week-ahead",
+      "name": { "zh": "周运牌阵", "en": "The Week Ahead" },
+      "category": "time-prediction",
+      "description": {
+        "zh": "用于观察接下来七天内每一天的能量趋势。中心放置一张指示牌代表本周总体基调，周围七张牌分别对应周一至周日。",
+        "en": "Observe energy trends for each of the next seven days. A central significator represents the week's overall tone, surrounded by seven cards for Monday through Sunday."
+      },
+      "cardCount": 8,
+      "hasSignificator": true,
+      "significatorRole": {
+        "zh": "代表本周的总体基调或核心主题",
+        "en": "Represents the week's overall tone or core theme"
+      },
+      "positions": [
+        { "index": 0, "name": { "zh": "本周主题（指示牌）", "en": "Week Theme (Significator)" }, "description": { "zh": "代表本周的总体能量基调和核心主题，其他七张牌的解读应与此牌互动参照。", "en": "The week's overall energy tone. All seven daily cards should be interpreted in relation to this central theme." } },
+        { "index": 1, "name": { "zh": "周一", "en": "Monday" }, "description": { "zh": "周一的能量与可能发生的事件或情绪。", "en": "Monday's energy, likely events or emotional tone." } },
+        { "index": 2, "name": { "zh": "周二", "en": "Tuesday" }, "description": { "zh": "周二的能量与可能发生的事件或情绪。", "en": "Tuesday's energy, likely events or emotional tone." } },
+        { "index": 3, "name": { "zh": "周三", "en": "Wednesday" }, "description": { "zh": "周三的能量与可能发生的事件或情绪。", "en": "Wednesday's energy, likely events or emotional tone." } },
+        { "index": 4, "name": { "zh": "周四", "en": "Thursday" }, "description": { "zh": "周四的能量与可能发生的事件或情绪。", "en": "Thursday's energy, likely events or emotional tone." } },
+        { "index": 5, "name": { "zh": "周五", "en": "Friday" }, "description": { "zh": "周五的能量与可能发生的事件或情绪。", "en": "Friday's energy, likely events or emotional tone." } },
+        { "index": 6, "name": { "zh": "周六", "en": "Saturday" }, "description": { "zh": "周六的能量与可能发生的事件或情绪。", "en": "Saturday's energy, likely events or emotional tone." } },
+        { "index": 7, "name": { "zh": "周日", "en": "Sunday" }, "description": { "zh": "周日的能量与可能发生的事件或情绪。", "en": "Sunday's energy, likely events or emotional tone." } }
+      ],
+      "suitableFor": {
+        "zh": ["每周规划", "日常状态检查", "了解近期能量趋势"],
+        "en": ["Weekly planning", "Daily check-ins", "Understanding near-term energy trends"]
+      },
+      "readingTips": {
+        "zh": "解读时需观察各天牌面与中心指示牌的互动，判断每日能量是否与本周大背景对齐。注意能量流转的规律——是否某几天连续出现同一花色？",
+        "en": "Observe how each daily card interacts with the central significator. Note energy flow patterns — do consecutive days share the same suit?"
+      }
+    },
+    {
+      "id": "month-ahead",
+      "name": { "zh": "月运牌阵", "en": "The Month Ahead" },
+      "category": "time-prediction",
+      "description": {
+        "zh": "将接下来的四个星期分为四个阶段，每周分配两张牌并排放置，共八张牌，用于观察一个月内能量的演变过程。",
+        "en": "Divides the coming four weeks into stages with two cards per week (8 total), observing how energy evolves over the month."
+      },
+      "cardCount": 8,
+      "hasSignificator": false,
+      "positions": [
+        { "index": 0, "name": { "zh": "第一周·事件", "en": "Week 1 · Events" }, "description": { "zh": "第一周可能发生的主要事件或外部环境变化。", "en": "Main events or environmental changes likely in week one." } },
+        { "index": 1, "name": { "zh": "第一周·内在", "en": "Week 1 · Inner" }, "description": { "zh": "第一周你的内在感受或应对建议。", "en": "Your inner feelings or coping advice for week one." } },
+        { "index": 2, "name": { "zh": "第二周·事件", "en": "Week 2 · Events" }, "description": { "zh": "第二周可能发生的主要事件或外部环境变化。", "en": "Main events or environmental changes likely in week two." } },
+        { "index": 3, "name": { "zh": "第二周·内在", "en": "Week 2 · Inner" }, "description": { "zh": "第二周你的内在感受或应对建议。", "en": "Your inner feelings or coping advice for week two." } },
+        { "index": 4, "name": { "zh": "第三周·事件", "en": "Week 3 · Events" }, "description": { "zh": "第三周可能发生的主要事件或外部环境变化。", "en": "Main events or environmental changes likely in week three." } },
+        { "index": 5, "name": { "zh": "第三周·内在", "en": "Week 3 · Inner" }, "description": { "zh": "第三周你的内在感受或应对建议。", "en": "Your inner feelings or coping advice for week three." } },
+        { "index": 6, "name": { "zh": "第四周·事件", "en": "Week 4 · Events" }, "description": { "zh": "第四周可能发生的主要事件或外部环境变化。", "en": "Main events or environmental changes likely in week four." } },
+        { "index": 7, "name": { "zh": "第四周·内在", "en": "Week 4 · Inner" }, "description": { "zh": "第四周你的内在感受或应对建议。", "en": "Your inner feelings or coping advice for week four." } }
+      ],
+      "suitableFor": {
+        "zh": ["月度规划", "观察能量演变", "提前预警挑战时段"],
+        "en": ["Monthly planning", "Observing energy evolution", "Early warning of challenging periods"]
+      },
+      "readingTips": {
+        "zh": "需结合小阿尔卡那的数字进展逻辑，观察能量在四周内是逐渐增强（数字由小变大）还是面临阻碍。每周两张牌的组合关系也很重要。",
+        "en": "Follow Minor Arcana numerical progression — is energy growing (ascending numbers) or blocked? The relationship between each week's two-card pair matters."
+      }
+    },
+    {
+      "id": "year-ahead",
+      "name": { "zh": "年运牌阵", "en": "The Year Ahead" },
+      "category": "time-prediction",
+      "description": {
+        "zh": "最宏大的预测牌阵。中心放置一张指示牌总结年度主题，其余十二张像钟表表盘一样排列，从当前月份开始按顺时针方向代表一年中的十二个月。",
+        "en": "The grandest predictive spread. A central significator summarizes the year's theme; 12 cards arranged clockwise like a clock face represent the twelve months starting from the current month."
+      },
+      "cardCount": 13,
+      "hasSignificator": true,
+      "significatorRole": {
+        "zh": "总结年度主题和核心能量",
+        "en": "Summarizes the year's theme and core energy"
+      },
+      "positions": [
+        { "index": 0, "name": { "zh": "年度主题（指示牌）", "en": "Year Theme (Significator)" }, "description": { "zh": "代表整年的核心主题、总体能量走向和灵魂进化方向。", "en": "The year's core theme, overall energy direction, and soul evolution path." } },
+        { "index": 1, "name": { "zh": "第1个月", "en": "Month 1" }, "description": { "zh": "从当前月份开始，代表第一个月的能量。", "en": "Starting from the current month — energy of month one." } },
+        { "index": 2, "name": { "zh": "第2个月", "en": "Month 2" }, "description": { "zh": "第二个月的能量与趋势。", "en": "Energy and trends of month two." } },
+        { "index": 3, "name": { "zh": "第3个月", "en": "Month 3" }, "description": { "zh": "第三个月的能量与趋势。", "en": "Energy and trends of month three." } },
+        { "index": 4, "name": { "zh": "第4个月", "en": "Month 4" }, "description": { "zh": "第四个月的能量与趋势。", "en": "Energy and trends of month four." } },
+        { "index": 5, "name": { "zh": "第5个月", "en": "Month 5" }, "description": { "zh": "第五个月的能量与趋势。", "en": "Energy and trends of month five." } },
+        { "index": 6, "name": { "zh": "第6个月", "en": "Month 6" }, "description": { "zh": "第六个月的能量与趋势。", "en": "Energy and trends of month six." } },
+        { "index": 7, "name": { "zh": "第7个月", "en": "Month 7" }, "description": { "zh": "第七个月的能量与趋势。", "en": "Energy and trends of month seven." } },
+        { "index": 8, "name": { "zh": "第8个月", "en": "Month 8" }, "description": { "zh": "第八个月的能量与趋势。", "en": "Energy and trends of month eight." } },
+        { "index": 9, "name": { "zh": "第9个月", "en": "Month 9" }, "description": { "zh": "第九个月的能量与趋势。", "en": "Energy and trends of month nine." } },
+        { "index": 10, "name": { "zh": "第10个月", "en": "Month 10" }, "description": { "zh": "第十个月的能量与趋势。", "en": "Energy and trends of month ten." } },
+        { "index": 11, "name": { "zh": "第11个月", "en": "Month 11" }, "description": { "zh": "第十一个月的能量与趋势。", "en": "Energy and trends of month eleven." } },
+        { "index": 12, "name": { "zh": "第12个月", "en": "Month 12" }, "description": { "zh": "第十二个月的能量与趋势。", "en": "Energy and trends of month twelve." } }
+      ],
+      "suitableFor": {
+        "zh": ["新年展望", "长期人生规划", "审视年度重大转折点", "灵魂进化阶段"],
+        "en": ["New year outlook", "Long-term planning", "Identifying major turning points", "Soul evolution stages"]
+      },
+      "readingTips": {
+        "zh": "如果某个月份出现大阿尔卡那，预示该月将面临重大的人生转变或关键的生命教训。注意连续几个月的花色变化，可判断能量流转节奏。",
+        "en": "A Major Arcana in any month signals a major life transition or critical lesson. Watch suit changes across consecutive months to judge energy flow rhythm."
+      }
+    },
+    {
+      "id": "chakra",
+      "name": { "zh": "脉轮牌阵", "en": "Chakra Spread" },
+      "category": "spiritual",
+      "description": {
+        "zh": "按照人体七个主要脉轮的位置放置七张牌，从根轮到顶轮，全面探讨从生存安全到灵性目标的各个生命领域。",
+        "en": "Seven cards placed along the body's seven main chakras from root to crown, exploring all life domains from survival to spiritual purpose."
+      },
+      "cardCount": 7,
+      "positions": [
+        { "index": 0, "name": { "zh": "根轮·生存安全", "en": "Root · Survival & Security" }, "description": { "zh": "代表你的物质基础、安全感、身体健康和生存需求。对应海底轮（红色）。", "en": "Your material foundation, sense of security, physical health, and survival needs. Corresponds to the root chakra (red)." } },
+        { "index": 1, "name": { "zh": "脐轮·创造与情感", "en": "Sacral · Creativity & Emotion" }, "description": { "zh": "代表创造力、性欲、情感流动和快乐。对应脐轮（橙色）。", "en": "Creativity, sexuality, emotional flow, and pleasure. Corresponds to the sacral chakra (orange)." } },
+        { "index": 2, "name": { "zh": "太阳轮·力量与意志", "en": "Solar Plexus · Power & Will" }, "description": { "zh": "代表个人力量、自信、意志力和自我认同。对应太阳神经丛（黄色）。", "en": "Personal power, confidence, willpower, and self-identity. Corresponds to the solar plexus (yellow)." } },
+        { "index": 3, "name": { "zh": "心轮·爱与连接", "en": "Heart · Love & Connection" }, "description": { "zh": "代表爱、同理心、人际关系和情感治愈。对应心轮（绿色）。", "en": "Love, empathy, relationships, and emotional healing. Corresponds to the heart chakra (green)." } },
+        { "index": 4, "name": { "zh": "喉轮·沟通与表达", "en": "Throat · Communication & Expression" }, "description": { "zh": "代表自我表达、沟通能力、真实性和声音。对应喉轮（蓝色）。", "en": "Self-expression, communication, authenticity, and voice. Corresponds to the throat chakra (blue)." } },
+        { "index": 5, "name": { "zh": "眉心轮·直觉与洞察", "en": "Third Eye · Intuition & Insight" }, "description": { "zh": "代表直觉、内在智慧、清晰洞察和灵性觉知。对应第三眼（靛色）。", "en": "Intuition, inner wisdom, clarity of insight, and spiritual awareness. Corresponds to the third eye (indigo)." } },
+        { "index": 6, "name": { "zh": "顶轮·灵性与目标", "en": "Crown · Spirituality & Purpose" }, "description": { "zh": "代表灵性连接、人生使命、更高意识和宇宙智慧。对应顶轮（紫色/白色）。", "en": "Spiritual connection, life purpose, higher consciousness, and universal wisdom. Corresponds to the crown chakra (violet/white)." } }
+      ],
+      "suitableFor": {
+        "zh": ["身心灵平衡检查", "能量疗愈", "自我成长", "找到生活失衡的根源"],
+        "en": ["Mind-body-spirit balance check", "Energy healing", "Self-growth", "Finding the root of life imbalance"]
+      }
+    },
+    {
+      "id": "zodiac-houses",
+      "name": { "zh": "十二宫牌阵", "en": "Zodiac Spread" },
+      "category": "spiritual",
+      "description": {
+        "zh": "十二张牌对应占星十二宫位，全方位审视财务、家庭、创意、健康、事业等各生活领域。是最全面的生活全景扫描牌阵之一。",
+        "en": "Twelve cards corresponding to the twelve astrological houses — a panoramic scan of finances, family, creativity, health, career, and all life domains."
+      },
+      "cardCount": 12,
+      "positions": [
+        { "index": 0, "name": { "zh": "第一宫·自我", "en": "1st House · Self" }, "description": { "zh": "代表你的自我形象、外表、个人身份和整体态度。", "en": "Self-image, appearance, personal identity, and overall attitude." } },
+        { "index": 1, "name": { "zh": "第二宫·财务", "en": "2nd House · Finances" }, "description": { "zh": "代表金钱、物质资源、个人价值观和安全感。", "en": "Money, material resources, personal values, and sense of security." } },
+        { "index": 2, "name": { "zh": "第三宫·沟通", "en": "3rd House · Communication" }, "description": { "zh": "代表日常沟通、短途旅行、兄弟姐妹关系和学习。", "en": "Daily communication, short trips, sibling relationships, and learning." } },
+        { "index": 3, "name": { "zh": "第四宫·家庭", "en": "4th House · Home & Family" }, "description": { "zh": "代表家庭、家居环境、情感根基和内在安全感。", "en": "Home, family, emotional foundations, and inner security." } },
+        { "index": 4, "name": { "zh": "第五宫·创意与恋爱", "en": "5th House · Creativity & Romance" }, "description": { "zh": "代表创造力、恋爱、子女、娱乐和自我表达。", "en": "Creativity, romance, children, entertainment, and self-expression." } },
+        { "index": 5, "name": { "zh": "第六宫·健康与日常", "en": "6th House · Health & Routine" }, "description": { "zh": "代表日常工作、健康习惯、服务他人和生活规律。", "en": "Daily work, health habits, service to others, and routine." } },
+        { "index": 6, "name": { "zh": "第七宫·合作关系", "en": "7th House · Partnerships" }, "description": { "zh": "代表婚姻、商业伙伴、重要的一对一关系和公开的敌人。", "en": "Marriage, business partners, important one-on-one relationships, and open enemies." } },
+        { "index": 7, "name": { "zh": "第八宫·转化", "en": "8th House · Transformation" }, "description": { "zh": "代表深层转变、共同资源、继承、性、死亡与重生。", "en": "Deep transformation, shared resources, inheritance, sexuality, death and rebirth." } },
+        { "index": 8, "name": { "zh": "第九宫·探索", "en": "9th House · Exploration" }, "description": { "zh": "代表长途旅行、高等教育、哲学信仰和精神追求。", "en": "Long-distance travel, higher education, philosophical beliefs, and spiritual pursuits." } },
+        { "index": 9, "name": { "zh": "第十宫·事业", "en": "10th House · Career" }, "description": { "zh": "代表事业成就、社会地位、公众形象和人生方向。", "en": "Career achievements, social status, public image, and life direction." } },
+        { "index": 10, "name": { "zh": "第十一宫·社交与愿望", "en": "11th House · Social & Wishes" }, "description": { "zh": "代表友谊、社交网络、团体活动和对未来的愿望。", "en": "Friendships, social networks, group activities, and future wishes." } },
+        { "index": 11, "name": { "zh": "第十二宫·潜意识", "en": "12th House · Subconscious" }, "description": { "zh": "代表潜意识、隐藏的敌人、精神世界、业力和灵性成长。", "en": "Subconscious, hidden enemies, spiritual world, karma, and spiritual growth." } }
+      ],
+      "suitableFor": {
+        "zh": ["年度全景审视", "全方位生活诊断", "与占星结合的深度分析"],
+        "en": ["Annual panoramic review", "Full-spectrum life diagnosis", "Deep analysis combined with astrology"]
+      }
+    },
+    {
+      "id": "tree-of-life",
+      "name": { "zh": "生命之树牌阵", "en": "Tree of Life Spread" },
+      "category": "spiritual",
+      "description": {
+        "zh": "基于卡巴拉十个原质（Sephirots）的位置放置十张牌，可用于世俗决策分析（责任、支持、隐藏因素）或纯粹的灵性洞察。",
+        "en": "Ten cards placed according to Kabbalistic Sephirots — usable for mundane decision analysis (responsibilities, support, hidden factors) or pure spiritual insight."
+      },
+      "cardCount": 10,
+      "positions": [
+        { "index": 0, "name": { "zh": "王冠·最高理想", "en": "Keter · Highest Ideal" }, "description": { "zh": "代表灵性源头、最高理想和神性火花。你灵魂层面的终极追求。", "en": "Spiritual source, highest ideal, and divine spark. Your soul's ultimate pursuit." } },
+        { "index": 1, "name": { "zh": "智慧·灵感", "en": "Chokmah · Wisdom" }, "description": { "zh": "代表原始智慧、灵感闪现和创造性的原动力。", "en": "Primal wisdom, flashes of inspiration, and the creative prime mover." } },
+        { "index": 2, "name": { "zh": "理解·形式", "en": "Binah · Understanding" }, "description": { "zh": "代表深层理解、形式与结构、以及将灵感具象化的能力。", "en": "Deep understanding, form and structure, and the ability to materialize inspiration." } },
+        { "index": 3, "name": { "zh": "慈悲·扩展", "en": "Chesed · Mercy" }, "description": { "zh": "代表慈悲、扩展、丰盛和恩典。外部支持与祝福的来源。", "en": "Mercy, expansion, abundance, and grace. Source of external support and blessings." } },
+        { "index": 4, "name": { "zh": "严厉·界限", "en": "Geburah · Severity" }, "description": { "zh": "代表纪律、界限、力量和必要的裁减。需要面对的严格考验。", "en": "Discipline, boundaries, strength, and necessary pruning. Stern tests to face." } },
+        { "index": 5, "name": { "zh": "美·平衡", "en": "Tiphareth · Beauty" }, "description": { "zh": "代表和谐、平衡、自我意识的核心。连接高层与低层的桥梁。", "en": "Harmony, balance, core self-awareness. The bridge between higher and lower realms." } },
+        { "index": 6, "name": { "zh": "胜利·情感", "en": "Netzach · Victory" }, "description": { "zh": "代表情感、欲望、艺术和人际关系中的热情。", "en": "Emotions, desires, artistry, and passion in relationships." } },
+        { "index": 7, "name": { "zh": "荣耀·智力", "en": "Hod · Glory" }, "description": { "zh": "代表逻辑、沟通、智力分析和精确的思维。", "en": "Logic, communication, intellectual analysis, and precise thinking." } },
+        { "index": 8, "name": { "zh": "基础·潜意识", "en": "Yesod · Foundation" }, "description": { "zh": "代表潜意识、梦境、直觉和情感根基。物质显化之前的模板。", "en": "Subconscious, dreams, intuition, and emotional foundation. The template before material manifestation." } },
+        { "index": 9, "name": { "zh": "王国·物质现实", "en": "Malkuth · Kingdom" }, "description": { "zh": "代表物质世界、日常现实、身体和最终的显化结果。", "en": "Material world, everyday reality, the body, and final manifestation." } }
+      ],
+      "suitableFor": {
+        "zh": ["灵性洞察", "深层自我探索", "理解责任与支持的来源", "卡巴拉研究"],
+        "en": ["Spiritual insight", "Deep self-exploration", "Understanding sources of duty and support", "Kabbalah study"]
+      }
+    }
+  ]
+}

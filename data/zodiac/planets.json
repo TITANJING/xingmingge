@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "description": "十大行星基础数据",
+    "description_en": "Ten Major Planets Base Data",
+    "lastUpdated": "2026-03-30"
+  },
+  "planets": [
+    {
+      "id": "sun",
+      "name": {
+        "zh": "太阳",
+        "en": "Sun"
+      },
+      "symbol": "☉",
+      "keywords": {
+        "zh": ["自我", "意志", "生命力", "创造力", "权威", "自信", "中心"],
+        "en": ["Self", "Will", "Vitality", "Creativity", "Authority", "Confidence", "Center"]
+      },
+      "rules": ["leo"],
+      "exaltedIn": "aries",
+      "debilitatedIn": "libra",
+      "category": {
+        "zh": "个人行星",
+        "en": "Personal Planet"
+      },
+      "description": {
+        "zh": "太阳代表你的核心自我、意志力和生命的主要驱动力。它象征着个人的本质身份、自我认同和人生追求的中心。太阳是你最想成为的人，是你内在光芒和创造力的源头。",
+        "en": "The Sun represents your core self, willpower, and primary life force. It symbolizes the essential identity, self-recognition, and central purpose of life. The Sun is who you aspire to be, the source of your inner light and creative power."
+      },
+      "inChartMeaning": {
+        "zh": "太阳星座是大多数人熟知的星座，它定义了你的基本性格、自我认同和人生方向。太阳的宫位则显示你在哪个生活领域最能发光发热、获得认可和成就感。",
+        "en": "Your Sun sign is what most people recognize as your zodiac sign. It defines your basic personality, self-identity, and life direction. The Sun's house placement shows where you shine brightest, gain recognition, and achieve fulfillment."
+      }
+    },
+    {
+      "id": "moon",
+      "name": {
+        "zh": "月亮",
+        "en": "Moon"
+      },
+      "symbol": "☽",
+      "keywords": {
+        "zh": ["情感", "本能", "内心世界", "无意识", "习惯", "母性", "安全感"],
+        "en": ["Emotions", "Instincts", "Inner World", "Subconscious", "Habits", "Motherhood", "Security"]
+      },
+      "rules": ["cancer"],
+      "exaltedIn": "taurus",
+      "debilitatedIn": "scorpio",
+      "category": {
+        "zh": "个人行星",
+        "en": "Personal Planet"
+      },
+      "description": {
+        "zh": "月亮代表你的情感世界、本能反应和内心的真实需求。它反映了你的无意识心理、情绪模式和对安全感的渴望。月亮是你最私密的自我，影响着你的习惯、记忆和情感反应方式。",
+        "en": "The Moon represents your emotional world, instinctive reactions, and authentic inner needs. It reflects your subconscious psyche, emotional patterns, and desire for security. The Moon is your most private self, influencing your habits, memories, and emotional responses."
+      },
+      "inChartMeaning": {
+        "zh": "月亮星座代表你真实的情感需求和内在气质，往往比太阳星座更能反映你在亲近的人面前的真实面目。月亮的宫位指示你在何处寻求情感滋养和归属感。",
+        "en": "Your Moon sign represents your authentic emotional needs and inner nature, often reflecting your true self with those closest to you better than your Sun sign. The Moon's house placement shows where you seek emotional nourishment and belonging."
+      }
+    },
+    {
+      "id": "mercury",
+      "name": {
+        "zh": "水星",
+        "en": "Mercury"
+      },
+      "symbol": "☿",
+      "keywords": {
+        "zh": ["沟通", "思维", "理性", "学习", "兄弟姐妹", "短途旅行", "交易"],
+        "en": ["Communication", "Intellect", "Reason", "Learning", "Siblings", "Short Journeys", "Commerce"]
+      },
+      "rules": ["gemini", "virgo"],
+      "exaltedIn": "virgo",
+      "debilitatedIn": "pisces",
+      "category": {
+        "zh": "个人行星",
+        "en": "Personal Planet"
+      },
+      "description": {
+        "zh": "水星代表你的思维方式、沟通能力和智力表达。它掌管理性思考、语言、写作和信息交流。水星象征着好奇心、学习能力和与周围世界的联系方式。",
+        "en": "Mercury represents your thinking style, communication ability, and intellectual expression. It governs rational thought, language, writing, and information exchange. Mercury symbolizes curiosity, learning capacity, and how you connect with the world."
+      },
+      "inChartMeaning": {
+        "zh": "水星星座决定了你的思维风格、说话方式和学习方法。你如何理解信息、表达想法和进行逻辑分析都受到水星的影响。水星的宫位显示沟通在你生活中扮演重要角色的领域。",
+        "en": "Your Mercury sign determines your thinking style, manner of speech, and learning approach. How you understand information, express ideas, and analyze logically are all influenced by Mercury. Mercury's house shows where communication plays a vital role in your life."
+      }
+    },
+    {
+      "id": "venus",
+      "name": {
+        "zh": "金星",
+        "en": "Venus"
+      },
+      "symbol": "♀",
+      "keywords": {
+        "zh": ["爱情", "美", "价值观", "关系", "艺术", "享受", "财务"],
+        "en": ["Love", "Beauty", "Values", "Relationships", "Art", "Pleasure", "Finance"]
+      },
+      "rules": ["taurus", "libra"],
+      "exaltedIn": "pisces",
+      "debilitatedIn": "virgo",
+      "category": {
+        "zh": "个人行星",
+        "en": "Personal Planet"
+      },
+      "description": {
+        "zh": "金星代表你对爱、美和价值的追求。它掌管你的审美品味、人际关系方式和物质享受的态度。金星反映了你在爱情中的需求、吸引力和如何表达亲密。",
+        "en": "Venus represents your pursuit of love, beauty, and value. It governs your aesthetic taste, relational approach, and attitude toward material pleasure. Venus reflects your romantic needs, attractiveness, and how you express intimacy."
+      },
+      "inChartMeaning": {
+        "zh": "金星星座显示你的爱情风格、审美偏好和如何建立亲密关系。它影响你吸引什么样的人，以及你在感情中表现出的特质。金星的宫位指示爱情和美在你生活中展现的具体领域。",
+        "en": "Your Venus sign shows your romantic style, aesthetic preferences, and how you build intimacy. It influences what type of partner attracts you and what qualities you display in relationships. Venus's house indicates where love and beauty manifest in your life."
+      }
+    },
+    {
+      "id": "mars",
+      "name": {
+        "zh": "火星",
+        "en": "Mars"
+      },
+      "symbol": "♂",
+      "keywords": {
+        "zh": ["行动", "欲望", "能量", "勇气", "冲突", "性欲", "竞争"],
+        "en": ["Action", "Desire", "Energy", "Courage", "Conflict", "Sexuality", "Competition"]
+      },
+      "rules": ["aries", "scorpio"],
+      "exaltedIn": "capricorn",
+      "debilitatedIn": "cancer",
+      "category": {
+        "zh": "个人行星",
+        "en": "Personal Planet"
+      },
+      "description": {
+        "zh": "火星代表你的行动力、欲望和追求目标的动力。它象征着勇气、激情和面对挑战的精神。火星掌管你的性能量、竞争本能和如何争取自己想要的东西。",
+        "en": "Mars represents your drive to act, your desires, and the force that propels you toward goals. It symbolizes courage, passion, and your spirit in facing challenges. Mars governs your sexual energy, competitive instinct, and how you assert yourself."
+      },
+      "inChartMeaning": {
+        "zh": "火星星座显示你的行动风格、欲望表达方式和应对冲突的方法。它决定了你的激情程度、耐心度和争取目标时的策略。火星的宫位指示你将精力投入到哪个生活领域。",
+        "en": "Your Mars sign shows your action style, how you express desires, and your approach to conflict. It determines your level of passion, patience, and strategy in pursuing goals. Mars's house indicates which life area demands your active energy."
+      }
+    },
+    {
+      "id": "jupiter",
+      "name": {
+        "zh": "木星",
+        "en": "Jupiter"
+      },
+      "symbol": "♃",
+      "keywords": {
+        "zh": ["扩展", "幸运", "智慧", "成长", "乐观", "哲学", "慷慨"],
+        "en": ["Expansion", "Luck", "Wisdom", "Growth", "Optimism", "Philosophy", "Generosity"]
+      },
+      "rules": ["sagittarius", "pisces"],
+      "exaltedIn": "cancer",
+      "debilitatedIn": "capricorn",
+      "category": {
+        "zh": "社会行星",
+        "en": "Social Planet"
+      },
+      "description": {
+        "zh": "木星代表扩展、成长和好运。它象征着乐观精神、学习欲望和超越局限的能力。木星掌管信仰系统、哲学思想和生活中的幸运机遇。",
+        "en": "Jupiter represents expansion, growth, and good fortune. It symbolizes optimism, desire for learning, and ability to transcend limitations. Jupiter governs belief systems, philosophical thinking, and fortunate opportunities in life."
+      },
+      "inChartMeaning": {
+        "zh": "木星星座反映你的乐观态度、道德准则和寻求意义的方式。它显示你自然倾向于扩展和成长的领域。木星的宫位指示幸运最容易降临的生活领域，以及你最能体验成功和满足感的地方。",
+        "en": "Your Jupiter sign reflects your optimistic attitude, moral principles, and way of seeking meaning. It shows where you naturally tend toward expansion and growth. Jupiter's house indicates where luck most easily finds you and where you experience greatest success and satisfaction."
+      }
+    },
+    {
+      "id": "saturn",
+      "name": {
+        "zh": "土星",
+        "en": "Saturn"
+      },
+      "symbol": "♄",
+      "keywords": {
+        "zh": ["纪律", "结构", "责任", "限制", "时间", "成熟", "教训"],
+        "en": ["Discipline", "Structure", "Responsibility", "Limitation", "Time", "Maturity", "Lessons"]
+      },
+      "rules": ["capricorn", "aquarius"],
+      "exaltedIn": "libra",
+      "debilitatedIn": "aries",
+      "category": {
+        "zh": "社会行星",
+        "en": "Social Planet"
+      },
+      "description": {
+        "zh": "土星代表责任、结构和成熟的过程。它象征着生活中的考验、限制和通过努力取得的成就。土星掌管时间、衰老和通过纪律获得真正的权力。",
+        "en": "Saturn represents responsibility, structure, and the process of maturation. It symbolizes trials, limitations, and achievements through effort. Saturn governs time, aging, and genuine authority earned through discipline."
+      },
+      "inChartMeaning": {
+        "zh": "土星星座显示你的责任感、成熟度和生活中需要克服的挑战。它指示你通过纪律和努力能够建立起什么。土星的宫位代表你需要投入最多耐心和责任的生活领域，也是你能够获得持久成果的地方。",
+        "en": "Your Saturn sign shows your sense of responsibility, maturity level, and challenges you must overcome. It indicates what you can build through discipline and effort. Saturn's house represents the life area requiring most patience and responsibility, where you can achieve lasting results."
+      }
+    },
+    {
+      "id": "uranus",
+      "name": {
+        "zh": "天王星",
+        "en": "Uranus"
+      },
+      "symbol": "♅",
+      "keywords": {
+        "zh": ["创新", "反叛", "突变", "自由", "独特", "革命", "未来"],
+        "en": ["Innovation", "Rebellion", "Sudden Change", "Freedom", "Uniqueness", "Revolution", "Future"]
+      },
+      "rules": ["aquarius"],
+      "exaltedIn": null,
+      "debilitatedIn": null,
+      "category": {
+        "zh": "超越人格行星",
+        "en": "Transpersonal Planet"
+      },
+      "description": {
+        "zh": "天王星代表创新、突变和对自由的渴望。它象征着打破传统、革新思想和超越常规的能力。天王星掌管发明、科技进步和个人的独特性。",
+        "en": "Uranus represents innovation, sudden change, and the desire for freedom. It symbolizes breaking tradition, revolutionary thinking, and ability to transcend convention. Uranus governs invention, technological progress, and personal uniqueness."
+      },
+      "inChartMeaning": {
+        "zh": "天王星在你星盘中的位置显示你在哪个领域具有创新天赋或倾向于打破常规。它反映了你个人的独特性和追求自由的方式。天王星的宫位指示突然变化和新机遇最可能出现的生活领域。",
+        "en": "Uranus's placement in your chart shows where you have innovative talent or tend to break rules. It reflects your personal uniqueness and way of pursuing freedom. Uranus's house indicates the life area where sudden changes and new opportunities are most likely to occur."
+      }
+    },
+    {
+      "id": "neptune",
+      "name": {
+        "zh": "海王星",
+        "en": "Neptune"
+      },
+      "symbol": "♆",
+      "keywords": {
+        "zh": ["梦想", "直觉", "灵性", "幻想", "同情", "溶解", "理想主义"],
+        "en": ["Dreams", "Intuition", "Spirituality", "Fantasy", "Compassion", "Dissolution", "Idealism"]
+      },
+      "rules": ["pisces"],
+      "exaltedIn": null,
+      "debilitatedIn": null,
+      "category": {
+        "zh": "超越人格行星",
+        "en": "Transpersonal Planet"
+      },
+      "description": {
+        "zh": "海王星代表梦想、直觉和精神追求。它象征着超越物质世界的能力、艺术创意和对理想的向往。海王星掌管幻想、同情心和对终极真理的追寻。",
+        "en": "Neptune represents dreams, intuition, and spiritual pursuit. It symbolizes ability to transcend the material world, artistic creativity, and aspiration toward ideals. Neptune governs fantasy, compassion, and the search for ultimate truth."
+      },
+      "inChartMeaning": {
+        "zh": "海王星在你星盘中的位置揭示你的精神倾向、艺术才能和理想主义梦想。它也显示了你容易迷茫或自欺欺人的领域。海王星的宫位指示你的创意表达、灵性渴望和需要保持清晰的生活领域。",
+        "en": "Neptune's placement in your chart reveals your spiritual inclinations, artistic talents, and idealistic dreams. It also shows where you may be prone to confusion or self-deception. Neptune's house indicates your creative expression, spiritual yearnings, and areas requiring clarity."
+      }
+    },
+    {
+      "id": "pluto",
+      "name": {
+        "zh": "冥王星",
+        "en": "Pluto"
+      },
+      "symbol": "♇",
+      "keywords": {
+        "zh": ["转变", "力量", "重生", "深度", "执念", "潜意识", "极端"],
+        "en": ["Transformation", "Power", "Rebirth", "Depth", "Obsession", "Subconscious", "Extremes"]
+      },
+      "rules": ["scorpio"],
+      "exaltedIn": null,
+      "debilitatedIn": null,
+      "category": {
+        "zh": "超越人格行星",
+        "en": "Transpersonal Planet"
+      },
+      "description": {
+        "zh": "冥王星代表深刻的转变、力量和重生。它象征着生死循环、潜在的深层力量和通过破坏而重新开始的能力。冥王星掌管隐藏的事物、强烈的情感和生命中的关键转折。",
+        "en": "Pluto represents deep transformation, power, and rebirth. It symbolizes cycles of death and regeneration, hidden depths, and the ability to start anew through destruction. Pluto governs hidden matters, intense emotions, and pivotal turning points in life."
+      },
+      "inChartMeaning": {
+        "zh": "冥王星在你星盘中的位置显示你在哪个领域会经历深刻的转变和重生。它指示你内在的强大力量以及需要学会释放和重生的课题。冥王星的宫位代表你人生中最具变革性的领域，也是你能够体验最深刻成长的地方。",
+        "en": "Pluto's placement in your chart shows where you undergo deep transformation and rebirth. It indicates your inner power and areas where you must learn to release and be reborn. Pluto's house represents the most transformative area of your life, where you can experience profound growth."
+      }
+    }
+  ]
+}

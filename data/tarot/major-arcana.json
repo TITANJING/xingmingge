@@ -1,0 +1,532 @@
+{
+  "majorArcana": [
+    {
+      "id": 0,
+      "name": {
+        "zh": "愚者",
+        "en": "The Fool"
+      },
+      "keywords": {
+        "zh": ["新开始", "冒险", "天真", "自由", "信任"],
+        "en": ["new beginnings", "adventure", "innocence", "spontaneity", "trust"]
+      },
+      "upright": {
+        "zh": "愚者代表新的开始和未知的冒险。这张牌象征着天真无邪的精神、对生活的信任和无限的可能性。它鼓励你采取跳跃性的行动，相信宇宙会为你指引方向。",
+        "en": "The Fool represents new beginnings and venturing into the unknown. This card embodies innocence, faith in life, and unlimited potential. It encourages you to take bold leaps and trust that the universe will guide your path."
+      },
+      "reversed": {
+        "zh": "逆位的愚者表示鲁莽、缺乏判断力和不负责任的行为。它警告你可能做出仓促的决定，忽视现实中的危险信号。需要更加谨慎和理性地评估局势。",
+        "en": "Reversed, The Fool indicates recklessness, poor judgment, and irresponsible behavior. It warns against hasty decisions and ignoring warning signs. You need to be more cautious and rational in assessing situations."
+      },
+      "element": {
+        "zh": "风",
+        "en": "Air"
+      },
+      "association": "Uranus"
+    },
+    {
+      "id": 1,
+      "name": {
+        "zh": "魔术师",
+        "en": "The Magician"
+      },
+      "keywords": {
+        "zh": ["才能", "力量", "行动", "创造力", "意愿"],
+        "en": ["talent", "power", "action", "creativity", "willpower"]
+      },
+      "upright": {
+        "zh": "魔术师代表你拥有实现目标的所有工具和资源。这张牌象征着力量、专注、创造力和个人动力。它表示你有能力将想法转变为现实，掌握命运在自己的手中。",
+        "en": "The Magician represents having all the tools and resources needed to manifest your goals. This card symbolizes power, focus, creativity, and personal drive. It indicates your ability to turn ideas into reality and take control of your destiny."
+      },
+      "reversed": {
+        "zh": "逆位的魔术师显示你可能在浪费才能或缺乏方向感。这可能表示欺骗、操纵或使用不道德的方法。需要重新评估你的目的和行动方式。",
+        "en": "Reversed, The Magician suggests wasted talent or lack of direction. It may indicate deception, manipulation, or unethical methods. You need to reassess your intentions and the means you're using."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Mercury"
+    },
+    {
+      "id": 2,
+      "name": {
+        "zh": "女祭司",
+        "en": "The High Priestess"
+      },
+      "keywords": {
+        "zh": ["直觉", "神秘", "潜意识", "秘密", "寂静"],
+        "en": ["intuition", "mystery", "subconscious", "secrets", "silence"]
+      },
+      "upright": {
+        "zh": "女祭司代表内在的智慧、直觉和神秘的知识。这张牌鼓励你倾听内心的声音，相信你的直觉感受。它表示答案就在你的内心，需要安静和内省来发现真相。",
+        "en": "The High Priestess represents inner wisdom, intuition, and esoteric knowledge. This card encourages you to listen to your inner voice and trust your intuitive insights. The answers lie within; seek them through quiet reflection."
+      },
+      "reversed": {
+        "zh": "逆位的女祭司表示忽视直觉或信息被隐藏。这可能显示沟通不足、自欺欺人或无法理解深层含义。需要更加开放和诚实地面对真相。",
+        "en": "Reversed, The High Priestess indicates ignored intuition or hidden information. It may show poor communication, self-deception, or inability to grasp deeper meaning. Be more open and honest in confronting the truth."
+      },
+      "element": {
+        "zh": "水",
+        "en": "Water"
+      },
+      "association": "Moon"
+    },
+    {
+      "id": 3,
+      "name": {
+        "zh": "皇后",
+        "en": "The Empress"
+      },
+      "keywords": {
+        "zh": ["丰饶", "美丽", "创意", "自然", "母性"],
+        "en": ["fertility", "beauty", "creativity", "nature", "nurturing"]
+      },
+      "upright": {
+        "zh": "皇后代表丰饶、创意和女性力量的绽放。这张牌象征着美丽、舒适和自然界的恩赐。它表示你处于生产力高昂的时期，所有事物都在生长和繁荣。",
+        "en": "The Empress represents fertility, creativity, and the blossoming of feminine power. This card symbolizes beauty, comfort, and nature's gifts. It indicates a period of high productivity where all things grow and flourish."
+      },
+      "reversed": {
+        "zh": "逆位的皇后显示创意被阻挡或物质缺乏。这可能表示内在的不安全感、依赖或过度保护。需要重新发现你的创意力量和独立性。",
+        "en": "Reversed, The Empress shows blocked creativity or material lack. It may indicate insecurity, dependence, or overprotection. Reconnect with your creative power and independence."
+      },
+      "element": {
+        "zh": "土",
+        "en": "Earth"
+      },
+      "association": "Venus"
+    },
+    {
+      "id": 4,
+      "name": {
+        "zh": "皇帝",
+        "en": "The Emperor"
+      },
+      "keywords": {
+        "zh": ["权威", "力量", "稳定", "领导", "秩序"],
+        "en": ["authority", "power", "stability", "leadership", "order"]
+      },
+      "upright": {
+        "zh": "皇帝代表权力、权威和世俗的控制。这张牌象征着强大的领导力、逻辑思维和建立秩序的能力。它表示你有能力掌控局面，建立坚实的基础。",
+        "en": "The Emperor represents power, authority, and worldly control. This card symbolizes strong leadership, logical thinking, and the ability to establish order. It shows you can take charge and build solid foundations."
+      },
+      "reversed": {
+        "zh": "逆位的皇帝表示权力的滥用或缺乏自制力。这可能显示专制、控制欲强或无法承担责任。需要反思你的权力运用方式。",
+        "en": "Reversed, The Emperor indicates abuse of power or lack of self-control. It may show tyranny, controlling behavior, or failure to take responsibility. Reflect on how you wield power."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Aries"
+    },
+    {
+      "id": 5,
+      "name": {
+        "zh": "教皇",
+        "en": "The Hierophant"
+      },
+      "keywords": {
+        "zh": ["传统", "信念", "灵性", "指导", "伦理"],
+        "en": ["tradition", "belief", "spirituality", "guidance", "ethics"]
+      },
+      "upright": {
+        "zh": "教皇代表精神指导、信念系统和传统智慧。这张牌象征着道德规范、教育和与更高权力的联系。它表示你需要寻求指导或传播你的信念给他人。",
+        "en": "The Hierophant represents spiritual guidance, belief systems, and traditional wisdom. This card symbolizes morality, education, and connection to higher power. It suggests seeking guidance or sharing your beliefs with others."
+      },
+      "reversed": {
+        "zh": "逆位的教皇表示教条或宗教束缚。这可能显示背离传统、精神觉醒或质疑权威。需要找到自己的精神真理。",
+        "en": "Reversed, The Hierophant indicates dogma or religious restriction. It may show breaking from tradition, spiritual awakening, or questioning authority. Find your own spiritual truth."
+      },
+      "element": {
+        "zh": "土",
+        "en": "Earth"
+      },
+      "association": "Taurus"
+    },
+    {
+      "id": 6,
+      "name": {
+        "zh": "恋人",
+        "en": "The Lovers"
+      },
+      "keywords": {
+        "zh": ["爱", "关系", "选择", "价值观", "和谐"],
+        "en": ["love", "relationships", "choice", "values", "harmony"]
+      },
+      "upright": {
+        "zh": "恋人代表爱、关系和深层的连接。这张牌象征着重要的选择和价值观的对齐。它表示爱情、伙伴关系或与他人建立真实的灵魂连接。",
+        "en": "The Lovers represent love, relationships, and deep connection. This card symbolizes important choices and alignment of values. It indicates love, partnership, or authentic soulful connection with another."
+      },
+      "reversed": {
+        "zh": "逆位的恋人显示关系不和或价值观冲突。这可能表示分离、误解或难以做出选择。需要重新评估你对爱和关系的认识。",
+        "en": "Reversed, The Lovers show relationship discord or conflicting values. It may indicate separation, misunderstanding, or difficulty making choices. Reassess what you truly value in love and relationships."
+      },
+      "element": {
+        "zh": "风",
+        "en": "Air"
+      },
+      "association": "Gemini"
+    },
+    {
+      "id": 7,
+      "name": {
+        "zh": "战车",
+        "en": "The Chariot"
+      },
+      "keywords": {
+        "zh": ["意志", "胜利", "控制", "决心", "前进"],
+        "en": ["willpower", "victory", "control", "determination", "forward momentum"]
+      },
+      "upright": {
+        "zh": "战车代表意志力、胜利和控制。这张牌象征着确定的方向、克服障碍和取得成功。它表示你拥有推动自己前进所需的力量和决心。",
+        "en": "The Chariot represents willpower, victory, and control. This card symbolizes a clear direction, overcoming obstacles, and achieving success. It shows you have the strength and determination to move forward."
+      },
+      "reversed": {
+        "zh": "逆位的战车表示缺乏方向或失控。这可能显示冲动的行为、内部冲突或被外部力量阻挡。需要重新获得对局面的控制。",
+        "en": "Reversed, The Chariot indicates lack of direction or loss of control. It may show rash behavior, internal conflict, or being blocked by external forces. Regain control of your situation."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Cancer"
+    },
+    {
+      "id": 8,
+      "name": {
+        "zh": "力量",
+        "en": "Strength"
+      },
+      "keywords": {
+        "zh": ["内在力量", "勇气", "耐心", "温柔", "自信"],
+        "en": ["inner strength", "courage", "patience", "gentleness", "confidence"]
+      },
+      "upright": {
+        "zh": "力量代表内在的勇气、忍耐和温柔的力量。这张牌象征着精神上的力量大于物质力量，以及驯服困难的能力。它表示通过慈悲和理解来克服挑战。",
+        "en": "Strength represents inner courage, patience, and gentle power. This card symbolizes spiritual strength exceeding physical force, and the ability to tame difficulties. It shows overcoming challenges through compassion and understanding."
+      },
+      "reversed": {
+        "zh": "逆位的力量显示内在虚弱或力量的误用。这可能表示自我怀疑、缺乏勇气或对他人的控制。需要重新建立你的内在力量。",
+        "en": "Reversed, Strength shows inner weakness or misuse of power. It may indicate self-doubt, lack of courage, or controlling others. Rebuild your inner strength and confidence."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Leo"
+    },
+    {
+      "id": 9,
+      "name": {
+        "zh": "隐者",
+        "en": "The Hermit"
+      },
+      "keywords": {
+        "zh": ["内省", "独处", "智慧", "寻求", "灯光"],
+        "en": ["introspection", "solitude", "wisdom", "seeking", "illumination"]
+      },
+      "upright": {
+        "zh": "隐者代表内省、精神寻求和智慧的追求。这张牌象征着向内看、寻求真理和灵性觉醒。它表示你需要时间独处以发现内在的光芒和答案。",
+        "en": "The Hermit represents introspection, spiritual seeking, and the pursuit of wisdom. This card symbolizes looking inward, seeking truth, and spiritual awakening. It shows you need solitude to discover inner light and answers."
+      },
+      "reversed": {
+        "zh": "逆位的隐者表示孤立或拒绝指导。这可能显示过度内省、社交隔离或失去方向。需要重新与世界和他人连接。",
+        "en": "Reversed, The Hermit indicates isolation or refusal of guidance. It may show excessive introspection, social withdrawal, or losing direction. Reconnect with the world and others."
+      },
+      "element": {
+        "zh": "土",
+        "en": "Earth"
+      },
+      "association": "Virgo"
+    },
+    {
+      "id": 10,
+      "name": {
+        "zh": "命运之轮",
+        "en": "Wheel of Fortune"
+      },
+      "keywords": {
+        "zh": ["命运", "周期", "机运", "转机", "业力"],
+        "en": ["destiny", "cycles", "luck", "turning point", "karma"]
+      },
+      "upright": {
+        "zh": "命运之轮代表命运的转变和好运的到来。这张牌象征着生活的自然周期、机会和因果循环。它表示好事即将降临，命运正在你的方向转变。",
+        "en": "Wheel of Fortune represents turning destiny and the arrival of good luck. This card symbolizes life's natural cycles, opportunities, and karmic circles. It shows good things are coming and destiny is turning in your favor."
+      },
+      "reversed": {
+        "zh": "逆位的命运之轮显示坏运气或不受欢迎的变化。这可能表示失控感或被动接受命运。需要主动创造你自己的幸运。",
+        "en": "Reversed, Wheel of Fortune shows bad luck or unwanted change. It may indicate loss of control or passive acceptance of fate. Take active steps to create your own luck."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Jupiter"
+    },
+    {
+      "id": 11,
+      "name": {
+        "zh": "正义",
+        "en": "Justice"
+      },
+      "keywords": {
+        "zh": ["公正", "真实", "平衡", "法律", "责任"],
+        "en": ["justice", "truth", "balance", "law", "accountability"]
+      },
+      "upright": {
+        "zh": "正义代表平衡、真实和公正的行为。这张牌象征着法律问题的解决、诚实的沟通和道德责任。它表示因果报应和公正的结果。",
+        "en": "Justice represents balance, truth, and fair dealing. This card symbolizes resolution of legal matters, honest communication, and moral responsibility. It shows cause and effect, and just outcomes."
+      },
+      "reversed": {
+        "zh": "逆位的正义表示不公平或逃避责任。这可能显示法律困难、偏见或说谎。需要面对真相并承担责任。",
+        "en": "Reversed, Justice indicates unfairness or evading responsibility. It may show legal troubles, bias, or dishonesty. Face the truth and take accountability."
+      },
+      "element": {
+        "zh": "风",
+        "en": "Air"
+      },
+      "association": "Libra"
+    },
+    {
+      "id": 12,
+      "name": {
+        "zh": "倒吊人",
+        "en": "The Hanged Man"
+      },
+      "keywords": {
+        "zh": ["牺牲", "暂停", "放手", "新视角", "灵性"],
+        "en": ["sacrifice", "pause", "letting go", "new perspective", "spirituality"]
+      },
+      "upright": {
+        "zh": "倒吊人代表放手、看待事物的新角度和灵性的转变。这张牌象征着必要的牺牲和停顿以获得更深的理解。它表示投降于命运的安排会带来启蒙。",
+        "en": "The Hanged Man represents letting go, new perspective, and spiritual transformation. This card symbolizes necessary sacrifice and pause for deeper understanding. It shows surrender to fate brings enlightenment."
+      },
+      "reversed": {
+        "zh": "逆位的倒吊人表示拒绝改变或避免学习课程。这可能显示固执或无法看到新的视角。需要学会放手和接受变化。",
+        "en": "Reversed, The Hanged Man indicates refusal to change or avoiding a lesson. It may show stubbornness or inability to see new perspectives. Learn to let go and accept change."
+      },
+      "element": {
+        "zh": "水",
+        "en": "Water"
+      },
+      "association": "Neptune"
+    },
+    {
+      "id": 13,
+      "name": {
+        "zh": "死神",
+        "en": "Death"
+      },
+      "keywords": {
+        "zh": ["转变", "结束", "新开始", "过渡", "释放"],
+        "en": ["transformation", "endings", "new beginnings", "transition", "release"]
+      },
+      "upright": {
+        "zh": "死神代表重大的转变和必要的结束。这张牌象征着新时代的开始和过时事物的离去。它表示通过变化和转变实现重生。",
+        "en": "Death represents major transformation and necessary endings. This card symbolizes the beginning of a new era and release of what's outworn. It shows rebirth through change and transition."
+      },
+      "reversed": {
+        "zh": "逆位的死神表示抗拒变化或停滞。这可能显示害怕放手或被困在过去。需要接受变化的必要性。",
+        "en": "Reversed, Death indicates resistance to change or stagnation. It may show fear of letting go or being stuck in the past. Accept the necessity of change."
+      },
+      "element": {
+        "zh": "水",
+        "en": "Water"
+      },
+      "association": "Scorpio"
+    },
+    {
+      "id": 14,
+      "name": {
+        "zh": "节制",
+        "en": "Temperance"
+      },
+      "keywords": {
+        "zh": ["平衡", "调和", "耐心", "温和", "自制"],
+        "en": ["balance", "harmony", "patience", "moderation", "self-control"]
+      },
+      "upright": {
+        "zh": "节制代表平衡、调和和适度。这张牌象征着生活中各个领域的和谐融合和内在的平静。它表示保持冷静、有耐心和寻求中道。",
+        "en": "Temperance represents balance, harmony, and moderation. This card symbolizes harmonious blending of life's elements and inner peace. It shows keeping calm, exercising patience, and finding the middle way."
+      },
+      "reversed": {
+        "zh": "逆位的节制表示不平衡或过度。这可能显示失去控制、冲突或不和谐。需要重新寻找生活的平衡。",
+        "en": "Reversed, Temperance indicates imbalance or excess. It may show loss of control, conflict, or discord. Restore balance in your life."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Sagittarius"
+    },
+    {
+      "id": 15,
+      "name": {
+        "zh": "恶魔",
+        "en": "The Devil"
+      },
+      "keywords": {
+        "zh": ["束缚", "欲望", "恐惧", "阴影", "物质"],
+        "en": ["bondage", "desire", "fear", "shadow", "materialism"]
+      },
+      "upright": {
+        "zh": "恶魔代表束缚、诱惑和阴影自我。这张牌象征着物质欲望、恐惧和自我强加的限制。它表示你可能被习惯、成瘾或不健康的关系所束缚。",
+        "en": "The Devil represents bondage, temptation, and the shadow self. This card symbolizes material desire, fear, and self-imposed limitations. It shows you may be bound by habits, addictions, or unhealthy relationships."
+      },
+      "reversed": {
+        "zh": "逆位的恶魔表示摆脱束缚或认识阴影。这可能显示解放、恢复自由或战胜恐惧。需要勇敢地面对你的阴暗面。",
+        "en": "Reversed, The Devil indicates breaking free or recognizing your shadow. It may show liberation, regaining freedom, or overcoming fear. Courageously confront your darker aspects."
+      },
+      "element": {
+        "zh": "土",
+        "en": "Earth"
+      },
+      "association": "Capricorn"
+    },
+    {
+      "id": 16,
+      "name": {
+        "zh": "塔",
+        "en": "The Tower"
+      },
+      "keywords": {
+        "zh": ["突变", "破坏", "启示", "混乱", "重建"],
+        "en": ["sudden change", "destruction", "revelation", "chaos", "rebuilding"]
+      },
+      "upright": {
+        "zh": "塔代表突然的变化和意想不到的破坏。这张牌象征着虚假基础的崩溃和隐藏真相的揭露。虽然破坏性，但它也带来了必要的启示和清理。",
+        "en": "The Tower represents sudden change and unexpected destruction. This card symbolizes the collapse of false foundations and revelation of hidden truths. Though destructive, it brings necessary revelation and clearing."
+      },
+      "reversed": {
+        "zh": "逆位的塔表示避免灾难或渐进的改变。这可能显示延迟的危机或小的干扰。需要为即将到来的变化做好准备。",
+        "en": "Reversed, The Tower indicates avoided disaster or gradual change. It may show delayed crisis or minor disruption. Prepare for coming changes."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Mars"
+    },
+    {
+      "id": 17,
+      "name": {
+        "zh": "星星",
+        "en": "The Star"
+      },
+      "keywords": {
+        "zh": ["希望", "灵感", "梦想", "清晰", "引导"],
+        "en": ["hope", "inspiration", "dreams", "clarity", "guidance"]
+      },
+      "upright": {
+        "zh": "星星代表希望、灵感和精神引导。这张牌象征着你的梦想、清晰的视野和对美好未来的信心。它表示你被宇宙所引导，应该追随你的真实召唤。",
+        "en": "The Star represents hope, inspiration, and spiritual guidance. This card symbolizes your dreams, clear vision, and faith in a bright future. It shows you're guided by the universe and should follow your authentic calling."
+      },
+      "reversed": {
+        "zh": "逆位的星星表示失去希望或模糊的方向。这可能显示绝望、失去梦想或灵性迷茫。需要重新点燃你的内在光芒。",
+        "en": "Reversed, The Star indicates loss of hope or unclear direction. It may show despair, lost dreams, or spiritual confusion. Reignite your inner light."
+      },
+      "element": {
+        "zh": "风",
+        "en": "Air"
+      },
+      "association": "Aquarius"
+    },
+    {
+      "id": 18,
+      "name": {
+        "zh": "月亮",
+        "en": "The Moon"
+      },
+      "keywords": {
+        "zh": ["幻觉", "潜意识", "恐惧", "直觉", "梦想"],
+        "en": ["illusion", "unconscious", "fear", "intuition", "dreams"]
+      },
+      "upright": {
+        "zh": "月亮代表潜意识、幻觉和隐藏的恐惧。这张牌象征着直觉信息和梦想的力量。它表示事物可能不如表面所见，需要相信你的直觉来穿过迷雾。",
+        "en": "The Moon represents the unconscious, illusions, and hidden fears. This card symbolizes intuitive messages and the power of dreams. It shows things may not be as they appear and you need intuition to navigate the fog."
+      },
+      "reversed": {
+        "zh": "逆位的月亮表示澄清或消除幻觉。这可能显示真相被揭露或恐惧被克服。需要看清现实和理解隐藏的含义。",
+        "en": "Reversed, The Moon indicates clarity or illusions dissolving. It may show truth being revealed or fears being overcome. See reality clearly and understand hidden meanings."
+      },
+      "element": {
+        "zh": "水",
+        "en": "Water"
+      },
+      "association": "Pisces"
+    },
+    {
+      "id": 19,
+      "name": {
+        "zh": "太阳",
+        "en": "The Sun"
+      },
+      "keywords": {
+        "zh": ["成功", "喜乐", "光明", "活力", "胜利"],
+        "en": ["success", "joy", "light", "vitality", "victory"]
+      },
+      "upright": {
+        "zh": "太阳代表成功、幸福和明亮的未来。这张牌象征着胜利、活力和积极的能量。它是牌组中最幸运的一张，表示一切都在顺利进行，光明和温暖正照亮你的道路。",
+        "en": "The Sun represents success, happiness, and a bright future. This card symbolizes victory, vitality, and positive energy. It's the luckiest card in the deck, showing everything is going well and light and warmth illuminate your path."
+      },
+      "reversed": {
+        "zh": "逆位的太阳表示延迟的成功或暂时的阴影。这可能显示短暂的挫折或被其他事物遮挡。需要相信光明最终会回归。",
+        "en": "Reversed, The Sun indicates delayed success or temporary shadow. It may show brief setbacks or being overshadowed. Trust that light will return."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Leo"
+    },
+    {
+      "id": 20,
+      "name": {
+        "zh": "审判",
+        "en": "Judgement"
+      },
+      "keywords": {
+        "zh": ["觉醒", "评估", "转折点", "真理", "呼唤"],
+        "en": ["awakening", "reckoning", "turning point", "truth", "calling"]
+      },
+      "upright": {
+        "zh": "审判代表灵性的觉醒和重要的转折点。这张牌象征着对过去的评估和对更高目标的召唤。它表示你处于人生的关键时刻，需要做出重要决定。",
+        "en": "Judgement represents spiritual awakening and an important turning point. This card symbolizes reckoning with the past and a call to higher purpose. It shows you're at a critical life juncture requiring important decisions."
+      },
+      "reversed": {
+        "zh": "逆位的审判表示延迟的觉醒或自我怀疑。这可能显示回避判断或拒绝承担责任。需要诚实地评估自己并回答内心的召唤。",
+        "en": "Reversed, Judgement indicates delayed awakening or self-doubt. It may show avoiding judgment or refusing accountability. Honestly assess yourself and answer your inner calling."
+      },
+      "element": {
+        "zh": "火",
+        "en": "Fire"
+      },
+      "association": "Pluto"
+    },
+    {
+      "id": 21,
+      "name": {
+        "zh": "世界",
+        "en": "The World"
+      },
+      "keywords": {
+        "zh": ["完成", "整体", "成就", "团圆", "新周期"],
+        "en": ["completion", "wholeness", "achievement", "closure", "new cycle"]
+      },
+      "upright": {
+        "zh": "世界代表完成、整体和一个周期的结束。这张牌象征着成就、圆满和与所有事物的连接。它表示你已达成目标，为新的开始做好了准备。",
+        "en": "The World represents completion, wholeness, and the end of a cycle. This card symbolizes achievement, fulfillment, and connection with all things. It shows you've reached your goal and are ready for new beginnings."
+      },
+      "reversed": {
+        "zh": "逆位的世界表示不完成或寻求。这可能显示延迟、缺少某些东西或无法看到全局。需要解决悬而未决的事项以实现真正的完成。",
+        "en": "Reversed, The World indicates incompletion or seeking. It may show delays, something missing, or inability to see the whole. Resolve outstanding issues to achieve true completion."
+      },
+      "element": {
+        "zh": "土",
+        "en": "Earth"
+      },
+      "association": "Saturn"
+    }
+  ]
+}

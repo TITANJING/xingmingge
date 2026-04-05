@@ -1,0 +1,211 @@
+{
+  "patternRecognition": {
+    "name": { "zh": "宏观模式诊断", "en": "Pattern Recognition" },
+    "description": {
+      "zh": "在逐一解释牌义前，先观察牌阵的整体分布模式（侦探式读牌）。",
+      "en": "Before interpreting individual cards, observe the spread's overall distribution (detective-style reading)."
+    },
+    "majorMinorBalance": {
+      "majorityMajors": {
+        "zh": "大阿尔卡那占多数：求问者正处于重大生命转折点、宿命般的阶段或需要学习深刻的灵性教训。",
+        "en": "Majority Majors: The querent faces a major life turning point, fated phase, or deep spiritual lesson."
+      },
+      "majorityMinors": {
+        "zh": "小阿尔卡那占多数：反映日常生活中的细节、暂时性的挑战或世俗琐事。",
+        "en": "Majority Minors: Reflects everyday details, temporary challenges, or mundane matters."
+      },
+      "majorityCourts": {
+        "zh": "宫廷牌占多数：当前局势受到他人介入或复杂性格动态的强烈影响。",
+        "en": "Majority Courts: The situation is heavily influenced by other people's involvement or complex personality dynamics."
+      }
+    },
+    "suitSaturation": {
+      "wands": {
+        "zh": "权杖组占多数：焦点在事业、创业精神、创意激情、灵感和行动力。可能预示一段充满能量和积极行动的时期。",
+        "en": "Majority Wands: Focus on career, entrepreneurship, creative passion, inspiration, and drive."
+      },
+      "cups": {
+        "zh": "圣杯组占多数：焦点在人际关系、情感福祉、直觉和内心世界。更关注连接和同理心而非物质产出。",
+        "en": "Majority Cups: Focus on relationships, emotional well-being, intuition, and inner world."
+      },
+      "swords": {
+        "zh": "宝剑组占多数：焦点在智力挑战、冲突、逻辑分析和沟通。通常与精神压力或需要清晰判断的局面有关。",
+        "en": "Majority Swords: Focus on intellectual challenges, conflict, logical analysis, and communication."
+      },
+      "pentacles": {
+        "zh": "星币组占多数：焦点在金钱、财务安全、身体健康和物质稳定。强调务实、规划和工作效率。",
+        "en": "Majority Pentacles: Focus on money, financial security, physical health, and material stability."
+      }
+    },
+    "missingElements": {
+      "zh": "缺失的花色同样重要——揭示求问者为达成平衡需要补足的能量。缺少星币=缺务实性；缺少权杖=缺行动力；缺少圣杯=缺情感连接；缺少宝剑=缺逻辑分析。",
+      "en": "Missing suits are equally important — they reveal energy the querent needs to cultivate for balance. Missing Pentacles=needs practicality; Missing Wands=needs drive; Missing Cups=needs emotional connection; Missing Swords=needs logical clarity."
+    },
+    "majorityReversed": {
+      "zh": "逆位牌占多数：预示能量受阻、延迟，或者求问者需要进行大量的内在工作（审视内心而非采取外部行动）。",
+      "en": "Majority Reversed: Energy is blocked or delayed; the querent needs significant inner work rather than external action."
+    },
+    "repeatedNumbers": {
+      "description": {
+        "zh": "重复数字是强力信号——该数字代表的能量被极大放大，暗示有重要信息正在突破显现。",
+        "en": "Repeated numbers are powerful signals — that number's energy is greatly amplified, suggesting important information breaking through."
+      },
+      "meanings": {
+        "aces": { "zh": "多个A：全新开始。2张=重要伙伴关系；3张=好消息；4张=极大兴奋感和潜力", "en": "Multiple Aces: New beginnings. 2=important partnership; 3=good news; 4=great excitement and potential" },
+        "twos": { "zh": "多个2：重要决定，需审慎考虑不宜匆忙", "en": "Multiple 2s: Important decisions requiring careful deliberation" },
+        "threes": { "zh": "多个3：庆祝、丰饶、社交乐趣或创意诞生", "en": "Multiple 3s: Celebration, abundance, social joy, or creative birth" },
+        "fours": { "zh": "多个4：稳定、建立边界和可靠根基", "en": "Multiple 4s: Stability, establishing boundaries and solid foundations" },
+        "fives": { "zh": "多个5：混乱、挑战、冲突或困难考验", "en": "Multiple 5s: Chaos, challenges, conflict, or difficult trials" },
+        "sixes": { "zh": "多个6：调和、平衡、给予与接受的互动", "en": "Multiple 6s: Reconciliation, balance, give-and-take dynamics" },
+        "sevens": { "zh": "多个7：挣扎与挑战，可能涉及信念的考验", "en": "Multiple 7s: Struggles and challenges, possibly testing faith" },
+        "eights": { "zh": "多个8：成就、行动、快速进展", "en": "Multiple 8s: Achievement, action, rapid progress" },
+        "nines": { "zh": "多个9：结算、接近完结或处于某种状态的顶点", "en": "Multiple 9s: Settlement, nearing completion, or peak of a state" },
+        "tens": { "zh": "多个10：结束与新开始的交替，周期的圆满", "en": "Multiple 10s: Endings cycling into new beginnings, completion of cycles" }
+      },
+      "courtCardRepeats": {
+        "kings": { "zh": "多个国王：重要的会议或权力动态（4个=权力斗争）", "en": "Multiple Kings: Important meetings or power dynamics (4=power struggle)" },
+        "queens": { "zh": "多个王后：女性聚会、互助的朋友圈（负面时=流言蜚语）", "en": "Multiple Queens: Female gatherings, supportive friends (negatively=gossip)" },
+        "knights": { "zh": "多个骑士：行动力加强、事件进展加速", "en": "Multiple Knights: Increased momentum, accelerated events" },
+        "pages": { "zh": "多个侍从：重要的新开始、消息或社交活动", "en": "Multiple Pages: Important new beginnings, messages, or social events" }
+      }
+    }
+  },
+
+  "elementalDignities": {
+    "name": { "zh": "元素尊严", "en": "Elemental Dignities" },
+    "description": {
+      "zh": "四大元素（火、水、风、土）之间相互作用的规则，决定相邻牌的能量是增强、支持、削弱还是中性。",
+      "en": "Rules governing how the four elements (Fire, Water, Air, Earth) interact, determining whether adjacent cards' energies strengthen, support, weaken, or remain neutral."
+    },
+    "polarities": {
+      "active": {
+        "zh": "阳性/主动：火与风。向外聚焦能量并改变环境。",
+        "en": "Active/Masculine: Fire and Air. Project energy outward and change the environment."
+      },
+      "passive": {
+        "zh": "阴性/被动：水与土。向内聚焦能量并适应环境。",
+        "en": "Passive/Feminine: Water and Earth. Focus energy inward and adapt to the environment."
+      }
+    },
+    "interactions": [
+      {
+        "type": "strengthen",
+        "name": { "zh": "强化", "en": "Strengthen" },
+        "rule": { "zh": "相同元素互相增加强度，放大正负面特质", "en": "Same elements amplify each other's positive and negative traits" },
+        "pairs": [
+          { "pair": ["fire","fire"], "zh": "火+火：极高的行动力和强度，可能极具建设性也可能极具破坏性", "en": "Fire+Fire: Extreme drive and intensity — powerfully constructive or destructive" },
+          { "pair": ["water","water"], "zh": "水+水：情感深度倍增，可能带来深刻的治愈或淹没性的情绪", "en": "Water+Water: Doubled emotional depth — profound healing or overwhelming feelings" },
+          { "pair": ["air","air"], "zh": "风+风：思维高度活跃，可能带来清晰洞察或过度分析", "en": "Air+Air: Highly active thinking — clear insight or over-analysis" },
+          { "pair": ["earth","earth"], "zh": "土+土：极端的稳定和务实，可能带来坚实基础或顽固不变", "en": "Earth+Earth: Extreme stability — solid foundations or stubborn immobility" }
+        ]
+      },
+      {
+        "type": "support",
+        "name": { "zh": "支持", "en": "Support" },
+        "rule": { "zh": "同极性的友好元素互相促进、协作增长", "en": "Friendly same-polarity elements promote each other cooperatively" },
+        "pairs": [
+          { "pair": ["fire","air"], "zh": "火+风：风让火烧得更旺。风的智慧和计划被火的激情驱动，将思想转化为创意行动", "en": "Fire+Air: Air fans Fire's flames. Air's wisdom and plans are driven by Fire's passion into creative action" },
+          { "pair": ["water","earth"], "zh": "水+土：土为水提供容器，水滋润土地。在情感波动时带来舒适和稳定感", "en": "Water+Earth: Earth gives Water a container, Water nourishes Earth. Brings comfort and stability during emotional turbulence" }
+        ]
+      },
+      {
+        "type": "weaken",
+        "name": { "zh": "削弱", "en": "Weaken" },
+        "rule": { "zh": "极性相反且对立的敌人元素互相抵消或降低效力", "en": "Opposing enemy elements cancel out or reduce each other's effectiveness" },
+        "pairs": [
+          { "pair": ["fire","water"], "zh": "火+水：动力被情感或恐惧抵消。有宏大雄心却因缺乏安全感而停滞", "en": "Fire+Water: Drive is canceled by emotion or fear. Grand ambitions stalled by insecurity" },
+          { "pair": ["air","earth"], "zh": "风+土：土尝试稳定思想但往往失败。表现为拒绝接受现实，或思想被物质约束", "en": "Air+Earth: Earth tries to stabilize thought but often fails. Refusal to accept reality, or thought constrained by material concerns" }
+        ]
+      },
+      {
+        "type": "neutral",
+        "name": { "zh": "中性", "en": "Neutral" },
+        "rule": { "zh": "既不加强也不削弱，但需注意平衡", "en": "Neither strengthens nor weakens, but balance should be monitored" },
+        "pairs": [
+          { "pair": ["fire","earth"], "zh": "火+土：行动与务实的混合，彼此无显著增强或对抗", "en": "Fire+Earth: Action mixed with practicality — no significant enhancement or opposition" },
+          { "pair": ["water","air"], "zh": "水+风：心与智的结合。若平衡则运作良好，若失衡则会用逻辑解释感性问题导致混乱", "en": "Water+Air: Heart meets mind. Works well if balanced; if not, rationalizing emotions causes confusion" }
+        ]
+      }
+    ],
+    "courtCardApplication": {
+      "zh": "在托特体系中，每张宫廷牌由两个元素构成（阶级元素+花色元素）。元素尊严决定角色的内在性格。例如：权杖王后（水之火）=有感知力的领导风格；宝剑侍从（土之风）=脚踏实地的策略家。当阶级与花色元素相同时（如权杖骑士=火中之火），该元素特质达到极致或过剩。",
+      "en": "In the Thoth system, each Court card has two elements (rank element + suit element). Elemental dignities determine the character's inner nature. E.g.: Queen of Wands (Water of Fire)=perceptive leadership; Page of Swords (Earth of Air)=grounded strategist. When rank and suit match (Knight of Wands=Fire of Fire), the element's traits reach extremes."
+    },
+    "suitElements": {
+      "wands": "fire",
+      "cups": "water",
+      "swords": "air",
+      "pentacles": "earth"
+    }
+  },
+
+  "quintessence": {
+    "name": { "zh": "精质还原", "en": "Quintessence" },
+    "description": {
+      "zh": "读牌结束后的进一步洞察。将牌阵中所有大阿尔卡那的编号相加并还原为个位数（1-22→1-9），得出的对应大牌即代表本次读牌的核心深层信息。",
+      "en": "A post-reading insight technique. Sum all Major Arcana numbers in the spread, reduce to a single digit (1-9), and the corresponding Major card represents the reading's deepest core message."
+    },
+    "method": {
+      "zh": "1. 找出牌阵中所有大阿尔卡那\n2. 将它们的编号相加（愚者=0，魔术师=1，女教皇=2...世界=21）\n3. 若总和>22，继续相加各位数字直到得出1-22之间的数\n4. 找到对应编号的大阿尔卡那，即为精质牌",
+      "en": "1. Identify all Major Arcana in the spread\n2. Sum their numbers (Fool=0, Magician=1, High Priestess=2...World=21)\n3. If sum>22, add digits until you get 1-22\n4. The corresponding Major Arcana is the Quintessence card"
+    }
+  },
+
+  "significator": {
+    "name": { "zh": "指示牌", "en": "Significator" },
+    "description": {
+      "zh": "预先选出代表求问者本人或占卜主题的牌，作为解读的能量焦点。该牌不参与随后的洗牌。",
+      "en": "A pre-selected card representing the querent or the question's theme, serving as the energy focus. This card is removed from the deck before shuffling."
+    },
+    "selectionMethods": [
+      {
+        "method": { "zh": "性别/年龄法", "en": "Gender/Age Method" },
+        "description": { "zh": "根据求问者的性别和年龄选择宫廷牌。如国王代表成熟男性，王后代表成熟女性。", "en": "Choose a Court card based on the querent's gender and age. E.g., Kings for mature men, Queens for mature women." }
+      },
+      {
+        "method": { "zh": "太阳星座法", "en": "Sun Sign Method" },
+        "description": { "zh": "根据求问者的占星太阳星座选择对应花色的宫廷牌。", "en": "Choose a Court card matching the querent's astrological sun sign element." }
+      },
+      {
+        "method": { "zh": "主题法", "en": "Theme Method" },
+        "description": { "zh": "根据占卜主题选择特定大阿尔卡那。如法律问题选「正义」，教育问题选「教皇」，感情问题选「恋人」。", "en": "Choose a specific Major Arcana matching the question's theme. E.g., 'Justice' for legal matters, 'Hierophant' for education, 'Lovers' for relationships." }
+      }
+    ]
+  },
+
+  "timingTechniques": {
+    "name": { "zh": "时间判定技巧", "en": "Timing Techniques" },
+    "description": {
+      "zh": "塔罗牌反映的是当前能量趋势而非不可更改的宿命。以下技巧用于精准锁定事件的时间。",
+      "en": "Tarot reflects current energy trends, not immutable fate. These techniques help pinpoint event timing."
+    },
+    "numericalTiming": {
+      "zh": "数字判定法：直接利用卡牌数字作为时间单位。例如星币四可能预示4天、4周或4个月内发生。",
+      "en": "Numerical Timing: Use the card's number as a time unit. E.g., Four of Pentacles may indicate 4 days, weeks, or months."
+    },
+    "courtCardRanks": {
+      "pages": { "zh": "侍从：代表天或即将来临的消息", "en": "Pages: Represent days or incoming messages" },
+      "knights": { "zh": "骑士：代表周或快速的移动", "en": "Knights: Represent weeks or swift movement" },
+      "queens": { "zh": "王后：代表月或事物的孕育期", "en": "Queens: Represent months or gestation periods" },
+      "kings": { "zh": "国王：代表季节或一个完整周期的结束", "en": "Kings: Represent seasons or the completion of a full cycle" }
+    },
+    "suitSeasons": {
+      "wands": { "zh": "权杖=春季，或「周」为单位", "en": "Wands = Spring, or 'weeks' as unit" },
+      "cups": { "zh": "圣杯=夏季", "en": "Cups = Summer" },
+      "swords": { "zh": "宝剑=秋季", "en": "Swords = Autumn" },
+      "pentacles": { "zh": "星币=冬季", "en": "Pentacles = Winter" }
+    },
+    "speedCards": {
+      "fast": { "zh": "权杖八=事情会非常迅速进展", "en": "Eight of Wands = Events will progress very rapidly" },
+      "slow": { "zh": "倒吊人、宝剑四=严重延迟或需要长期等待", "en": "Hanged Man, Four of Swords = Serious delay or long wait required" }
+    }
+  },
+
+  "reversalInterpretation": {
+    "name": { "zh": "正逆位互动", "en": "Upright & Reversed Interaction" },
+    "description": {
+      "zh": "正位代表外部显现的能量；逆位通常暗示能量受阻、延迟或正向内转化（进行内在工作）。",
+      "en": "Upright represents externally manifested energy; Reversed usually suggests blocked, delayed, or inwardly transforming energy (inner work in progress)."
+    }
+  }
+}
